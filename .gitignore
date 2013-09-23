@@ -1,0 +1,13 @@
+## PROJECT::GENERAL
+rdoc
+doc
+log
+pkg/*
+tmp
+.rvmrc
+.rbenv*
+
+## BUNDLER
+*.gem
+.bundle
+Gemfile.lock
