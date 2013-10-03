@@ -1,9 +1,14 @@
 ## Consumer
+- [ ] unit spec
+  - normalise consumer and provider names
+- [ ] watch out for require_relative and target version
 
-- [ ] record interactions using DSL
-- [ ] spec writes out ticket after a run
-- [ ] allow ticket location to be configured
+- introduce Patronage to link provider and consumer, update time as it has interactions
+
+- [ ] add interactions
 - [ ] add support for givens (existing provider state)
+- [ ] check runtime ruby versions
+- [ ] make sure examples work
 
 ## Server Producer Stubbing
 

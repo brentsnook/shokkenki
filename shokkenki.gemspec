@@ -20,6 +20,10 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 1.8.7'
 
+  s.add_runtime_dependency 'json'
+
   s.add_development_dependency 'rake', '~> 10.0.0'
   s.add_development_dependency 'rspec', '~> 2.14.0'
+  s.add_development_dependency 'json'
+  s.add_development_dependency 'timecop'
 end
