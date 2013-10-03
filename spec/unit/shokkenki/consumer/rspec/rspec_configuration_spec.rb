@@ -44,7 +44,7 @@ describe 'RSpec configuration' do
 
     # this allows an implicit consumer to be referred to in the DSL
     it 'sets a new consumer using the shokkenki metadata' do
-      expect(session).to have_received(:set_current_consumer).with consumer_metadata
+      expect(session).to have_received(:current_consumer=).with consumer_metadata
     end
 
     it 'sets a new consumer for any shokkenki consumer example' do

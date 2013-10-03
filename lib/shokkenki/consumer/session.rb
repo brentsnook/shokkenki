@@ -19,7 +19,7 @@ module Shokkenki
         @current_consumer.patronage provider_name
       end
 
-      def set_current_consumer consumer_attributes
+      def current_consumer= consumer_attributes
         name = consumer_attributes[:name]
         @consumers[name] ||= Shokkenki::Consumer::ConsumerRole.new consumer_attributes
         @current_consumer = @consumers[name]

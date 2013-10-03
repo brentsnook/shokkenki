@@ -15,7 +15,7 @@ describe Shokkenki::Consumer::Session do
   context 'provider' do
 
     before do
-      subject.set_current_consumer :name => :consumertron
+      subject.current_consumer = {:name => :consumertron}
     end
 
     # when referred to in this context, provider means the patronage
@@ -31,7 +31,7 @@ describe Shokkenki::Consumer::Session do
 
       before do
         allow(Shokkenki::Consumer::ConsumerRole).to receive(:new).and_return(new_consumer)
-        subject.set_current_consumer :name => :consumertron
+        subject.current_consumer = {:name => :consumertron}
       end
 
       it 'creates a new consumer with that name' do
@@ -49,10 +49,11 @@ describe Shokkenki::Consumer::Session do
 
       before do
         subject.consumers[:consumertron] = existing_consumer
+        subject.current_consumer = {:name => :consumertron }
       end
 
       it 'uses the existing consumer' do
-        expect(subject.set_current_consumer(:name => :consumertron)).to be(existing_consumer)
+        expect(subject.current_consumer).to be(existing_consumer)
       end
     end
   end

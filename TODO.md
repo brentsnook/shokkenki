@@ -1,7 +1,5 @@
 ## Consumer
-- rename provider role to patronage
 - normalise consumer and provider names
-- rename set_current_consumer to current_consumer=
 - [ ] watch out for require_relative and target version
 - [ ] pull more out into separate DSL definition?
 
