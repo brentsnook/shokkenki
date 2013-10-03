@@ -4,10 +4,10 @@ require 'shokkenki/consumer/patronage'
 
 describe Shokkenki::Consumer::ConsumerRole do
   context 'when created' do
-    subject { Shokkenki::Consumer::ConsumerRole.new :name => 'consumatron'}
+    subject { Shokkenki::Consumer::ConsumerRole.new :name => :Consumatron}
 
-    it 'has the name it is given' do
-      expect(subject.name).to eq('consumatron')
+    it 'simplifies the name it is given' do
+      expect(subject.name).to eq(:consumatron)
     end
 
     it 'has no patronages' do
@@ -48,6 +48,10 @@ describe Shokkenki::Consumer::ConsumerRole do
 
       it 'retrieves the existing patronage' do
         expect(subject.patronage(:my_provider)).to be(existing_patronage)
+      end
+
+      it 'simplifies the provider name' do
+        expect(subject.patronage(:MY_provider)).to be(existing_patronage)
       end
     end
   end

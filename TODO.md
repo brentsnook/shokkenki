@@ -1,11 +1,11 @@
 ## Consumer
-- normalise consumer and provider names
+- [ ] push ticket generation into the patronage, remove ticket
+- [ ] add interactions, record time
+- [ ] ticket time is time of last interaction
 - [ ] watch out for require_relative and target version
+- [ ] store provider/consumer label
 - [ ] pull more out into separate DSL definition?
 
-- introduce Patronage to link provider and consumer, update time as it has interactions
-
-- [ ] add interactions
 - [ ] add support for givens (existing provider state)
 - [ ] check runtime ruby versions
 - [ ] make sure examples work
@@ -35,3 +35,7 @@
 
 - [ ] Allow stubbing method to be specified (server, webmock)
 - [ ] Convert recorded interactions into webmock stubs
+
+## shokkenki-angular.js
+
+Allow tickets to be produced from Jasmine run angular specs.

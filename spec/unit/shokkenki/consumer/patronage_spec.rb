@@ -7,10 +7,10 @@ describe Shokkenki::Consumer::Patronage do
 
     let(:consumer) { double 'consumer' }
 
-    subject { Shokkenki::Consumer::Patronage.new :name => 'providertron', :consumer => consumer}
+    subject { Shokkenki::Consumer::Patronage.new :name => :Providertron, :consumer => consumer}
 
-    it 'has the provider name it is given' do
-      expect(subject.name). to eq('providertron')
+    it 'simplifies the provider name it is given' do
+      expect(subject.name). to eq(:providertron)
     end
 
     it 'has the consumer it is given' do
@@ -20,8 +20,8 @@ describe Shokkenki::Consumer::Patronage do
 
   describe 'ticket' do
 
-    let(:consumer) { double 'consumer', :name => 'consumertron' }
-    subject { Shokkenki::Consumer::Patronage.new :name => 'providertron', :consumer => consumer}
+    let(:consumer) { double 'consumer', :name => :consumertron }
+    subject { Shokkenki::Consumer::Patronage.new :name => :providertron, :consumer => consumer}
 
     before do
       allow(Shokkenki::Consumer::Ticket).to receive(:new)
@@ -29,11 +29,11 @@ describe Shokkenki::Consumer::Patronage do
     end
 
     it 'has the consumer name' do
-      expect(Shokkenki::Consumer::Ticket).to have_received(:new).with(hash_including(:consumer => 'consumertron'))
+      expect(Shokkenki::Consumer::Ticket).to have_received(:new).with(hash_including(:consumer => :consumertron))
     end
 
     it 'has the provider name' do
-      expect(Shokkenki::Consumer::Ticket).to have_received(:new).with(hash_including(:provider => 'providertron'))
+      expect(Shokkenki::Consumer::Ticket).to have_received(:new).with(hash_including(:provider => :providertron))
     end
   end
 end

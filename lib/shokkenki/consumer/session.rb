@@ -1,9 +1,11 @@
 require 'shokkenki/consumer/consumer_role'
 require 'shokkenki/shokkenki'
+require 'shokkenki/consumer/simplification'
 
 module Shokkenki
   module Consumer
     class Session
+      include Shokkenki::Consumer::Simplification
 
       attr_reader :consumers, :current_consumer
 
@@ -20,7 +22,7 @@ module Shokkenki
       end
 
       def current_consumer= consumer_attributes
-        name = consumer_attributes[:name]
+        name = simplify(consumer_attributes[:name])
         @consumers[name] ||= Shokkenki::Consumer::ConsumerRole.new consumer_attributes
         @current_consumer = @consumers[name]
       end

@@ -41,6 +41,7 @@ describe Shokkenki::Consumer::Session do
       it 'registers the consumer' do
         expect(subject.consumers[:consumertron]).to be(new_consumer)
       end
+
     end
 
     context 'when a consumer with that name is already registered' do
@@ -54,6 +55,17 @@ describe Shokkenki::Consumer::Session do
 
       it 'uses the existing consumer' do
         expect(subject.current_consumer).to be(existing_consumer)
+      end
+
+    end
+
+    context 'when registering a consumer' do
+      before do
+        subject.current_consumer = {:name => :CONsumertron}
+      end
+
+      it 'simplfies the consumer name' do
+        expect(subject.consumers[:consumertron]).to_not be_nil
       end
     end
   end
