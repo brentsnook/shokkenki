@@ -3,19 +3,19 @@ require 'time'
 
 module Shokkenki
   module Consumer
-  	class Ticket
+    class Ticket
 
       attr_reader :provider, :consumer
       attr_accessor :time, :version
 
-  	  def initialize attributes
+      def initialize attributes
         @provider = attributes[:provider]
         @consumer = attributes[:consumer]
-  	  end
+      end
 
-  	  def filename
+      def filename
         "#{@consumer}-#{@provider}.json"
-  	  end
+      end
 
       def to_hash
         {

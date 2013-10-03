@@ -2,7 +2,7 @@ require 'shokkenki/consumer/provider_role'
 
 module Shokkenki
   module Consumer
-  	class ConsumerRole
+    class ConsumerRole
 
       attr_reader :name, :providers
 
@@ -11,9 +11,9 @@ module Shokkenki
         @providers = {}
       end
 
-  	  def provider provider_name
+      def provider provider_name
         @providers[provider_name] ||= Shokkenki::Consumer::ProviderRole.new :name => provider_name, :consumer => self
-  	  end
+      end
 
       def tickets
         @providers.values.collect &:ticket

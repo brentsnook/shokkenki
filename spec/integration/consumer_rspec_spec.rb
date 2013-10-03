@@ -14,7 +14,7 @@ describe 'A consumer rspec spec' do
       run_spec 'spec/integration/consumer_rspec_spec_harness.rb', 'ticket_directory' => ticket_directory
     end
 
-  	describe 'the created ticket' do
+    describe 'the created ticket' do
 
       let(:ticket) do
         JSON.parse File.read(File.expand_path(File.join(ticket_directory, 'my_consumer-my_provider.json')))
@@ -22,7 +22,7 @@ describe 'A consumer rspec spec' do
 
       it 'includes the consumer name' do
         expect(ticket['consumer']['name']).to eq('my_consumer')
-  	  end
+      end
 
       it 'includes the provider name' do
         expect(ticket['provider']['name']).to eq('my_provider')
