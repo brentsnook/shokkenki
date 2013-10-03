@@ -5,7 +5,7 @@ module Shokkenki
   module Consumer
     class Session
 
-      attr_reader :consumers
+      attr_reader :consumers, :current_consumer
 
       def initialize
         @consumers = {}
@@ -15,8 +15,8 @@ module Shokkenki
         @instance ||= Session.new
       end
 
-      def consumer
-        @current_consumer
+      def provider provider_name
+        @current_consumer.patronage provider_name
       end
 
       def set_current_consumer consumer_attributes

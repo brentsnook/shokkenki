@@ -12,6 +12,19 @@ describe Shokkenki::Consumer::Session do
     expect(Shokkenki::Consumer::Session.singleton).to_not be_nil
   end
 
+  context 'provider' do
+
+    before do
+      subject.set_current_consumer :name => :consumertron
+    end
+
+    # when referred to in this context, provider means the patronage
+    # of the current consumer
+    it "is the current consumer's patronage of the given provider" do
+      expect(subject.provider(:providertron)).to be(subject.current_consumer.patronage(:providertron))
+    end
+  end
+
   context 'setting the current consumer' do
     context 'when a consumer with that name is not already registered' do
       let(:new_consumer) { double 'new consumer' }

@@ -8,7 +8,7 @@ describe 'A consumer', :shokkenki_consumer => {:name => :my_consumer} do
       config.ticket_location = ENV['ticket_directory']
     end
 
-    shokkenki.consumer.patronage(:my_provider)
+    shokkenki.provider(:my_provider)
   end
 
   it 'runs successfully' do

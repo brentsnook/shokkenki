@@ -20,7 +20,7 @@ require_relative 'hungry_man'
 
 describe HungryMan, :shokkenki => {:consumer => :hungry_man} do
 
-  shokkenki.consumer.provider :restaurant do
+  shokkenki.provider :restaurant do
     stubbed_as_server do
       on_port 1234
     end
@@ -29,7 +29,7 @@ describe HungryMan, :shokkenki => {:consumer => :hungry_man} do
   context 'when his ramen is hot' do
 
     before do
-      shokkenki.consumer.provider(:restaurant).
+      shokkenki.provider(:restaurant).
         during('an order for ramen').
         requested_with(
           :method => :get, :path => '/order/ramen'
