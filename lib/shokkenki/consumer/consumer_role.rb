@@ -1,22 +1,22 @@
-require 'shokkenki/consumer/provider_role'
+require 'shokkenki/consumer/patronage'
 
 module Shokkenki
   module Consumer
     class ConsumerRole
 
-      attr_reader :name, :providers
+      attr_reader :name, :patronages
 
       def initialize arguments
         @name = arguments[:name]
-        @providers = {}
+        @patronages = {}
       end
 
-      def provider provider_name
-        @providers[provider_name] ||= Shokkenki::Consumer::ProviderRole.new :name => provider_name, :consumer => self
+      def patronage provider_name
+        @patronages[provider_name] ||= Shokkenki::Consumer::Patronage.new :name => provider_name, :consumer => self
       end
 
       def tickets
-        @providers.values.collect &:ticket
+        @patronages.values.collect &:ticket
       end
 
     end

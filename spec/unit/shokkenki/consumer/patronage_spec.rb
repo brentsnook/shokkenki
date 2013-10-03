@@ -1,15 +1,15 @@
 require_relative '../../spec_helper'
 require 'shokkenki/consumer/ticket'
-require 'shokkenki/consumer/provider_role'
+require 'shokkenki/consumer/patronage'
 
-describe Shokkenki::Consumer::ProviderRole do
+describe Shokkenki::Consumer::Patronage do
   context 'when created' do
 
     let(:consumer) { double 'consumer' }
 
-    subject { Shokkenki::Consumer::ProviderRole.new :name => 'providertron', :consumer => consumer}
+    subject { Shokkenki::Consumer::Patronage.new :name => 'providertron', :consumer => consumer}
 
-    it 'has the name it is given' do
+    it 'has the provider name it is given' do
       expect(subject.name). to eq('providertron')
     end
 
@@ -21,7 +21,7 @@ describe Shokkenki::Consumer::ProviderRole do
   describe 'ticket' do
 
     let(:consumer) { double 'consumer', :name => 'consumertron' }
-    subject { Shokkenki::Consumer::ProviderRole.new :name => 'providertron', :consumer => consumer}
+    subject { Shokkenki::Consumer::Patronage.new :name => 'providertron', :consumer => consumer}
 
     before do
       allow(Shokkenki::Consumer::Ticket).to receive(:new)

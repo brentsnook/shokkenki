@@ -1,6 +1,6 @@
 require_relative '../../spec_helper'
 require 'shokkenki/consumer/consumer_role'
-require 'shokkenki/consumer/provider_role'
+require 'shokkenki/consumer/patronage'
 
 describe Shokkenki::Consumer::ConsumerRole do
   context 'when created' do
@@ -10,44 +10,44 @@ describe Shokkenki::Consumer::ConsumerRole do
       expect(subject.name).to eq('consumatron')
     end
 
-    it 'has no providers' do
-      expect(subject.providers).to be_empty
+    it 'has no patronages' do
+      expect(subject.patronages).to be_empty
     end
 
   end
 
-  context 'retrieving a provider' do
+  context 'retrieving a patronage' do
 
     subject { Shokkenki::Consumer::ConsumerRole.new({}) }
 
-    context 'when the provider does not already exist' do
+    context 'when a patronage doesnt exist for the provider' do
 
-      let(:new_provider) { double 'new provider' }
+      let(:new_patronage) { double 'new patronage' }
 
       before do
-        allow(Shokkenki::Consumer::ProviderRole).to receive(:new).and_return new_provider
-        subject.provider(:my_provider)
+        allow(Shokkenki::Consumer::Patronage).to receive(:new).and_return new_patronage
+        subject.patronage(:my_provider)
       end
 
-      it 'creates a new provider role with the given name and its self as the consumer' do
-        expect(Shokkenki::Consumer::ProviderRole).to have_received(:new).with(:consumer => subject, :name => :my_provider)
+      it 'creates a new patronage with the given name and its self as the consumer' do
+        expect(Shokkenki::Consumer::Patronage).to have_received(:new).with(:consumer => subject, :name => :my_provider)
       end
 
       it 'retrieves the newly created provider for subsequent requests' do
-        expect(subject.provider(:my_provider)).to be(new_provider)
+        expect(subject.patronage(:my_provider)).to be(new_patronage)
       end
     end
 
-    context 'when the provider already exists' do
+    context 'when a patronage already exists for the provider' do
 
-      let(:existing_provider) { double 'provider' }
+      let(:existing_patronage) { double 'patronage' }
 
       before do
-        subject.providers[:my_provider] = existing_provider
+        subject.patronages[:my_provider] = existing_patronage
       end
 
-      it 'retrieves the existing provider' do
-        expect(subject.provider(:my_provider)).to be(existing_provider)
+      it 'retrieves the existing patronage' do
+        expect(subject.patronage(:my_provider)).to be(existing_patronage)
       end
     end
   end
@@ -57,13 +57,13 @@ describe Shokkenki::Consumer::ConsumerRole do
     subject { Shokkenki::Consumer::ConsumerRole.new({}) }
 
     before do
-      subject.providers.merge!(
-        :provider1 => double('provider1', :ticket => 'ticket1'),
-        :provider2 => double('provider2', :ticket => 'ticket2')
+      subject.patronages.merge!(
+        :provider1 => double('patronage1', :ticket => 'ticket1'),
+        :provider2 => double('patronage2', :ticket => 'ticket2')
       )
     end
 
-    it 'collects the tickets of all of its providers' do
+    it 'collects the tickets of all of its patronages' do
       expect(subject.tickets).to eq(['ticket1', 'ticket2'])
     end
   end

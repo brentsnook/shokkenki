@@ -2,7 +2,7 @@ require 'shokkenki/consumer/ticket'
 
 module Shokkenki
   module Consumer
-    class ProviderRole
+    class Patronage
 
       attr_reader :name, :consumer
 
