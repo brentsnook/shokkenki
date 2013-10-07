@@ -16,16 +16,14 @@ describe Shokkenki::Consumer::Session do
     expect(subject).to respond_to(:order)
   end
 
-  describe 'provider' do
+  describe 'current patronage' do
 
     before do
       subject.current_consumer = {:name => :consumertron}
     end
 
-    # when referred to in this context, provider means the patronage
-    # of the current consumer
     it "is the current consumer's patronage of the given provider" do
-      expect(subject.provider(:providertron)).to be(subject.current_consumer.patronage(:providertron))
+      expect(subject.current_patronage_for(:providertron)).to be(subject.current_consumer.patronage(:providertron))
     end
   end
 

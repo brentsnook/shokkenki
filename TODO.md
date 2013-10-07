@@ -1,5 +1,4 @@
 ## Consumer
-- [ ] rename session.provider to patronage_for
 - [ ] add Response
 - [ ] Introduce Terms
   - StringTerm

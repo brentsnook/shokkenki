@@ -19,7 +19,7 @@ module Shokkenki
         @instance ||= Session.new
       end
 
-      def provider provider_name
+      def current_patronage_for provider_name
         @current_consumer.patronage provider_name
       end
 

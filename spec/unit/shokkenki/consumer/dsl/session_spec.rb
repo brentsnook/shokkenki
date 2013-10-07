@@ -19,7 +19,7 @@ describe Shokkenki::Consumer::DSL::Session do
     before do
       allow(Shokkenki::Consumer::DSL::Order).to receive(:new).and_return order
       allow(order).to receive(:provider_name).and_return(:provider_name)
-      allow(subject).to receive(:provider).with(:provider_name).and_return patronage
+      allow(subject).to receive(:current_patronage_for).with(:provider_name).and_return patronage
       allow(order).to receive(:to_interaction).and_return interaction
       subject.order do
         set_some_details

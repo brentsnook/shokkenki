@@ -7,7 +7,7 @@ module Shokkenki
         def order &block
           order = Shokkenki::Consumer::DSL::Order.new
           order.instance_eval &block
-          provider(order.provider_name).add_interaction order.to_interaction
+          current_patronage_for(order.provider_name).add_interaction order.to_interaction
         end
       end
     end
