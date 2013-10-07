@@ -1,5 +1,7 @@
 # Shokkenki
 
+## This gem is still being built! Don't expect anything to work in the meantime.
+
 Shokkenki (食券機) records [consumer-driven contracts](http://martinfowler.com/articles/consumerDrivenContracts.html) from real examples and uses them to test both ends of the consumer-provider relationship.
 
 Consumer tests can express a contract as a series of HTTP interactions that can be used to stub out the provider in those tests. Those interactions can then be saved as a shokkenki ticket and then used within provider tests to ensure that a provider honours that contract.
