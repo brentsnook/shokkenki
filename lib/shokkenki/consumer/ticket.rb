@@ -1,16 +1,18 @@
+require 'shokkenki/version'
 require 'json'
-require 'time'
 
 module Shokkenki
   module Consumer
     class Ticket
 
-      attr_reader :provider, :consumer
+      attr_reader :provider, :consumer, :interactions
       attr_accessor :time, :version
 
       def initialize attributes
         @provider = attributes[:provider]
         @consumer = attributes[:consumer]
+        @interactions = attributes[:interactions]
+        @version = Shokkenki::Version::STRING
       end
 
       def filename
@@ -25,7 +27,7 @@ module Shokkenki
           :provider => {
             :name => @provider
           },
-          :time => @time.utc.iso8601,
+          :interactions => @interactions.collect(&:to_hash),
           :version => @version
         }
       end

@@ -13,6 +13,15 @@ module Shokkenki
         @response = attributes[:response]
         @time = Time.now
       end
+
+      def to_hash
+        {
+          :label => @label,
+          :request => @request.to_hash,
+          :response => @response.to_hash,
+          :time => @time.utc.iso8601
+        }
+      end
     end
   end
 end

@@ -1,8 +1,6 @@
 require_relative '../../spec_helper'
-require 'timecop'
 require 'shokkenki/consumer/session'
 require 'shokkenki/consumer/consumer_role'
-require 'shokkenki/version'
 
 describe Shokkenki::Consumer::Session do
 
@@ -72,44 +70,20 @@ describe Shokkenki::Consumer::Session do
     end
   end
 
-  context 'stamping tickets' do
-    let(:first_ticket) { double('first ticket').as_null_object }
-    let(:second_ticket) { double('second ticket').as_null_object }
-
-    before do
-      stub_const('Shokkenki::Version::STRING', '99.9')
-
-      subject.consumers.merge!({
-        :consumer1 => double('consumer1', :tickets => [first_ticket]),
-        :consumer2 => double('consumer2', :tickets => [second_ticket])
-      })
-    end
-
-    it 'collects all consumer tickets' do
-      expect(subject.stamped_tickets).to eq([first_ticket, second_ticket])
-    end
-
-    it 'stamps each ticket with the shokkenki version' do
-      subject.stamped_tickets
-      expect(first_ticket).to have_received(:version=).with '99.9'
-    end
-
-    it 'stamps the ticket with the date' do
-      current_time = Time.now
-      Timecop.freeze(current_time) do
-        subject.stamped_tickets
-      end
-      expect(first_ticket).to have_received(:time=).with current_time
-    end
-  end
-
   context 'printing tickets' do
 
     let(:file) { double('file').as_null_object }
+    let(:ticket) do
+      double('ticket',
+        :to_json => 'ticket json',
+        :filename => 'ticketfilename'
+      )
+    end
 
     before do
-      allow(subject).to receive(:stamped_tickets).and_return [double('ticket', :to_json => 'ticketjson', :filename => 'ticketfilename')]
-
+      subject.consumers.merge!({
+        :consumer => double('consumer', :tickets => [ticket])
+      })
       allow(File).to receive(:open).and_yield file
       allow(Shokkenki.configuration).to receive(:ticket_location).and_return 'ticket_dir'
 
@@ -117,7 +91,7 @@ describe Shokkenki::Consumer::Session do
     end
 
     it 'writes the contents of each consumer ticket' do
-      expect(file).to have_received(:write).with 'ticketjson'
+      expect(file).to have_received(:write).with 'ticket json'
     end
 
     it 'writes each consumer ticket to the ticket directory' do

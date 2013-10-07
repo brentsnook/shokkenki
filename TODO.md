@@ -1,21 +1,13 @@
 ## Consumer
-- [ ] add Response
+- [ ] store provider/consumer label
 - [ ] Introduce Terms
   - StringTerm
   - RegexTerm
   - Open up Regex, Symbol and String and provide to_shokkenki_term method
-- [ ] Add interaction to ticket
-  - Add to_json to terms
-     - {
-       'type' => 'string',
-       'value' => 'hello'
-     }
-- [ ] add requests and responses to ticket
-- [ ] ticket time is time of last interaction
-- [ ] store provider/consumer label
-
+- [ ] Make request and response free-form lists of headers + body
 - [ ] add support for givens (existing provider state)
 
+- [ ] Error handling for missing requests/responses etc
 - [ ] check runtime ruby versions
 - [ ] update examples and ensure that they work
 - [ ] better name for 'shokkenki.order' ?

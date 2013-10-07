@@ -1,21 +1,39 @@
 require_relative '../../spec_helper'
 require 'shokkenki/consumer/ticket'
 require 'json'
-require 'time'
+require 'shokkenki/version'
 
 describe Shokkenki::Consumer::Ticket do
 
-  subject { Shokkenki::Consumer::Ticket.new :provider => 'providertron', :consumer => 'consumertron'}
+  let(:interaction) { double('interaction') }
+  let(:time) { Time.now }
+
+  before do
+    stub_const('Shokkenki::Version::STRING', '99.9')
+  end
+
+  subject do
+    Shokkenki::Consumer::Ticket.new(
+      :provider => 'providertron',
+      :consumer => 'consumertron',
+      :interactions => [interaction]
+    )
+  end
 
   context 'when created' do
 
     it 'has the consumer it is given' do
-      expect(subject.consumer). to eq('consumertron')
+      expect(subject.consumer).to eq('consumertron')
     end
 
     it 'has the provider it is given' do
-      expect(subject.provider). to eq('providertron')
+      expect(subject.provider).to eq('providertron')
     end
+
+    it 'has the interactions it is given' do
+      expect(subject.interactions).to eq([interaction])
+    end
+
   end
 
   describe 'filename' do
@@ -32,8 +50,7 @@ describe Shokkenki::Consumer::Ticket do
   context 'converted to JSON' do
 
     before do
-      subject.version = '99.9'
-      subject.time = Time.parse '2012-04-23T18:25:43Z'
+      allow(interaction).to receive(:to_hash).and_return({:interaction => :json})
     end
 
     let(:json) { JSON.parse subject.to_json }
@@ -46,12 +63,12 @@ describe Shokkenki::Consumer::Ticket do
       expect(json['provider']['name']).to eq('providertron')
     end
 
-    it 'includes the time formatted as an ISO 8601 date' do
-      expect(json['time']).to eq('2012-04-23T18:25:43Z')
-    end
-
     it 'includes the version' do
       expect(json['version']).to eq('99.9')
+    end
+
+    it 'includes the JSON of each interaction' do
+      expect(json['interactions']).to eq([{'interaction' => 'json'}])
     end
   end
 end

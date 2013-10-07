@@ -34,10 +34,18 @@ describe Shokkenki::Consumer::Patronage do
 
   describe 'ticket' do
 
+    let(:interaction) { double('interaction') }
+
     before do
       allow(consumer).to receive(:name).and_return(:consumertron)
       allow(Shokkenki::Consumer::Ticket).to receive(:new)
+      subject.interactions << interaction
+
       subject.ticket
+    end
+
+    it 'has the interactions' do
+      expect(Shokkenki::Consumer::Ticket).to have_received(:new).with(hash_including(:interactions => [interaction]))
     end
 
     it 'has the consumer name' do

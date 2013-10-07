@@ -8,6 +8,12 @@ module Shokkenki
         @body = attributes[:body] if attributes
       end
 
+      def to_hash
+        {
+          :body => @body
+        }
+      end
+
     end
   end
 end

@@ -20,7 +20,11 @@ module Shokkenki
       end
 
       def ticket
-        Ticket.new :consumer => @consumer.name, :provider => @name
+        Ticket.new(
+          :consumer => @consumer.name,
+          :provider => @name,
+          :interactions => @interactions
+        )
       end
     end
   end

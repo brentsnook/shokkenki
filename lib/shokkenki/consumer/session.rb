@@ -29,19 +29,12 @@ module Shokkenki
         @current_consumer = @consumers[name]
       end
 
-      def stamped_tickets
-        time = Time.now
-        # would rather copy + transform tickets rather than modify
-        # existing state - something to come back to
-        @consumers.values.collect(&:tickets).flatten.map do |ticket|
-          ticket.version = Shokkenki::Version::STRING
-          ticket.time = time
-          ticket
-        end
+      def tickets
+        @consumers.values.collect(&:tickets).flatten
       end
 
       def print_tickets
-        stamped_tickets.each do |ticket|
+        tickets.each do |ticket|
           ticket_path = File.expand_path(File.join(Shokkenki.configuration.ticket_location, ticket.filename))
           File.open(ticket_path, 'w') { |file| file.write(ticket.to_json) }
         end

@@ -9,6 +9,12 @@ module Shokkenki
         @path = attributes[:path]
       end
 
+      def to_hash
+        {
+          :method => @method_type,
+          :path => @path
+        }
+      end
     end
   end
 end
