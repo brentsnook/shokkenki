@@ -1,4 +1,5 @@
 require 'shokkenki/consumer/ticket'
+require 'shokkenki/consumer/interaction'
 require 'shokkenki/consumer/simplification'
 
 module Shokkenki
@@ -11,6 +12,13 @@ module Shokkenki
       def initialize attributes
         @name = simplify(attributes[:name])
         @consumer = attributes[:consumer]
+        @interactions = []
+      end
+
+      def during interaction_label
+        interaction = Interaction.new(:label => interaction_label)
+        @interactions << interaction
+        interaction
       end
 
       def ticket

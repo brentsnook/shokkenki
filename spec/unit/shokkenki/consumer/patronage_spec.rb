@@ -18,6 +18,17 @@ describe Shokkenki::Consumer::Patronage do
     end
   end
 
+  context 'during' do
+
+    subject { Shokkenki::Consumer::Patronage.new :name => :providertron, :consumer => double('consumer')}
+
+    it 'starts a new interaction with the given label' do
+      expect(subject.during('an awesome interaction').label).to eq('an awesome interaction')
+    end
+
+    it 'doesnt allow duplicate interactions'
+  end
+
   describe 'ticket' do
 
     let(:consumer) { double 'consumer', :name => :consumertron }

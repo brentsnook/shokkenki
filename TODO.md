@@ -1,6 +1,8 @@
 ## Consumer
-- [ ] push ticket generation into the patronage, remove ticket
-- [ ] add interactions, record time
+- [ ] add interactions
+- [ ] use matchers for all request parameters
+  - Define special match method for String and Regex
+- [ ] record time of interaction
 - [ ] ticket time is time of last interaction
 - [ ] watch out for require_relative and target version
 - [ ] store provider/consumer label
