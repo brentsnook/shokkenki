@@ -8,11 +8,13 @@ describe 'A consumer', :shokkenki_consumer => {:name => :my_consumer} do
       config.ticket_location = ENV['ticket_directory']
     end
 
-    shokkenki.provider(:my_provider).
-      during('a greeting').
+    shokkenki.order do
+      provider :my_provider
+      during 'a greeting'
       requested_with(
         :method => :get, :path => '/greeting'
       )
+    end
   end
 
   it 'runs successfully' do

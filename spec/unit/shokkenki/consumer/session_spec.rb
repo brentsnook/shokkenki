@@ -12,7 +12,11 @@ describe Shokkenki::Consumer::Session do
     expect(Shokkenki::Consumer::Session.singleton).to_not be_nil
   end
 
-  context 'provider' do
+  it 'includes the session DSL' do
+    expect(subject).to respond_to(:order)
+  end
+
+  describe 'provider' do
 
     before do
       subject.current_consumer = {:name => :consumertron}

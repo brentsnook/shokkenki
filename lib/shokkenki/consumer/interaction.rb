@@ -5,20 +5,14 @@ module Shokkenki
   module Consumer
     class Interaction
 
-      attr_reader :label, :request, :response
+      attr_reader :label, :request, :response, :time
 
       def initialize attributes
         @label = attributes[:label]
+        @request = attributes[:request]
+        @response = attributes[:response]
+        @time = Time.now
       end
-
-      def requested_with request_attributes
-        @request = Shokkenki::Consumer::Request.new request_attributes
-      end
-
-      def responds_with response_attributes
-        @response = Shokkenki::Consumer::Response.new response_attributes
-      end
-
     end
   end
 end

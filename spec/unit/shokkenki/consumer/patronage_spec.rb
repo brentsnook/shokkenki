@@ -3,11 +3,12 @@ require 'shokkenki/consumer/ticket'
 require 'shokkenki/consumer/patronage'
 
 describe Shokkenki::Consumer::Patronage do
+
+  let(:consumer) { double 'consumer' }
+  subject { Shokkenki::Consumer::Patronage.new :name => :providertron, :consumer => consumer}
+
   context 'when created' do
-
-    let(:consumer) { double 'consumer' }
-
-    subject { Shokkenki::Consumer::Patronage.new :name => :Providertron, :consumer => consumer}
+    subject { Shokkenki::Consumer::Patronage.new :name => :PROvidertron, :consumer => consumer}
 
     it 'simplifies the provider name it is given' do
       expect(subject.name). to eq(:providertron)
@@ -18,23 +19,23 @@ describe Shokkenki::Consumer::Patronage do
     end
   end
 
-  context 'during' do
+  context 'adding an interaction' do
 
-    subject { Shokkenki::Consumer::Patronage.new :name => :providertron, :consumer => double('consumer')}
+    let(:interaction) { double 'interaction' }
 
-    it 'starts a new interaction with the given label' do
-      expect(subject.during('an awesome interaction').label).to eq('an awesome interaction')
+    before do
+      subject.add_interaction interaction
     end
 
-    it 'doesnt allow duplicate interactions'
+    it 'adds an interaction to the list for this patronage' do
+      expect(subject.interactions).to include(interaction)
+    end
   end
 
   describe 'ticket' do
 
-    let(:consumer) { double 'consumer', :name => :consumertron }
-    subject { Shokkenki::Consumer::Patronage.new :name => :providertron, :consumer => consumer}
-
     before do
+      allow(consumer).to receive(:name).and_return(:consumertron)
       allow(Shokkenki::Consumer::Ticket).to receive(:new)
       subject.ticket
     end

@@ -1,11 +1,13 @@
 require 'shokkenki/consumer/consumer_role'
 require 'shokkenki/shokkenki'
 require 'shokkenki/consumer/simplification'
+require 'shokkenki/consumer/dsl/session'
 
 module Shokkenki
   module Consumer
     class Session
       include Shokkenki::Consumer::Simplification
+      include Shokkenki::Consumer::DSL::Session
 
       attr_reader :consumers, :current_consumer
 

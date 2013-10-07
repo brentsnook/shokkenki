@@ -1,7 +1,16 @@
 ## Consumer
-- [ ] add interactions
-- [ ] use matchers for all request parameters
-  - Define special match method for String and Regex
+- [ ] rename session.provider to patronage_for
+- [ ] add Response
+- [ ] Introduce Terms
+  - StringTerm
+  - RegexTerm
+  - Open up Regex, Symbol and String and provide to_shokkenki_term method
+- [ ] Add interaction to ticket
+  - Add to_json to terms
+     - {
+       'type' => 'string',
+       'value' => 'hello'
+     }
 - [ ] record time of interaction
 - [ ] ticket time is time of last interaction
 - [ ] watch out for require_relative and target version
@@ -11,9 +20,11 @@
 - [ ] add support for givens (existing provider state)
 - [ ] check runtime ruby versions
 - [ ] make sure examples work
+- [ ] better name for 'order' ?
 
 ## Server Producer Stubbing
 
+- separate parsing, interpretation and matching of interactions from actual stubbing - allow this logic to be used from stub server or from webmock
 - [ ] look at Faraday - does it provide a mock server that can be used?
 - [ ] stub server starts as part of all spec runs
 - [ ] stub server starts as part of specs tagged with shokkenki (shokkenki-contract?)
