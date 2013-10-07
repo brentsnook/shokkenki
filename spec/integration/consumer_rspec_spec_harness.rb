@@ -14,6 +14,9 @@ describe 'A consumer', :shokkenki_consumer => {:name => :my_consumer} do
       requested_with(
         :method => :get, :path => '/greeting'
       )
+      responds_with(
+        :body => /hello/
+      )
     end
   end
 

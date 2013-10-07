@@ -2,8 +2,10 @@ module Shokkenki
   module Consumer
     class Response
 
-      def initialize attributes
+      attr_reader :body
 
+      def initialize attributes
+        @body = attributes[:body] if attributes
       end
 
     end

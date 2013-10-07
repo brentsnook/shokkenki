@@ -10,16 +10,16 @@
        'type' => 'string',
        'value' => 'hello'
      }
-- [ ] record time of interaction
+- [ ] add requests and responses to ticket
 - [ ] ticket time is time of last interaction
-- [ ] watch out for require_relative and target version
 - [ ] store provider/consumer label
-- [ ] pull more out into separate DSL definition?
 
 - [ ] add support for givens (existing provider state)
+
 - [ ] check runtime ruby versions
-- [ ] make sure examples work
-- [ ] better name for 'order' ?
+- [ ] update examples and ensure that they work
+- [ ] better name for 'shokkenki.order' ?
+- [ ] watch out for require_relative and target version
 
 ## Server Producer Stubbing
 
