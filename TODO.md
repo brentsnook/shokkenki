@@ -1,5 +1,4 @@
 ## Consumer
-- store provider/consumer label [ ]
 - Introduce Terms [ ][ ][ ]
   - StringTerm
   - RegexTerm
