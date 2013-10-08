@@ -1,5 +1,4 @@
 require 'shokkenki/consumer/session'
-require 'shokkenki/consumer/consumer_role'
 
 module Shokkenki
   module Consumer

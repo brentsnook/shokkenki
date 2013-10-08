@@ -1,6 +1,6 @@
 require_relative '../../spec_helper'
 require 'shokkenki/consumer/session'
-require 'shokkenki/consumer/consumer_role'
+require 'shokkenki/consumer/role'
 
 describe Shokkenki::Consumer::Session do
 
@@ -14,15 +14,47 @@ describe Shokkenki::Consumer::Session do
     expect(subject).to respond_to(:order)
   end
 
+  describe 'provider' do
+    it 'is always the same when requested by name' do
+      provider = subject.provider(:name => :providertron)
+      expect(subject.provider(:name => :providertron)).to be(provider)
+    end
+
+    it 'is stored and retrieved using a simplified name' do
+      provider = subject.provider(:name => :PROvidertron)
+      expect(subject.provider(:name => :providertron)).to be(provider)
+    end
+  end
+
+  describe 'consumer' do
+
+    it 'is always the same when requested by name' do
+      consumer = subject.consumer(:name => :consumertron)
+      expect(subject.consumer(:name => :consumertron)).to be(consumer)
+    end
+
+    it 'is stored and retrieved using a simplified name' do
+      consumer = subject.consumer(:name => :CONsumertron)
+      expect(subject.consumer(:name => :consumertron)).to be(consumer)
+    end
+  end
+
   describe 'current patronage' do
 
     before do
       subject.current_consumer = {:name => :consumertron}
     end
 
-    it "is the current consumer's patronage of the given provider" do
-      expect(subject.current_patronage_for(:providertron)).to be(subject.current_consumer.patronage(:providertron))
+    let(:patronage) { subject.current_patronage_for(:providertron) }
+
+    it 'is for the current consumer' do
+      expect(patronage.consumer.name).to eq(:consumertron)
     end
+
+    it 'is of the given provider' do
+      expect(patronage.provider.name).to eq(:providertron)
+    end
+
   end
 
   context 'setting the current consumer' do
@@ -30,28 +62,24 @@ describe Shokkenki::Consumer::Session do
       let(:new_consumer) { double 'new consumer' }
 
       before do
-        allow(Shokkenki::Consumer::ConsumerRole).to receive(:new).and_return(new_consumer)
+        allow(Shokkenki::Consumer::Role).to receive(:new).and_return(new_consumer)
         subject.current_consumer = {:name => :consumertron}
       end
 
       it 'creates a new consumer with that name' do
-        expect(Shokkenki::Consumer::ConsumerRole).to have_received(:new).with hash_including(:name => :consumertron)
+        expect(Shokkenki::Consumer::Role).to have_received(:new).with hash_including(:name => :consumertron)
       end
 
       it 'registers the consumer' do
-        expect(subject.consumers[:consumertron]).to be(new_consumer)
+        expect(subject.consumer(:name => :consumertron)).to be(new_consumer)
       end
 
     end
 
     context 'when a consumer with that name is already registered' do
 
-      let(:existing_consumer) { double 'existing consumer' }
-
-      before do
-        subject.consumers[:consumertron] = existing_consumer
-        subject.current_consumer = {:name => :consumertron }
-      end
+      let(:existing_consumer) { subject.consumer(:name => :consumertron) }
+      before { subject.current_consumer = {:name => :consumertron} }
 
       it 'uses the existing consumer' do
         expect(subject.current_consumer).to be(existing_consumer)
@@ -59,15 +87,6 @@ describe Shokkenki::Consumer::Session do
 
     end
 
-    context 'when registering a consumer' do
-      before do
-        subject.current_consumer = {:name => :CONsumertron}
-      end
-
-      it 'simplfies the consumer name' do
-        expect(subject.consumers[:consumertron]).to_not be_nil
-      end
-    end
   end
 
   context 'printing tickets' do
@@ -81,8 +100,8 @@ describe Shokkenki::Consumer::Session do
     end
 
     before do
-      subject.consumers.merge!({
-        :consumer => double('consumer', :tickets => [ticket])
+      subject.patronages.merge!({
+         :key => double('patronage', :ticket => ticket)
       })
       allow(File).to receive(:open).and_yield file
       allow(Shokkenki.configuration).to receive(:ticket_location).and_return 'ticket_dir'

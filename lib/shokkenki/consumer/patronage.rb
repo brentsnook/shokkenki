@@ -1,16 +1,14 @@
 require 'shokkenki/consumer/ticket'
 require 'shokkenki/consumer/interaction'
-require 'shokkenki/consumer/simplification'
 
 module Shokkenki
   module Consumer
     class Patronage
-      include Shokkenki::Consumer::Simplification
 
-      attr_reader :name, :consumer, :interactions
+      attr_reader :provider, :consumer, :interactions
 
       def initialize attributes
-        @name = simplify(attributes[:name])
+        @provider = attributes[:provider]
         @consumer = attributes[:consumer]
         @interactions = []
       end
@@ -21,8 +19,8 @@ module Shokkenki
 
       def ticket
         Ticket.new(
-          :consumer => @consumer.name,
-          :provider => @name,
+          :consumer => @consumer,
+          :provider => @provider,
           :interactions => @interactions
         )
       end

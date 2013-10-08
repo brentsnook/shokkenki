@@ -7,6 +7,8 @@ describe Shokkenki::Consumer::Ticket do
 
   let(:interaction) { double('interaction') }
   let(:time) { Time.now }
+  let(:consumer) { double 'consumer' }
+  let(:provider) { double 'provider' }
 
   before do
     stub_const('Shokkenki::Version::STRING', '99.9')
@@ -14,8 +16,8 @@ describe Shokkenki::Consumer::Ticket do
 
   subject do
     Shokkenki::Consumer::Ticket.new(
-      :provider => 'providertron',
-      :consumer => 'consumertron',
+      :provider => provider,
+      :consumer => consumer,
       :interactions => [interaction]
     )
   end
@@ -23,11 +25,11 @@ describe Shokkenki::Consumer::Ticket do
   context 'when created' do
 
     it 'has the consumer it is given' do
-      expect(subject.consumer).to eq('consumertron')
+      expect(subject.consumer).to be(consumer)
     end
 
     it 'has the provider it is given' do
-      expect(subject.provider).to eq('providertron')
+      expect(subject.provider).to be(provider)
     end
 
     it 'has the interactions it is given' do
@@ -37,6 +39,11 @@ describe Shokkenki::Consumer::Ticket do
   end
 
   describe 'filename' do
+
+    before do
+      allow(consumer).to receive(:name).and_return('consumertron')
+      allow(provider).to receive(:name).and_return('providertron')
+    end
 
     it 'contains the consumer and provider names' do
       expect(subject.filename).to match(/consumertron-providertron/)
@@ -51,6 +58,8 @@ describe Shokkenki::Consumer::Ticket do
 
     before do
       allow(interaction).to receive(:to_hash).and_return({:interaction => :json})
+      allow(consumer).to receive(:to_hash).and_return({:name => 'consumertron'})
+      allow(provider).to receive(:to_hash).and_return({:name => 'providertron'})
     end
 
     let(:json) { JSON.parse subject.to_json }

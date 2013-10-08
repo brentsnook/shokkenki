@@ -1,5 +1,6 @@
-require 'shokkenki/consumer/consumer_role'
 require 'shokkenki/shokkenki'
+require 'shokkenki/consumer/role'
+require 'shokkenki/consumer/patronage'
 require 'shokkenki/consumer/simplification'
 require 'shokkenki/consumer/dsl/session'
 
@@ -9,10 +10,12 @@ module Shokkenki
       include Shokkenki::Consumer::Simplification
       include Shokkenki::Consumer::DSL::Session
 
-      attr_reader :consumers, :current_consumer
+      attr_reader :current_consumer, :patronages
 
       def initialize
         @consumers = {}
+        @providers = {}
+        @patronages = {}
       end
 
       def self.singleton
@@ -20,21 +23,28 @@ module Shokkenki
       end
 
       def current_patronage_for provider_name
-        @current_consumer.patronage provider_name
+        consumer = @current_consumer
+        provider = provider(:name => provider_name)
+        key = { consumer => provider }
+        @patronages[key] ||= Shokkenki::Consumer::Patronage.new :consumer => consumer, :provider => provider
       end
 
-      def current_consumer= consumer_attributes
-        name = simplify(consumer_attributes[:name])
-        @consumers[name] ||= Shokkenki::Consumer::ConsumerRole.new consumer_attributes
-        @current_consumer = @consumers[name]
+      def provider attributes
+        name = simplify(attributes[:name])
+        @providers[name] ||= Shokkenki::Consumer::Role.new attributes
       end
 
-      def tickets
-        @consumers.values.collect(&:tickets).flatten
+      def consumer attributes
+        name = simplify(attributes[:name])
+        @consumers[name] ||= Shokkenki::Consumer::Role.new attributes
+      end
+
+      def current_consumer= attributes
+        @current_consumer = consumer attributes
       end
 
       def print_tickets
-        tickets.each do |ticket|
+        @patronages.values.collect(&:ticket).each do |ticket|
           ticket_path = File.expand_path(File.join(Shokkenki.configuration.ticket_location, ticket.filename))
           File.open(ticket_path, 'w') { |file| file.write(ticket.to_json) }
         end

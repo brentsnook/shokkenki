@@ -16,17 +16,13 @@ module Shokkenki
       end
 
       def filename
-        "#{@consumer}-#{@provider}.json"
+        "#{@consumer.name}-#{@provider.name}.json"
       end
 
       def to_hash
         {
-          :consumer => {
-            :name => @consumer
-          },
-          :provider => {
-            :name => @provider
-          },
+          :consumer => @consumer.to_hash,
+          :provider => @provider.to_hash,
           :interactions => @interactions.collect(&:to_hash),
           :version => @version
         }
