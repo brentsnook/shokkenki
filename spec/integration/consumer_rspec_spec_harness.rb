@@ -12,7 +12,7 @@ describe 'A consumer', :shokkenki_consumer => {:name => :my_consumer} do
       provider :my_provider
       during 'a greeting'
       requested_with(
-        :method => :get, :path => '/greeting'
+        :path => '/greeting'
       )
       responds_with(
         :body => /hello/

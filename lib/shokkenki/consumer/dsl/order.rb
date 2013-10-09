@@ -23,11 +23,18 @@ module Shokkenki
           @response_details = details
         end
 
+        def validate!
+          raise "No 'provider' has been specified." unless @provider_name
+          raise "No 'during' has been specified." unless @interaction_label
+          raise "No 'requested_with' has been specified." unless @request_details
+          raise "No 'responds_with' has been specified." unless @response_details
+        end
+
         def to_interaction
           Shokkenki::Consumer::Interaction.new(
             :label => @interaction_label,
-            :request => Shokkenki::Consumer::Request.new(@request_details),
-            :response => Shokkenki::Consumer::Response.new(@response_details)
+            :request => @request_details.to_shokkenki_term,
+            :response => @response_details.to_shokkenki_term
           )
         end
       end

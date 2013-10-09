@@ -1,6 +1,3 @@
-require 'shokkenki/consumer/request'
-require 'shokkenki/consumer/response'
-
 module Shokkenki
   module Consumer
     class Interaction

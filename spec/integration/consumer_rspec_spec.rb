@@ -27,6 +27,43 @@ describe 'A consumer rspec spec' do
       it 'includes the provider name' do
         expect(ticket['provider']['name']).to eq('my_provider')
       end
+
+      describe 'interaction' do
+
+        let(:interaction) { ticket['interactions'].first }
+
+        it 'includes the label' do
+          expect(interaction['label']).to eq('a greeting')
+        end
+
+        it 'includes the request term' do
+          expect(interaction['request']).to(include(
+            {
+              'type' => 'and_expression',
+              'values' => {
+                'path' => {
+                  'type' => 'string',
+                  'value' => '/greeting'
+                }
+              }
+            }
+          ))
+        end
+
+        it 'includes the response term' do
+          expect(interaction['response']).to(include(
+            {
+              'type' => 'and_expression',
+              'values' => {
+                'body' => {
+                  'type' => 'regexp',
+                  'value' => '(?-mix:hello)'
+                }
+              }
+            }
+          ))
+        end
+      end
     end
   end
 end

@@ -30,6 +30,10 @@ describe Shokkenki::Consumer::DSL::Session do
       expect(order).to have_received(:set_some_details)
     end
 
+    it 'validates the order' do
+      expect(order).to have_received(:validate!)
+    end
+
     it 'creates a new interaction for the patronage of the named provider and current consumer' do
       expect(patronage).to have_received(:add_interaction).with interaction
     end

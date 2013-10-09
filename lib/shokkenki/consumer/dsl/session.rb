@@ -7,6 +7,7 @@ module Shokkenki
         def order &block
           order = Shokkenki::Consumer::DSL::Order.new
           order.instance_eval &block
+          order.validate!
           current_patronage_for(order.provider_name).add_interaction order.to_interaction
         end
       end

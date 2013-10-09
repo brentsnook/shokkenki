@@ -1,8 +1,6 @@
 require_relative '../../spec_helper'
 require 'timecop'
 require 'shokkenki/consumer/interaction'
-require 'shokkenki/consumer/request'
-require 'shokkenki/consumer/response'
 
 describe Shokkenki::Consumer::Interaction do
 
