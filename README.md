@@ -6,7 +6,7 @@ Consumer tests can express a contract as a series of HTTP interactions that can 
 
 Shokkenki is based on [pact](https://github.com/uglyog/pact) and would not exist without the hard work of all of the contributors of that project.
 
-<img src="http://commons.wikimedia.org/wiki/File:Under_contruction_icon-red.svg?raw=true" width="150px" height="125px" text-align="left"/>
+![Under construction](/Under_contruction_icon-red.svg.png "Under construction")
 
 ## Still under construction!
 
