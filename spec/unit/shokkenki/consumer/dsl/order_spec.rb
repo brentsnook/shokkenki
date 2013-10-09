@@ -1,6 +1,6 @@
 require_relative '../../../spec_helper'
 require 'shokkenki/consumer/dsl/order'
-require 'shokkenki/consumer/interaction'
+require 'shokkenki/consumer/model/interaction'
 
 describe Shokkenki::Consumer::DSL::Order do
 
@@ -16,7 +16,7 @@ describe Shokkenki::Consumer::DSL::Order do
   end
 
   before do
-    allow(Shokkenki::Consumer::Interaction).to receive(:new)
+    allow(Shokkenki::Consumer::Model::Interaction).to receive(:new)
   end
 
   context 'provider' do
@@ -36,7 +36,7 @@ describe Shokkenki::Consumer::DSL::Order do
     end
 
     it 'defines the label of the interaction' do
-      expect(Shokkenki::Consumer::Interaction).to have_received(:new).with(hash_including(:label => 'my label'))
+      expect(Shokkenki::Consumer::Model::Interaction).to have_received(:new).with(hash_including(:label => 'my label'))
     end
   end
 
@@ -50,7 +50,7 @@ describe Shokkenki::Consumer::DSL::Order do
     end
 
     it 'defines the request of the interaction using a term' do
-      expect(Shokkenki::Consumer::Interaction).to have_received(:new).with(hash_including(:request => request_term))
+      expect(Shokkenki::Consumer::Model::Interaction).to have_received(:new).with(hash_including(:request => request_term))
     end
 
   end
@@ -65,7 +65,7 @@ describe Shokkenki::Consumer::DSL::Order do
     end
 
     it 'defines the response of the interaction using a term' do
-      expect(Shokkenki::Consumer::Interaction).to have_received(:new).with(hash_including(:response => response_term))
+      expect(Shokkenki::Consumer::Model::Interaction).to have_received(:new).with(hash_including(:response => response_term))
     end
   end
 

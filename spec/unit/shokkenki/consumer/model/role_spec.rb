@@ -1,10 +1,10 @@
-require_relative '../../spec_helper'
-require 'shokkenki/consumer/role'
+require_relative '../../../spec_helper'
+require 'shokkenki/consumer/model/role'
 
-describe Shokkenki::Consumer::Role do
+describe Shokkenki::Consumer::Model::Role do
   context 'when created' do
 
-    subject { Shokkenki::Consumer::Role.new :name => :ROLenaMe}
+    subject { Shokkenki::Consumer::Model::Role.new :name => :ROLenaMe}
 
     it 'simplifies the name it is given' do
       expect(subject.name).to eq(:rolename)
@@ -12,7 +12,7 @@ describe Shokkenki::Consumer::Role do
 
     context 'when a label is supplied' do
 
-      subject { Shokkenki::Consumer::Role.new :name => :name, :label => 'Pretty Name' }
+      subject { Shokkenki::Consumer::Model::Role.new :name => :name, :label => 'Pretty Name' }
 
       it 'uses the label it is given' do
         expect(subject.label).to eq('Pretty Name')
@@ -22,7 +22,7 @@ describe Shokkenki::Consumer::Role do
 
     context 'when no label is supplied' do
 
-      subject { Shokkenki::Consumer::Role.new :name => :some_name }
+      subject { Shokkenki::Consumer::Model::Role.new :name => :some_name }
 
       it 'prettifies the name and uses that as the label' do
         expect(subject.label).to eq('Some Name')
@@ -34,7 +34,7 @@ describe Shokkenki::Consumer::Role do
 
   context 'as a hash' do
 
-    subject { Shokkenki::Consumer::Role.new :name => :rolename, :label => 'label' }
+    subject { Shokkenki::Consumer::Model::Role.new :name => :rolename, :label => 'label' }
 
     it 'includes the name' do
       expect(subject.to_hash[:name]).to eq(:rolename)

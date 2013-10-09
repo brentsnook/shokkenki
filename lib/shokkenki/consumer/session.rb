@@ -1,13 +1,13 @@
 require 'shokkenki/shokkenki'
-require 'shokkenki/consumer/role'
-require 'shokkenki/consumer/patronage'
-require 'shokkenki/consumer/simplification'
+require 'shokkenki/consumer/model/role'
+require 'shokkenki/consumer/model/patronage'
+require 'shokkenki/consumer/model/simplification'
 require 'shokkenki/consumer/dsl/session'
 
 module Shokkenki
   module Consumer
     class Session
-      include Shokkenki::Consumer::Simplification
+      include Shokkenki::Consumer::Model::Simplification
       include Shokkenki::Consumer::DSL::Session
 
       attr_reader :current_consumer, :patronages
@@ -26,17 +26,17 @@ module Shokkenki
         consumer = @current_consumer
         provider = provider(:name => provider_name)
         key = { consumer => provider }
-        @patronages[key] ||= Shokkenki::Consumer::Patronage.new :consumer => consumer, :provider => provider
+        @patronages[key] ||= Shokkenki::Consumer::Model::Patronage.new :consumer => consumer, :provider => provider
       end
 
       def provider attributes
         name = simplify(attributes[:name])
-        @providers[name] ||= Shokkenki::Consumer::Role.new attributes
+        @providers[name] ||= Shokkenki::Consumer::Model::Role.new attributes
       end
 
       def consumer attributes
         name = simplify(attributes[:name])
-        @consumers[name] ||= Shokkenki::Consumer::Role.new attributes
+        @consumers[name] ||= Shokkenki::Consumer::Model::Role.new attributes
       end
 
       def current_consumer= attributes

@@ -1,6 +1,6 @@
 require_relative '../../spec_helper'
 require 'shokkenki/consumer/session'
-require 'shokkenki/consumer/role'
+require 'shokkenki/consumer/model/role'
 
 describe Shokkenki::Consumer::Session do
 
@@ -62,12 +62,12 @@ describe Shokkenki::Consumer::Session do
       let(:new_consumer) { double 'new consumer' }
 
       before do
-        allow(Shokkenki::Consumer::Role).to receive(:new).and_return(new_consumer)
+        allow(Shokkenki::Consumer::Model::Role).to receive(:new).and_return(new_consumer)
         subject.current_consumer = {:name => :consumertron}
       end
 
       it 'creates a new consumer with that name' do
-        expect(Shokkenki::Consumer::Role).to have_received(:new).with hash_including(:name => :consumertron)
+        expect(Shokkenki::Consumer::Model::Role).to have_received(:new).with hash_including(:name => :consumertron)
       end
 
       it 'registers the consumer' do

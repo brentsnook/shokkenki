@@ -1,8 +1,8 @@
-require_relative '../../spec_helper'
-require 'shokkenki/consumer/simplification'
+require_relative '../../../spec_helper'
+require 'shokkenki/consumer/model/simplification'
 
-describe Shokkenki::Consumer::Simplification do
-  include Shokkenki::Consumer::Simplification
+describe Shokkenki::Consumer::Model::Simplification do
+  include Shokkenki::Consumer::Model::Simplification
 
   context 'when there is no name' do
     it 'does nothing' do

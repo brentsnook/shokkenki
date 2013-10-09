@@ -1,9 +1,9 @@
-require_relative '../../spec_helper'
-require 'shokkenki/consumer/ticket'
+require_relative '../../../spec_helper'
+require 'shokkenki/consumer/model/ticket'
 require 'json'
 require 'shokkenki/version'
 
-describe Shokkenki::Consumer::Ticket do
+describe Shokkenki::Consumer::Model::Ticket do
 
   let(:interaction) { double('interaction') }
   let(:time) { Time.now }
@@ -15,7 +15,7 @@ describe Shokkenki::Consumer::Ticket do
   end
 
   subject do
-    Shokkenki::Consumer::Ticket.new(
+    Shokkenki::Consumer::Model::Ticket.new(
       :provider => provider,
       :consumer => consumer,
       :interactions => [interaction]

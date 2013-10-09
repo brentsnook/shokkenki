@@ -1,4 +1,4 @@
-require 'shokkenki/consumer/interaction'
+require 'shokkenki/consumer/model/interaction'
 
 module Shokkenki
   module Consumer
@@ -31,7 +31,7 @@ module Shokkenki
         end
 
         def to_interaction
-          Shokkenki::Consumer::Interaction.new(
+          Shokkenki::Consumer::Model::Interaction.new(
             :label => @interaction_label,
             :request => @request_details.to_shokkenki_term,
             :response => @response_details.to_shokkenki_term

@@ -1,8 +1,8 @@
-require_relative '../../spec_helper'
+require_relative '../../../spec_helper'
 require 'timecop'
-require 'shokkenki/consumer/interaction'
+require 'shokkenki/consumer/model/interaction'
 
-describe Shokkenki::Consumer::Interaction do
+describe Shokkenki::Consumer::Model::Interaction do
 
   context 'when created' do
 
@@ -12,7 +12,7 @@ describe Shokkenki::Consumer::Interaction do
 
     subject do
       Timecop.freeze(current_time) do
-        Shokkenki::Consumer::Interaction.new(
+        Shokkenki::Consumer::Model::Interaction.new(
           :label => 'interaction label',
           :request => request,
           :response => response
@@ -44,7 +44,7 @@ describe Shokkenki::Consumer::Interaction do
 
     subject do
       Timecop.freeze(current_time) do
-        Shokkenki::Consumer::Interaction.new(
+        Shokkenki::Consumer::Model::Interaction.new(
           :label => 'interaction label',
           :request => request,
           :response => response
