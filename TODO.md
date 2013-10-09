@@ -1,16 +1,11 @@
 ## Consumer
-- Introduce Terms [ ][ ][ ]
-  - StringTerm
-  - RegexTerm
-  - Open up Regex, Symbol and String and provide to_shokkenki_term method
-- Make request and response free-form lists of headers + body [ ][ ]
 - add support for givens (existing provider state) [ ][ ][ ][ ]
 
-- error handling for missing requests/responses etc [ ][ ]
 - check runtime ruby versions [ ]
 - update examples and ensure that they work [ ]
 - better name for 'shokkenki.order' ?
 - watch out for require_relative and target version
+- better end to end coverage around tickets?
 
 ## Server Producer Stubbing
 
@@ -31,6 +26,12 @@
 - nice syntax highlighting in results [ ][ ][ ]
 - Rake task [ ]
 - add support for implementing givens [ ][ ][ ]
+
+## Tidy Up
+
+- document terms
+  - regex terms uses ruby standard for regex
+- release
 
 ## Webmock Producer Stubbing
 
