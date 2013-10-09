@@ -1,12 +1,3 @@
-## Consumer
-- add support for givens (existing provider state) [ ][ ][ ][ ]
-
-- check runtime ruby versions [ ]
-- update examples and ensure that they work [ ]
-- better name for 'shokkenki.order' ?
-- watch out for require_relative and target version
-- better end to end coverage around tickets?
-
 ## Server Producer Stubbing
 
 - separate parsing, interpretation and matching of interactions from actual stubbing - allow this logic to be used from stub server or from webmock
@@ -29,9 +20,22 @@
 
 ## Tidy Up
 
+- check runtime ruby versions [ ]
+- update examples and ensure that they work [ ]
+- better name for 'shokkenki.order' ?
+- watch out for require_relative and target version
+- better end to end coverage around tickets?
 - document terms
   - regex terms uses ruby standard for regex
 - release
+
+## Given State Support
+
+- add consumer support to generate givens in ticket:
+  - given('there is an apple', :colour => 'red')
+- add producer support to recognise givens
+  - fail if state is not recognised
+  - otherwise set state up before running specs
 
 ## Webmock Producer Stubbing
 
