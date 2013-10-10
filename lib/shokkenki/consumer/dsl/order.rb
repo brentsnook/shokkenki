@@ -9,18 +9,22 @@ module Shokkenki
 
         def provider provider_name
           @provider_name = provider_name
+          self
         end
 
         def during label
           @interaction_label = label
+          self
         end
 
         def requested_with details
           @request_details = details
+          self
         end
 
         def responds_with details
           @response_details = details
+          self
         end
 
         def validate!

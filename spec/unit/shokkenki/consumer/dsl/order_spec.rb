@@ -20,23 +20,27 @@ describe Shokkenki::Consumer::DSL::Order do
   end
 
   context 'provider' do
-    before do
-      subject.provider :providertron
-    end
+    let(:order_with_provider) { subject.provider :providertron }
 
     it 'defines the provider that is being interacted with' do
-      expect(subject.provider_name).to eq(:providertron)
+      expect(order_with_provider.provider_name).to eq(:providertron)
+    end
+
+    it 'allows order calls to be chained' do
+      expect(order_with_provider).to be(subject)
     end
   end
 
   context 'during' do
-    before do
-      subject.during 'my label'
-      subject.to_interaction
-    end
+    let(:order_with_label) { subject.during 'my label' }
 
     it 'defines the label of the interaction' do
+      order_with_label.to_interaction
       expect(Shokkenki::Consumer::Model::Interaction).to have_received(:new).with(hash_including(:label => 'my label'))
+    end
+
+    it 'allows order calls to be chained' do
+      expect(order_with_label).to be(subject)
     end
   end
 
@@ -44,28 +48,39 @@ describe Shokkenki::Consumer::DSL::Order do
 
     let(:request_term) { double 'request term' }
 
+    let(:order_with_request) { subject.requested_with request_attributes }
+
     before do
       allow(request_attributes).to receive(:to_shokkenki_term).and_return request_term
-      subject.to_interaction
     end
 
     it 'defines the request of the interaction using a term' do
+      order_with_request.to_interaction
       expect(Shokkenki::Consumer::Model::Interaction).to have_received(:new).with(hash_including(:request => request_term))
     end
 
+    it 'allows order calls to be chained' do
+      expect(order_with_request).to be(subject)
+    end
   end
 
   context 'responds with' do
 
     let(:response_term) { double 'response term' }
 
+    let(:order_with_response) { subject.responds_with response_attributes }
+
     before do
       allow(response_attributes).to receive(:to_shokkenki_term).and_return response_term
-      subject.to_interaction
     end
 
     it 'defines the response of the interaction using a term' do
+      order_with_response.to_interaction
       expect(Shokkenki::Consumer::Model::Interaction).to have_received(:new).with(hash_including(:response => response_term))
+    end
+
+    it 'allows order calls to be chained' do
+      expect(order_with_response).to be(subject)
     end
   end
 
