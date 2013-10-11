@@ -1,7 +1,5 @@
 ## Server Producer Stubbing - ConsumerEnd
 
-- add stub method to provider, stubs the interaction on the provider's stubber
-- introduce NullStubber - responds to calls and prints warning, default for provider
 - add rspec config to remove interactions on all provider stubs before shokkenki consumer spec
 - add rspec config to start Session
 - Implement Session start
