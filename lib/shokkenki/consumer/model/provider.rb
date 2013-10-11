@@ -16,6 +16,10 @@ module Shokkenki
         def stub_interaction interaction
           @stubber.stub_interaction interaction
         end
+
+        def clear_interaction_stubs
+          @stubber.clear_interaction_stubs
+        end
       end
     end
   end

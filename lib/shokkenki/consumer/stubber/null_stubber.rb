@@ -6,6 +6,10 @@ module Shokkenki
           warn
         end
 
+        def clear_interaction_stubs
+          warn
+        end
+
         private
 
         def warn

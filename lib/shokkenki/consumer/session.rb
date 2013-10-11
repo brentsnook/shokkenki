@@ -46,6 +46,10 @@ module Shokkenki
         @current_consumer = consumer attributes
       end
 
+      def clear_interaction_stubs
+        @providers.values.each { |p| p.clear_interaction_stubs }
+      end
+
       def print_tickets
         @patronages.values.collect(&:ticket).each do |ticket|
           ticket_path = File.expand_path(File.join(configuration.ticket_location, ticket.filename))

@@ -8,6 +8,7 @@ RSpec.configure do |config|
 
   config.before(:each, :shokkenki_consumer => lambda{ |x| true }) do
     Shokkenki.consumer.current_consumer = example.metadata[:shokkenki_consumer]
+    Shokkenki.consumer.clear_interaction_stubs
   end
 
   config.after(:suite) { Shokkenki.consumer.print_tickets }

@@ -112,6 +112,19 @@ describe Shokkenki::Consumer::Session do
 
   end
 
+  context 'clearing interaction stubs' do
+
+    let(:provider) { subject.provider(:name => :providertron) }
+    before do
+      allow(provider).to receive(:clear_interaction_stubs)
+      subject.clear_interaction_stubs
+    end
+
+    it 'clears the interaction stubs for each provider' do
+      expect(provider).to have_received(:clear_interaction_stubs)
+    end
+  end
+
   context 'printing tickets' do
 
     let(:file) { double('file').as_null_object }

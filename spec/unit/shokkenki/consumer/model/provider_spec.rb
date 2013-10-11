@@ -32,6 +32,7 @@ describe Shokkenki::Consumer::Model::Provider do
 
     end
   end
+
   context 'stubbing an interaction' do
 
     subject { Shokkenki::Consumer::Model::Provider.new(:stubber => stubber) }
@@ -44,6 +45,19 @@ describe Shokkenki::Consumer::Model::Provider do
 
     it 'uses its stubber' do
       expect(stubber).to have_received(:stub_interaction).with(interaction)
+    end
+  end
+
+  context 'clearing interaction stubs' do
+
+    subject { Shokkenki::Consumer::Model::Provider.new(:stubber => stubber) }
+
+    before do
+      subject.clear_interaction_stubs
+    end
+
+    it 'clears interaction stubs on its stubber' do
+      expect(stubber).to have_received(:clear_interaction_stubs)
     end
   end
 end

@@ -1,18 +1,12 @@
 ## Server Producer Stubbing - ConsumerEnd
 
-- add rspec config to remove interactions on all provider stubs before shokkenki consumer spec
-- add rspec config to start Session
-- Implement Session start
-  - notifies all providers of session start - session_started
-  - provider in turn notifies stub
-- add rspec config to stop session
-  - notifies all providers of session stop, they notify stub
 - allow shokkenki config to configure provider:
   Shokkenki.consumer.configure do |c|
     c.provider(:my_provider).configure do |p|
       p.stub_using(:remote).on_port 1234
     end
   end
+
 - introduce RemoteStubber - created with an address and port, stubs by
  POST -> /shokkenki/interactions
  DELETE -> /shokkenki/interactions
@@ -21,6 +15,13 @@
 ## Provider Stub - Remote Server - shokkenki/provider-stub/remote
 
 - HOW WILL THE SERVER TELL THE REMOTE STUBBER ABOUT THE PORT?
+
+- add rspec config to start Session
+- Implement Session start
+  - notifies all providers of session start - session_started
+  - provider in turn notifies stub
+- add rspec config to stop session
+  - notifies all providers of session stop, they notify stub
 
 - Implement session_start - spawn server [ ][ ]
 - Implement session_stop - close down server [ ][ ]

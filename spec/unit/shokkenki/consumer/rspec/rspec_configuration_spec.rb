@@ -51,6 +51,10 @@ describe 'RSpec configuration' do
       expect(@filter_result).to be_true
     end
 
+    it 'clears interaction stubs in the session' do
+      expect(session).to have_received(:clear_interaction_stubs)
+    end
+
   end
 
   context 'after the test suite finishes' do
