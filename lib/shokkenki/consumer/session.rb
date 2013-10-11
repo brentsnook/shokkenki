@@ -1,5 +1,6 @@
 require 'shokkenki/shokkenki'
 require 'shokkenki/consumer/model/role'
+require 'shokkenki/consumer/model/provider'
 require 'shokkenki/consumer/model/patronage'
 require 'shokkenki/consumer/model/simplification'
 require 'shokkenki/consumer/dsl/session'
@@ -33,7 +34,7 @@ module Shokkenki
 
       def provider attributes
         name = simplify(attributes[:name])
-        @providers[name] ||= Shokkenki::Consumer::Model::Role.new attributes
+        @providers[name] ||= Shokkenki::Consumer::Model::Provider.new attributes
       end
 
       def consumer attributes

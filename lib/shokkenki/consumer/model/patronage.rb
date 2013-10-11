@@ -16,6 +16,7 @@ module Shokkenki
 
         def add_interaction interaction
           @interactions << interaction
+          @provider.stub_interaction interaction
         end
 
         def ticket

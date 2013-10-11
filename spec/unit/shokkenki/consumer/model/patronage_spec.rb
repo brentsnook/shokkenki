@@ -4,8 +4,8 @@ require 'shokkenki/consumer/model/patronage'
 
 describe Shokkenki::Consumer::Model::Patronage do
 
-  let(:consumer) { double 'consumer' }
-  let(:provider) { double 'provider' }
+  let(:consumer) { double('consumer').as_null_object }
+  let(:provider) { double('provider').as_null_object }
 
   subject { Shokkenki::Consumer::Model::Patronage.new :provider => provider, :consumer => consumer}
 
@@ -30,6 +30,10 @@ describe Shokkenki::Consumer::Model::Patronage do
 
     it 'adds an interaction to the list for this patronage' do
       expect(subject.interactions).to include(interaction)
+    end
+
+    it 'stubs the interaction on the provider' do
+      expect(provider).to have_received(:stub_interaction).with(interaction)
     end
   end
 
