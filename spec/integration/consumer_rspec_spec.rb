@@ -2,15 +2,16 @@ require_relative 'spec_helper'
 require 'json'
 require 'tmpdir'
 
-describe 'A consumer rspec spec' do
+# 'let' can't be used from before(:all)
+ticket_directory = Dir.mktmpdir 'shokkenki-integration-spec-tickets'
 
-  let(:ticket_directory) do
-    Dir.mktmpdir 'shokkenki-integration-spec-tickets'
-  end
+describe 'A consumer rspec spec' do
 
   context 'after a shokkenki consumer example is run' do
 
-    before do
+    # careful with before(:all)! note that this runs once for the entire group
+    # running the command each time is quite slow
+    before(:all) do
       run_spec 'spec/integration/consumer_rspec_spec_harness.rb', 'ticket_directory' => ticket_directory
     end
 
