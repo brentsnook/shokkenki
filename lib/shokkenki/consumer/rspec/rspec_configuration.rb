@@ -1,3 +1,4 @@
+require 'shokkenki/shokkenki'
 require 'shokkenki/consumer/rspec/example_group_binding'
 require 'rspec'
 
@@ -6,8 +7,8 @@ RSpec.configure do |config|
   config.include Shokkenki::Consumer::RSpec::ExampleGroupBinding
 
   config.before(:each, :shokkenki_consumer => lambda{ |x| true }) do
-    Shokkenki::Consumer::Session.singleton.current_consumer = example.metadata[:shokkenki_consumer]
+    Shokkenki.consumer.current_consumer = example.metadata[:shokkenki_consumer]
   end
 
-  config.after(:suite) { Shokkenki::Consumer::Session.singleton.print_tickets }
+  config.after(:suite) { Shokkenki.consumer.print_tickets }
 end

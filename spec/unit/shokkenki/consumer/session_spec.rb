@@ -4,14 +4,37 @@ require 'shokkenki/consumer/model/role'
 
 describe Shokkenki::Consumer::Session do
 
-  # testing frameworks like RSpec require a singleton to maintain state
-  # between hooks
-  it 'has a singleton to maintain state' do
-    expect(Shokkenki::Consumer::Session.singleton).to_not be_nil
-  end
-
   it 'includes the session DSL' do
     expect(subject).to respond_to(:order)
+  end
+
+  context 'being configured' do
+
+    let(:configuration) { double('configuration').as_null_object }
+
+    before do
+      allow(subject).to receive(:configuration).and_return configuration
+    end
+
+    context 'with directives' do
+      before do
+        subject.configure do |config|
+          config.some_directive 'some value'
+        end
+      end
+
+      it 'applies those to the configuration' do
+        expect(configuration).to have_received(:some_directive).with('some value')
+      end
+    end
+
+    context 'with no directives' do
+      before { subject.configure }
+
+      it 'applies nothing' do
+        expect(configuration).to_not have_received(anything)
+      end
+    end
   end
 
   describe 'provider' do
@@ -104,7 +127,7 @@ describe Shokkenki::Consumer::Session do
          :key => double('patronage', :ticket => ticket)
       })
       allow(File).to receive(:open).and_yield file
-      allow(Shokkenki.configuration).to receive(:ticket_location).and_return 'ticket_dir'
+      allow(subject.configuration).to receive(:ticket_location).and_return 'ticket_dir'
 
       subject.print_tickets
     end

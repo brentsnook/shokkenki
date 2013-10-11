@@ -1,6 +1,6 @@
 require_relative '../../../spec_helper'
 require 'shokkenki/consumer/rspec/example_group_binding'
-require 'shokkenki/consumer/session'
+require 'shokkenki/shokkenki'
 
 describe 'RSpec configuration' do
 
@@ -10,7 +10,7 @@ describe 'RSpec configuration' do
 
   before do
     allow(::RSpec).to receive(:configure).and_yield(config)
-    allow(Shokkenki::Consumer::Session).to receive(:singleton).and_return session
+    allow(Shokkenki).to receive(:consumer).and_return session
   end
 
   it 'treats symbols as keys to prepare for RSpec 3' do

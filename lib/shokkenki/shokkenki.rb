@@ -1,12 +1,9 @@
-require 'shokkenki/configuration'
+require 'shokkenki/consumer/session'
 
 module Shokkenki
 
-  def self.configuration
-    @configuration ||= Shokkenki::Configuration.new
+  def self.consumer
+    @consumer_session ||= Shokkenki::Consumer::Session.new
   end
 
-  def self.configure
-    yield configuration if block_given?
-  end
 end

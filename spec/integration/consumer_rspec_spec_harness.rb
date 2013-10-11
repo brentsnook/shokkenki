@@ -1,13 +1,13 @@
 require_relative 'harness_helper'
 require 'shokkenki/consumer/rspec'
 
+Shokkenki.consumer.configure do |config|
+  config.ticket_location = ENV['ticket_directory']
+end
+
 describe 'A consumer', :shokkenki_consumer => {:name => :my_consumer} do
 
   before do
-    Shokkenki.configure do |config|
-      config.ticket_location = ENV['ticket_directory']
-    end
-
     shokkenki.order do
       provider :my_provider
       during 'a greeting'

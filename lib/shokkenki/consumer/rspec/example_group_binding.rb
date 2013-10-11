@@ -1,11 +1,11 @@
-require 'shokkenki/consumer/session'
+require 'shokkenki/shokkenki'
 
 module Shokkenki
   module Consumer
     module RSpec
       module ExampleGroupBinding
         def shokkenki
-          Shokkenki::Consumer::Session.singleton
+          Shokkenki.consumer
         end
       end
     end
