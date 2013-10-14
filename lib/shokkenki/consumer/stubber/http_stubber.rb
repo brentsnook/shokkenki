@@ -1,18 +1,21 @@
 require 'httparty'
 require 'uri'
+require 'shokkenki/consumer/stubber/server'
+require 'find_a_port'
 
 module Shokkenki
   module Consumer
     module Stubber
       class HttpStubber
 
-        attr_reader :port, :host, :scheme, :interactions_path
+        attr_reader :port, :host, :scheme, :interactions_path, :server
 
         def initialize attributes
           @port = attributes[:port]
           @scheme = attributes[:scheme] || :http
           @host = attributes[:host] || 'localhost'
           @interactions_path = attributes[:interactions_path] || '/shokkenki/interactions'
+          @server = Shokkenki::Consumer::Stubber::Server.new
         end
 
         def stub_interaction interaction
@@ -30,6 +33,19 @@ module Shokkenki
 
         def successful? response
           (200 <= response.code) &&  (response.code < 300)
+        end
+
+        def session_started
+          # Find a port as late as possible to minimise the
+          # chance that it starts being used in between finding it
+          # and using it.
+          @port = FindAPort.available_port unless @port
+          @server.port = @port
+          @server.start
+        end
+
+        def session_closed
+          @server.shutdown
         end
 
         def interactions_uri

@@ -1,14 +1,3 @@
-## Server Producer Stubbing - ConsumerEnd
-
-- allow shokkenki config to configure provider:
-  Shokkenki.consumer.configure do |c|
-    c.provider(:my_provider).configure do |p|
-      p.stub_using(:remote).on_port 1234
-    end
-  end
-
-- register remote stubber
-
 ## Provider Stub - Remote Server - shokkenki/provider-stub/remote
 
 - add dummy Rack app that just logs requests

@@ -10,7 +10,7 @@ module Shokkenki
           @stubber_classes = stubber_classes
         end
 
-        def stub_with stubber_name, attributes
+        def stub_with stubber_name, attributes = {}
           stubber_class = @stubber_classes[stubber_name] || raise("No stubber found named '#{stubber_name}'.")
           @stubber = stubber_class.new attributes
         end

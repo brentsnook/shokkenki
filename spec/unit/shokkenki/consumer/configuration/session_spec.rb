@@ -13,8 +13,8 @@ describe Shokkenki::Consumer::Configuration::Session do
 
   describe 'stubber classes' do
     context 'by default' do
-      it 'stubs :remote with the HTTP stubber' do
-        expect(subject.stubber_classes).to include({ :remote => Shokkenki::Consumer::Stubber::HttpStubber })
+      it 'stubs :local_server with the HTTP stubber' do
+        expect(subject.stubber_classes).to include({ :local_server => Shokkenki::Consumer::Stubber::HttpStubber })
       end
     end
   end

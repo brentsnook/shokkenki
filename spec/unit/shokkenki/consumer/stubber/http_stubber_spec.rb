@@ -1,12 +1,13 @@
 require_relative '../../../spec_helper'
 require 'httparty'
 require 'shokkenki/consumer/stubber/http_stubber'
+require 'find_a_port'
 
 describe Shokkenki::Consumer::Stubber::HttpStubber do
 
   let(:interaction) { double('interaction').as_null_object }
-
   let(:interactions_uri) { 'http://stubby.com/interaction_path' }
+  let(:server) { double('server').as_null_object }
 
   subject do
     Shokkenki::Consumer::Stubber::HttpStubber.new({})
@@ -14,6 +15,7 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
 
   before do
     allow(interaction).to receive(:to_hash).and_return({:interaction => 'hash'})
+    allow(Shokkenki::Consumer::Stubber::Server).to receive(:new).and_return(server)
   end
 
   context 'when created' do
@@ -50,6 +52,9 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
         expect(subject.interactions_path).to eq('/interactions')
       end
 
+      it 'has a server' do
+        expect(subject.server).to be(server)
+      end
     end
 
     context 'with no scheme' do
@@ -163,5 +168,50 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
       end
     end
 
+  end
+
+  context 'when the session starts' do
+    context 'when a port has been supplied' do
+      subject do
+        Shokkenki::Consumer::Stubber::HttpStubber.new(:port => 1234)
+      end
+
+      before { subject.session_started }
+
+      it 'starts the server on the given port' do
+        expect(server).to have_received(:port=).with 1234
+        expect(server).to have_received(:start)
+      end
+    end
+
+    context 'when no port has been supplied' do
+
+      subject do
+        Shokkenki::Consumer::Stubber::HttpStubber.new(:port => nil)
+      end
+
+      before do
+        allow(FindAPort).to receive(:available_port).and_return 9999
+        subject.session_started
+      end
+
+      it 'starts the server on an available port' do
+        expect(server).to have_received(:port=).with 9999
+      end
+
+      it 'allows the port to be read by specs' do
+        expect(subject.port).to eq(9999)
+      end
+    end
+  end
+
+  context 'when the session closes' do
+    before do
+      subject.session_closed
+    end
+
+    it 'shuts down the server' do
+      expect(server).to have_received(:shutdown)
+    end
   end
 end

@@ -11,5 +11,9 @@ RSpec.configure do |config|
     Shokkenki.consumer.clear_interaction_stubs
   end
 
-  config.after(:suite) { Shokkenki.consumer.print_tickets }
+  config.before(:suite) { Shokkenki.consumer.start }
+  config.after(:suite) do
+    Shokkenki.consumer.print_tickets
+    Shokkenki.consumer.close
+  end
 end

@@ -20,6 +20,14 @@ module Shokkenki
         def clear_interaction_stubs
           @stubber.clear_interaction_stubs
         end
+
+        def session_started
+          @stubber.session_started
+        end
+
+        def session_closed
+          @stubber.session_closed
+        end
       end
     end
   end

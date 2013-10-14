@@ -60,4 +60,22 @@ describe Shokkenki::Consumer::Model::Provider do
       expect(stubber).to have_received(:clear_interaction_stubs)
     end
   end
+
+  context 'when the session starts' do
+
+    before { subject.session_started }
+
+    it 'notifies its stubber of the session start' do
+      expect(stubber).to have_received(:session_started)
+    end
+  end
+
+  context 'when the session closes' do
+
+    before { subject.session_closed }
+
+    it 'notifies its stubber of the session close' do
+      expect(stubber).to have_received(:session_closed)
+    end
+  end
 end

@@ -13,7 +13,7 @@ module Shokkenki
         end
 
         def stubber_classes
-          @stubber_classes ||= { :remote => Shokkenki::Consumer::Stubber::HttpStubber }
+          @stubber_classes ||= { :local_server => Shokkenki::Consumer::Stubber::HttpStubber }
         end
 
         def register_stubber name, clazz

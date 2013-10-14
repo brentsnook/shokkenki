@@ -132,4 +132,28 @@ describe Shokkenki::Consumer::Session do
       expect(File).to have_received(:open).with(anything, 'w')
     end
   end
+
+  context 'when started' do
+    let(:provider) { subject.provider(:name => :providertron) }
+    before do
+      allow(provider).to receive(:session_started)
+      subject.start
+    end
+
+    it 'notifies all providers of the start' do
+      expect(provider).to have_received(:session_started)
+    end
+  end
+
+  context 'when closed' do
+    let(:provider) { subject.provider(:name => :providertron) }
+    before do
+      allow(provider).to receive(:session_closed)
+      subject.close
+    end
+
+    it 'notifies all providers of the close' do
+      expect(provider).to have_received(:session_closed)
+    end
+  end
 end

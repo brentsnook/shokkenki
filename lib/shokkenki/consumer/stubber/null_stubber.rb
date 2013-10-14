@@ -10,6 +10,14 @@ module Shokkenki
           warn
         end
 
+        def session_started
+          warn
+        end
+
+        def session_closed
+          warn
+        end
+
         private
 
         def warn

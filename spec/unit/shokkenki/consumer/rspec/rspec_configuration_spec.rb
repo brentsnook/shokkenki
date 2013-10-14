@@ -4,7 +4,7 @@ require 'shokkenki/shokkenki'
 
 describe 'RSpec configuration' do
 
-  let(:config) { double('RSpec configuration').as_null_object }
+  let(:config) { double('RSpec configuration', :before => '').as_null_object }
   let(:load_config) { load 'shokkenki/consumer/rspec/rspec_configuration.rb' }
   let(:session) { double('Shokkenki session').as_null_object }
 
@@ -57,6 +57,18 @@ describe 'RSpec configuration' do
 
   end
 
+  context 'before the test suite begins' do
+    before do
+      allow(config).to receive(:before).with(:suite).and_yield
+      load_config
+    end
+
+    it 'starts the session' do
+      expect(session).to have_received(:start)
+    end
+
+  end
+
   context 'after the test suite finishes' do
 
     before do
@@ -66,6 +78,10 @@ describe 'RSpec configuration' do
 
     it 'prints out all tickets' do
       expect(session).to have_received(:print_tickets)
+    end
+
+    it 'closes the session' do
+      expect(session).to have_received(:close)
     end
   end
 end

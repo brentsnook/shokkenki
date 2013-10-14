@@ -4,10 +4,7 @@ require 'shokkenki/consumer/rspec'
 Shokkenki.consumer.configure do |c|
   c.ticket_location = ENV['ticket_directory']
   # c.add_provider(:my_provider) do |p|
-  #   p.stub_with(:remote,
-  #     :host => 'localhost',
-  #     :port => 1234
-  #   )
+  #   p.stub_with :local_server
   # end
 end
 

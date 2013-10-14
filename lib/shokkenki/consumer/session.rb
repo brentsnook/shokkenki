@@ -47,6 +47,14 @@ module Shokkenki
         @providers.values.each { |p| p.clear_interaction_stubs }
       end
 
+      def start
+        @providers.values.each { |p| p.session_started }
+      end
+
+      def close
+        @providers.values.each { |p| p.session_closed }
+      end
+
       def print_tickets
         @patronages.values.collect(&:ticket).each do |ticket|
           ticket_path = File.expand_path(File.join(ticket_location, ticket.filename))
