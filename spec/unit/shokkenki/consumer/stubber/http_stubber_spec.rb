@@ -6,12 +6,10 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
 
   let(:interaction) { double('interaction').as_null_object }
 
-  let(:interactions_url) { 'http://stubby.com:1235/interactions' }
+  let(:interactions_uri) { 'http://stubby.com/interaction_path' }
 
   subject do
-    Shokkenki::Consumer::Stubber::HttpStubber.new(
-      :interactions_url => interactions_url
-    )
+    Shokkenki::Consumer::Stubber::HttpStubber.new({})
   end
 
   before do
@@ -20,20 +18,68 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
 
   context 'when created' do
 
-    it 'has the interactions URL provided' do
-      expect(subject.interactions_url).to eq('http://stubby.com:1235/interactions')
+    let(:default_attributes) do
+      {
+        :host => 'stubby.com',
+        :scheme => :https,
+        :port => 1235,
+        :interactions_path => '/interactions'
+      }
     end
 
-    context 'when the interactions URL is not a valid URL' do
+    subject do
+      Shokkenki::Consumer::Stubber::HttpStubber.new(attributes)
+    end
 
-      subject do
-        Shokkenki::Consumer::Stubber::HttpStubber.new(
-          :interactions_url =>'hzzp:\rubbishurl'
-        )
+    context 'with all values supplied' do
+      let(:attributes) { default_attributes }
+
+      it 'has the scheme provided' do
+        expect(subject.scheme).to eq(:https)
       end
 
-      it 'fails' do
-        expect{ subject.interactions_url }.to raise_error(/bad URI/)
+      it 'has the host provided' do
+        expect(subject.host).to eq('stubby.com')
+      end
+
+      it 'has the port provided' do
+        expect(subject.port).to eq(1235)
+      end
+
+      it 'has the interactions path provided' do
+        expect(subject.interactions_path).to eq('/interactions')
+      end
+
+    end
+
+    context 'with no scheme' do
+      let(:attributes) do
+        default_attributes.delete :scheme
+        default_attributes
+      end
+
+      it 'defaults scheme to http' do
+        expect(subject.scheme).to eq(:http)
+      end
+    end
+
+    context 'with no interactions path' do
+      let(:attributes) do
+        default_attributes.delete :interactions_path
+        default_attributes
+      end
+      it 'defaults interactions path to /shokkenki/interactions' do
+        expect(subject.interactions_path).to eq('/shokkenki/interactions')
+      end
+    end
+
+    context 'with no host' do
+      let(:attributes) do
+        default_attributes.delete :host
+        default_attributes
+      end
+      it 'default the host to localhost' do
+        expect(subject.host).to eq('localhost')
       end
     end
 
@@ -43,6 +89,7 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
 
     before do
       allow(HTTParty).to receive(:post).and_return response
+      allow(subject).to receive(:interactions_uri).and_return interactions_uri
     end
 
     context 'when the request succeeds' do
@@ -52,7 +99,7 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
       it 'posts the interaction to the interactions collection' do
         subject.stub_interaction interaction
         expect(HTTParty).to have_received(:post).with(
-          interactions_url,
+          interactions_uri,
           :body => { :interaction => 'hash' },
           :headers => {'Content-Type' => 'application/json'}
         )
@@ -74,6 +121,7 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
 
     before do
       allow(HTTParty).to receive(:delete).and_return response
+      allow(subject).to receive(:interactions_uri).and_return interactions_uri
     end
 
     context 'when the request succeeds' do
@@ -83,7 +131,7 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
       it 'deletes the entire interactions collection' do
         subject.clear_interaction_stubs
         expect(HTTParty).to have_received(:delete).with(
-          interactions_url
+          interactions_uri
         )
       end
     end

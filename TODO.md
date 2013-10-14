@@ -7,21 +7,13 @@
     end
   end
 
-- register this stubber
+- register remote stubber
 
 ## Provider Stub - Remote Server - shokkenki/provider-stub/remote
 
-- HOW WILL THE SERVER TELL THE REMOTE STUBBER ABOUT THE PORT?
-
-- add rspec config to start Session
-- Implement Session start
-  - notifies all providers of session start - session_started
-  - provider in turn notifies stub
-- add rspec config to stop session
-  - notifies all providers of session stop, they notify stub
-
-- Implement session_start - spawn server [ ][ ]
-- Implement session_stop - close down server [ ][ ]
+- add dummy Rack app that just logs requests
+- start remote server on session start (stubber reads port from started remote) [ ][ ]
+- stop remote server on session stop - [ ][ ]
 
 - stub server accepts interactions [ ][ ]
 - stub server responds according to received request [ ][ ]
@@ -97,3 +89,7 @@
 - what will it hopefully target? (Javascript consumers via unit tests + stubbing, http mocking in Angular/Ember/Backbone - shokkenki-consumer-angular)
 - how can it be used to test a provider that I don't control? Using it to test github API as an example
 - Issues/contributing
+
+## Later
+
+- HTTPS support

@@ -6,10 +6,10 @@ describe Shokkenki::Consumer::Model::Provider do
 
   let(:stubber) { double('stubber').as_null_object }
 
+  subject { Shokkenki::Consumer::Model::Provider.new(:stubber => stubber) }
+
   context 'when created' do
     context 'with a stubber' do
-
-      subject { Shokkenki::Consumer::Model::Provider.new(:stubber => stubber) }
 
       it 'has the stubber' do
         expect(subject.stubber).to eq(stubber)
