@@ -14,6 +14,7 @@ module Shokkenki
       include Shokkenki::Consumer::Configuration::Session
 
       attr_reader :current_consumer, :patronages, :configuration
+      attr_accessor :ticket_location
 
       def initialize
         @consumers = {}
