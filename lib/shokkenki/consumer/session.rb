@@ -4,13 +4,14 @@ require 'shokkenki/consumer/model/provider'
 require 'shokkenki/consumer/model/patronage'
 require 'shokkenki/consumer/model/simplification'
 require 'shokkenki/consumer/dsl/session'
-require 'shokkenki/consumer/configuration'
+require 'shokkenki/consumer/configuration/session'
 
 module Shokkenki
   module Consumer
     class Session
       include Shokkenki::Consumer::Model::Simplification
       include Shokkenki::Consumer::DSL::Session
+      include Shokkenki::Consumer::Configuration::Session
 
       attr_reader :current_consumer, :patronages, :configuration
 
@@ -18,11 +19,6 @@ module Shokkenki
         @consumers = {}
         @providers = {}
         @patronages = {}
-        @configuration = Shokkenki::Consumer::Configuration.new
-      end
-
-      def configure
-        yield configuration if block_given?
       end
 
       def current_patronage_for provider_name
@@ -52,7 +48,7 @@ module Shokkenki
 
       def print_tickets
         @patronages.values.collect(&:ticket).each do |ticket|
-          ticket_path = File.expand_path(File.join(configuration.ticket_location, ticket.filename))
+          ticket_path = File.expand_path(File.join(ticket_location, ticket.filename))
           File.open(ticket_path, 'w') { |file| file.write(ticket.to_json) }
         end
       end

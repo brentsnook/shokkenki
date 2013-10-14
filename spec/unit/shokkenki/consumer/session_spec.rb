@@ -8,33 +8,8 @@ describe Shokkenki::Consumer::Session do
     expect(subject).to respond_to(:order)
   end
 
-  context 'being configured' do
-
-    let(:configuration) { double('configuration').as_null_object }
-
-    before do
-      allow(subject).to receive(:configuration).and_return configuration
-    end
-
-    context 'with directives' do
-      before do
-        subject.configure do |config|
-          config.some_directive 'some value'
-        end
-      end
-
-      it 'applies those to the configuration' do
-        expect(configuration).to have_received(:some_directive).with('some value')
-      end
-    end
-
-    context 'with no directives' do
-      before { subject.configure }
-
-      it 'applies nothing' do
-        expect(configuration).to_not have_received(anything)
-      end
-    end
+  it 'is configurable' do
+    expect(subject).to respond_to(:configure)
   end
 
   describe 'provider' do
@@ -140,7 +115,7 @@ describe Shokkenki::Consumer::Session do
          :key => double('patronage', :ticket => ticket)
       })
       allow(File).to receive(:open).and_yield file
-      allow(subject.configuration).to receive(:ticket_location).and_return 'ticket_dir'
+      subject.ticket_location = 'ticket_dir'
 
       subject.print_tickets
     end
