@@ -7,9 +7,6 @@
     end
   end
 
-- introduce RemoteStubber - created with an address and port, stubs by
- POST -> /shokkenki/interactions
- DELETE -> /shokkenki/interactions
 - register this stubber
 
 ## Provider Stub - Remote Server - shokkenki/provider-stub/remote
@@ -43,6 +40,9 @@
   - term.generate_example
     - uses RubyStringRandom for Regexp
     - Strings are returned as is for StringTerm
+
+- make http stubber default + remove null stubber
+- use http stubber in integration specs
 
 ## Provider
 
