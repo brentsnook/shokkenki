@@ -1,9 +1,8 @@
-# temporary rack server - just logs out requests
-
 module Shokkenki
   module Consumer
     module Stubber
-      class DummyRackServer
+      class StubbedResponseMiddleware
+
         def call env
           [200, {}, ['hello kitty']]
         end

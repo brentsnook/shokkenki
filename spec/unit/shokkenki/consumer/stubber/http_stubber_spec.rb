@@ -171,7 +171,7 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
 
     before do
       allow(Shokkenki::Consumer::Stubber::Server).to receive(:new).and_return(server)
-      allow(Shokkenki::Consumer::Stubber::DummyRackServer).to receive(:new).and_return(app)
+      allow(Shokkenki::Consumer::Stubber::RackServer).to receive(:new).and_return(app)
     end
 
     context 'when a port has been supplied' do

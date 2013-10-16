@@ -1,7 +1,7 @@
 require 'httparty'
 require 'uri'
 require 'shokkenki/consumer/stubber/server'
-require 'shokkenki/consumer/stubber/dummy_rack_server'
+require 'shokkenki/consumer/stubber/rack_server'
 require 'find_a_port'
 
 module Shokkenki
@@ -42,7 +42,7 @@ module Shokkenki
           @port = FindAPort.available_port unless @port
 
           @server = Shokkenki::Consumer::Stubber::Server.new(
-            :app => Shokkenki::Consumer::Stubber::DummyRackServer.new,
+            :app => Shokkenki::Consumer::Stubber::RackServer.new,
             :host => @host,
             :port => @port
           )
