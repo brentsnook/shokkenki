@@ -7,7 +7,6 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
 
   let(:interaction) { double('interaction').as_null_object }
   let(:interactions_uri) { 'http://stubby.com/interaction_path' }
-  let(:server) { double('server').as_null_object }
 
   subject do
     Shokkenki::Consumer::Stubber::HttpStubber.new({})
@@ -15,7 +14,7 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
 
   before do
     allow(interaction).to receive(:to_hash).and_return({:interaction => 'hash'})
-    allow(Shokkenki::Consumer::Stubber::Server).to receive(:new).and_return(server)
+
   end
 
   context 'when created' do
@@ -50,10 +49,6 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
 
       it 'has the interactions path provided' do
         expect(subject.interactions_path).to eq('/interactions')
-      end
-
-      it 'has a server' do
-        expect(subject.server).to be(server)
       end
     end
 
@@ -171,15 +166,37 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
   end
 
   context 'when the session starts' do
+    let(:server) { double('server').as_null_object }
+    let(:app) { double(:app) }
+
+    before do
+      allow(Shokkenki::Consumer::Stubber::Server).to receive(:new).and_return(server)
+      allow(Shokkenki::Consumer::Stubber::DummyRackServer).to receive(:new).and_return(app)
+    end
+
     context 'when a port has been supplied' do
+
       subject do
-        Shokkenki::Consumer::Stubber::HttpStubber.new(:port => 1234)
+        Shokkenki::Consumer::Stubber::HttpStubber.new(:host => 'somehost', :port => 1234)
       end
 
-      before { subject.session_started }
+      before do
+        subject.session_started
+      end
 
-      it 'starts the server on the given port' do
-        expect(server).to have_received(:port=).with 1234
+      it 'runs a new server on the given port' do
+        expect(Shokkenki::Consumer::Stubber::Server).to have_received(:new).with(hash_including({:port => 1234}))
+      end
+
+      it 'runs a new server on the given host' do
+        expect(Shokkenki::Consumer::Stubber::Server).to have_received(:new).with(hash_including({:host => 'somehost'}))
+      end
+
+      it 'runs the dummy rack app' do
+        expect(Shokkenki::Consumer::Stubber::Server).to have_received(:new).with(hash_including({:app => app}))
+      end
+
+      it 'starts the newly created server' do
         expect(server).to have_received(:start)
       end
     end
@@ -196,7 +213,7 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
       end
 
       it 'starts the server on an available port' do
-        expect(server).to have_received(:port=).with 9999
+        expect(Shokkenki::Consumer::Stubber::Server).to have_received(:new).with(hash_including({:port => 9999}))
       end
 
       it 'allows the port to be read by specs' do
@@ -206,7 +223,15 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
   end
 
   context 'when the session closes' do
+
+    let(:server) { double('server').as_null_object }
+
     before do
+      allow(Shokkenki::Consumer::Stubber::Server).to receive(:new).and_return(server)
+    end
+
+    before do
+      subject.session_started
       subject.session_closed
     end
 

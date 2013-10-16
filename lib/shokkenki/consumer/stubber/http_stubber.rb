@@ -1,6 +1,7 @@
 require 'httparty'
 require 'uri'
 require 'shokkenki/consumer/stubber/server'
+require 'shokkenki/consumer/stubber/dummy_rack_server'
 require 'find_a_port'
 
 module Shokkenki
@@ -15,7 +16,6 @@ module Shokkenki
           @scheme = attributes[:scheme] || :http
           @host = attributes[:host] || 'localhost'
           @interactions_path = attributes[:interactions_path] || '/shokkenki/interactions'
-          @server = Shokkenki::Consumer::Stubber::Server.new
         end
 
         def stub_interaction interaction
@@ -40,7 +40,12 @@ module Shokkenki
           # chance that it starts being used in between finding it
           # and using it.
           @port = FindAPort.available_port unless @port
-          @server.port = @port
+
+          @server = Shokkenki::Consumer::Stubber::Server.new(
+            :app => Shokkenki::Consumer::Stubber::DummyRackServer.new,
+            :host => @host,
+            :port => @port
+          )
           @server.start
         end
 
