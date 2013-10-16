@@ -1,8 +1,5 @@
 ## Provider Stub - Remote Server - shokkenki/provider-stub/remote
-- start remote server on session start (stubber reads port from started remote) [ ][ ]
-- stop remote server on session stop - [ ][ ]
 
-- fake it til you make it - server returns canned responses - [ ]
 - stub server accepts interactions [ ][ ]
 - stub server responds according to received request [ ][ ]
 - stub server generates body using rubystringrandom [ ][ ]
