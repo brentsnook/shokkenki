@@ -5,8 +5,7 @@ module Shokkenki
     module Stubber
       class DummyRackServer
         def call env
-          puts env.inspect
-          [200, {}, ['done diddly']]
+          [200, {}, ['hello kitty']]
         end
       end
     end
