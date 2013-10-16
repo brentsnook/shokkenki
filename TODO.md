@@ -18,10 +18,16 @@
     - uses RubyStringRandom for Regexp
     - Strings are returned as is for StringTerm
 
+- make startup failures in server easy to diagnose (eg. load path problem)
 - make http stubber default + remove null stubber
 - use http stubber in integration specs
 - make http stubber usable apart from server
 - convert other http examples like http_stubber to use webmock
+- rename and restructure modules for middleware
+- add a call to action on README - "problems? Feature request? Doesn't work the way you want? Create an issue!"
+- Avoid fully qualifying classes all of the time?
+- Find a better way to stub new methods?
+- document what can be included in a request
 
 ## Logging
   - Server response polling - debug
@@ -83,4 +89,8 @@
 
 ## Later
 
-- HTTPS support
+
+- add default response params for those that are not given
+  - for example, default status to 200
+- streaming content support - add to a wiki page of things it doesnt support
+- HTTP session support
