@@ -1,5 +1,6 @@
 require_relative '../../../spec_helper'
 require 'shokkenki/consumer/stubber/rack_server'
+require 'shokkenki/consumer/stubber/interactions'
 require 'shokkenki/consumer/stubber/admin_middleware'
 require 'shokkenki/consumer/stubber/stubbed_response_middleware'
 
@@ -7,12 +8,14 @@ describe Shokkenki::Consumer::Stubber::RackServer do
   let(:call) { subject.call env }
   let(:admin_middleware) { double 'admin middleware', :call => 'admin middleware' }
   let(:stubbed_response_middleware) { double 'stubbed response middleware', :call => 'stubbed response middleware' }
+  let(:interactions) { double 'interactions' }
 
   subject { Shokkenki::Consumer::Stubber::RackServer.new }
 
   before do
-    allow(Shokkenki::Consumer::Stubber::AdminMiddleware).to receive(:new).and_return admin_middleware
-    allow(Shokkenki::Consumer::Stubber::StubbedResponseMiddleware).to receive(:new).and_return stubbed_response_middleware
+    allow(Shokkenki::Consumer::Stubber::Interactions).to receive(:new).and_return interactions
+    allow(Shokkenki::Consumer::Stubber::AdminMiddleware).to receive(:new).with(interactions).and_return admin_middleware
+    allow(Shokkenki::Consumer::Stubber::StubbedResponseMiddleware).to receive(:new).with(interactions).and_return stubbed_response_middleware
   end
 
   context 'responding to shokkenki admin requests' do
