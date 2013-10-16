@@ -14,7 +14,6 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
 
   before do
     allow(interaction).to receive(:to_hash).and_return({:interaction => 'hash'})
-
   end
 
   context 'when created' do

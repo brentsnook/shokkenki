@@ -5,6 +5,7 @@ require 'shokkenki/consumer/stubber/admin_middleware'
 require 'shokkenki/consumer/stubber/stubbed_response_middleware'
 
 describe Shokkenki::Consumer::Stubber::RackServer do
+
   let(:call) { subject.call env }
   let(:admin_middleware) { double 'admin middleware', :call => 'admin middleware' }
   let(:stubbed_response_middleware) { double 'stubbed response middleware', :call => 'stubbed response middleware' }
