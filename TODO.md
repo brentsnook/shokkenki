@@ -1,9 +1,8 @@
 ## Provider Stub - Remote Server - shokkenki/provider-stub/remote
-
-- add dummy Rack app that just logs requests
 - start remote server on session start (stubber reads port from started remote) [ ][ ]
 - stop remote server on session stop - [ ][ ]
 
+- fake it til you make it - server returns canned responses - [ ]
 - stub server accepts interactions [ ][ ]
 - stub server responds according to received request [ ][ ]
 - stub server generates body using rubystringrandom [ ][ ]
@@ -24,6 +23,12 @@
 
 - make http stubber default + remove null stubber
 - use http stubber in integration specs
+- make http stubber usable apart from server
+- convert other http examples like http_stubber to use webmock
+
+## Logging
+  - Server response polling - debug
+  - Actual server logging
 
 ## Provider
 
