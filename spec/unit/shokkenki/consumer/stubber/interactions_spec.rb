@@ -11,4 +11,12 @@ describe Shokkenki::Consumer::Stubber::Interactions do
       it 'finds nothing'
     end
   end
+
+  context 'deleting all interactions' do
+    it 'removes all interactions'
+  end
+
+  context 'adding a new interaction' do
+    it 'adds the interaction'
+  end
 end

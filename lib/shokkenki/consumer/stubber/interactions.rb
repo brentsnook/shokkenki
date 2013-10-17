@@ -9,6 +9,13 @@ module Shokkenki
           Response.new
         end
 
+        def delete_all
+
+        end
+
+        def add interaction
+
+        end
       end
     end
   end
