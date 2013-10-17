@@ -23,10 +23,14 @@
 - make http stubber default + remove null stubber
 - use http stubber in integration specs
 - make http stubber usable apart from server
+- add unique IDs to interactions - hashed from their contents - make it easier to spot unique interactions
+- log created interactions to rack log - INFO
+- log stubbed request to rack log - INFO
+- log unrecognised interactions to rack log - WARN
 - convert other http examples like http_stubber to use webmock
 - rename and restructure modules for middleware
 - add a call to action on README - "problems? Feature request? Doesn't work the way you want? Create an issue!"
-- Avoid fully qualifying classes all of the time?
+- rename shokkenki to shokkenki-consumer
 - Find a better way to stub new methods?
 - document what can be included in a request
 
