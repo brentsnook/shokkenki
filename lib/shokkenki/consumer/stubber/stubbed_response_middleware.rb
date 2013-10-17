@@ -12,13 +12,13 @@ module Shokkenki
 
         def call env
           request = Request.from_rack env
-          response = @interactions.find request
-          response ? response.to_rack_response : no_response(request)
+          interaction = @interactions.find request
+          interaction ? interaction.response.to_rack_response : no_interaction(request)
         end
 
         private
 
-        def no_response request
+        def no_interaction request
           body = {
             :shokkenki => {
               :message => 'No matching responses were found for the request.',

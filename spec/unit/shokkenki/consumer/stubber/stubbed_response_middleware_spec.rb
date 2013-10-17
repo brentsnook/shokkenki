@@ -8,6 +8,7 @@ describe Shokkenki::Consumer::Stubber::StubbedResponseMiddleware do
   let(:response) { double('response', :to_rack_response => rack_response) }
   let(:request) { double 'request' }
   let(:rack_response) { double 'rack response' }
+  let(:interaction) { double('interaction', :response => response) }
   let(:interactions) { double('interactions').as_null_object }
   let(:env) { double 'env' }
   let(:call_response) { subject.call env }
@@ -21,7 +22,7 @@ describe Shokkenki::Consumer::Stubber::StubbedResponseMiddleware do
   context 'when the request is recognised' do
 
     before do
-      allow(interactions).to receive(:find).with(request).and_return response
+      allow(interactions).to receive(:find).with(request).and_return interaction
     end
 
     it 'returns the stubbed response' do
