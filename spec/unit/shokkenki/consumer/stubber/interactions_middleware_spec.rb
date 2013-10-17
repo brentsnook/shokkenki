@@ -1,7 +1,7 @@
 require_relative '../../../spec_helper'
-require 'shokkenki/consumer/stubber/admin_middleware'
+require 'shokkenki/consumer/stubber/interactions_middleware'
 
-describe Shokkenki::Consumer::Stubber::AdminMiddleware do
+describe Shokkenki::Consumer::Stubber::InteractionsMiddleware do
   context 'when the request is to create a new interaction' do
     it 'creates the new interaction'
   end

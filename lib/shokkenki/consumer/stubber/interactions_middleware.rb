@@ -1,7 +1,7 @@
 module Shokkenki
   module Consumer
     module Stubber
-      class AdminMiddleware
+      class InteractionsMiddleware
 
         def initialize interactions
 
