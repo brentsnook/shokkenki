@@ -14,7 +14,7 @@ module Shokkenki
 
         def initialize attributes
           @app = attributes[:app]
-          @middleware = Shokkenki::Consumer::Stubber::Middleware.new(@app)
+          @middleware = Middleware.new(@app)
           @server_thread = nil # suppress warnings
           @host = attributes[:host]
           @port = attributes[:port]
@@ -31,7 +31,7 @@ module Shokkenki
         def responsive?
           return false if server_thread && server_thread.join(0)
           res = Net::HTTP.start(host, @port) do |http|
-            http.get Shokkenki::Consumer::Stubber::Middleware::IDENTIFY_PATH
+            http.get Middleware::IDENTIFY_PATH
           end
           ok?(res) && is_app?(res)
         rescue SystemCallError

@@ -8,9 +8,9 @@ module Shokkenki
       class RackServer
 
         def initialize
-          @interactions = Shokkenki::Consumer::Stubber::Interactions.new
-          @admin = Shokkenki::Consumer::Stubber::AdminMiddleware.new @interactions
-          @stubbed_response = Shokkenki::Consumer::Stubber::StubbedResponseMiddleware.new @interactions
+          @interactions = Interactions.new
+          @admin = AdminMiddleware.new @interactions
+          @stubbed_response = StubbedResponseMiddleware.new @interactions
         end
 
         def call env

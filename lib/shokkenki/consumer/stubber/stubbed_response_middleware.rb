@@ -11,7 +11,7 @@ module Shokkenki
         end
 
         def call env
-          request = Shokkenki::Consumer::Stubber::Request.from_rack env
+          request = Request.from_rack env
           response = @interactions.find request
           response ? response.to_rack_response : no_response(request)
         end

@@ -41,8 +41,8 @@ module Shokkenki
           # and using it.
           @port = FindAPort.available_port unless @port
 
-          @server = Shokkenki::Consumer::Stubber::Server.new(
-            :app => Shokkenki::Consumer::Stubber::RackServer.new,
+          @server = Server.new(
+            :app => RackServer.new,
             :host => @host,
             :port => @port
           )

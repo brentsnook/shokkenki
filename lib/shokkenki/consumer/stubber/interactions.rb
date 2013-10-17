@@ -6,7 +6,7 @@ module Shokkenki
       class Interactions
 
         def find request
-          Shokkenki::Consumer::Stubber::Response.new
+          Response.new
         end
 
       end

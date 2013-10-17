@@ -5,7 +5,7 @@ module Shokkenki
   module Consumer
     module Model
       class Role
-        include Shokkenki::Consumer::Model::Simplification
+        include Simplification
 
         attr_reader :name, :label
 

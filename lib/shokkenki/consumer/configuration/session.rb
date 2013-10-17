@@ -21,7 +21,7 @@ module Shokkenki
         end
 
         def add_provider name
-          provider_config = Shokkenki::Consumer::Configuration::ProviderConfiguration.new(
+          provider_config = ProviderConfiguration.new(
             name,
             stubber_classes
           )
