@@ -18,6 +18,7 @@
     - uses RubyStringRandom for Regexp
     - Strings are returned as is for StringTerm
 
+- deal with 500 responses in the http_stubber
 - make startup failures in server easy to diagnose (eg. load path problem)
 - make http stubber default + remove null stubber
 - use http stubber in integration specs
