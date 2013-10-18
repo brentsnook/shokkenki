@@ -1,9 +1,9 @@
 require_relative '../../../spec_helper'
-require 'shokkenki/consumer/stubber/response'
+require 'shokkenki/consumer/stubber/rack_response'
 
-describe Shokkenki::Consumer::Stubber::Response do
+describe Shokkenki::Consumer::Stubber::RackResponse do
 
-  context 'as a rack response' do
+  context 'created from a interaction response' do
     it 'has the path'
     it 'has the method'
     it 'has the headers'

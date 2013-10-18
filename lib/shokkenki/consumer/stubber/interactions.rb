@@ -1,5 +1,3 @@
-require 'shokkenki/consumer/stubber/response'
-
 module Shokkenki
   module Consumer
     module Stubber

@@ -1,20 +1,21 @@
 require_relative '../../../spec_helper'
 require 'shokkenki/consumer/stubber/stubbed_response_middleware'
 require 'shokkenki/consumer/stubber/request'
+require 'shokkenki/consumer/stubber/rack_response'
 require 'json'
 
 describe Shokkenki::Consumer::Stubber::StubbedResponseMiddleware do
 
-  let(:response) { double('response', :to_rack_response => rack_response) }
   let(:request) { double 'request' }
   let(:rack_response) { double 'rack response' }
-  let(:interaction) { double('interaction', :response => response) }
+  let(:interaction) { double 'interaction' }
   let(:interactions) { double('interactions').as_null_object }
   let(:env) { double 'env' }
   let(:call_response) { subject.call env }
 
   before do
     allow(Shokkenki::Consumer::Stubber::Request).to receive(:from_rack).with(env).and_return request
+    allow(Shokkenki::Consumer::Stubber::RackResponse).to receive(:from_interaction).with(interaction).and_return(rack_response)
   end
 
   subject { Shokkenki::Consumer::Stubber::StubbedResponseMiddleware.new interactions }

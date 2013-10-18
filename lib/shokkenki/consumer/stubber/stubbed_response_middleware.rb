@@ -1,5 +1,6 @@
 require 'json'
 require 'shokkenki/consumer/stubber/request'
+require 'shokkenki/consumer/stubber/rack_response'
 
 module Shokkenki
   module Consumer
@@ -13,7 +14,7 @@ module Shokkenki
         def call env
           request = Request.from_rack env
           interaction = @interactions.find request
-          interaction ? interaction.response.to_rack_response : no_interaction(request)
+          interaction ? RackResponse.from_interaction(interaction) : no_interaction(request)
         end
 
         private

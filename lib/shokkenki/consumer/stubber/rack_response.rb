@@ -1,9 +1,9 @@
 module Shokkenki
   module Consumer
     module Stubber
-      class Response
+      class RackResponse
 
-        def to_rack_response
+        def self.from_interaction interaction
           [200, {}, ['hello kitty']]
         end
 
