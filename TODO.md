@@ -1,22 +1,10 @@
 ## Provider Stub - Remote Server - shokkenki/provider-stub/remote
 
-- stub server accepts interactions [ ][ ]
-- stub server responds according to received request [ ][ ]
-- stub server generates body using rubystringrandom [ ][ ]
+- better name for and-term?
+- string term
+- regex term generates body using rubystringrandom [ ][ ]
 - add note to readme about rubystringrandom [ ]
 - separate parsing, interpretation and matching of interactions from actual stubbing - allow this logic to be used from stub server or from webmock
-
-1 reconstitute interaction
-2 turn incoming request into a shokkenki request
-  - method
-  - body
-  - content_type etc.
-3 Find matching interaction by applying matchers
-  - search through list for starters, index later if too slow
-4 Generate response using term
-  - term.generate_example
-    - uses RubyStringRandom for Regexp
-    - Strings are returned as is for StringTerm
 
 - deal with 500 responses in the http_stubber
 - make startup failures in server easy to diagnose (eg. load path problem)
@@ -51,11 +39,11 @@
 
 ## Tidy Up
 
+- make DSL closer to RSpec: shokkenki.order(:my_provider).to { receive('a greeting').with({}).and_respond({}) }
 - check runtime ruby versions [ ]
 - update examples and ensure that they work [ ]
 - make provider stubbing method configurable
   - including consumer/provider-stub/server mixes it into the configuration
-- make DSL closer to RSpec: shokkenki.order(:my_provider).to { receive('a greeting').with({}).and_respond({}) }
 - watch out for require_relative and target version
 - better end to end coverage around tickets?
 - document terms
