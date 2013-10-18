@@ -24,8 +24,11 @@
 - use http stubber in integration specs
 - make http stubber usable apart from server
 - add unique IDs to interactions - hashed from their contents - make it easier to spot unique interactions
+- key interactions by unique ID and warn when they are being overwritten
+- add a hit count to interactions - ensure this shows up on deletion log
 - log created interactions to rack log - INFO
 - log stubbed request to rack log - INFO
+- log deleted requests - INFO
 - log unrecognised interactions to rack log - WARN
 - convert other http examples like http_stubber to use webmock
 - rename and restructure modules for middleware
