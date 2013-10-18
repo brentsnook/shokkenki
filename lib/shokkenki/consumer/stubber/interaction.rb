@@ -7,8 +7,12 @@ module Shokkenki
           new
         end
 
-        def response
-          Response.new
+        def generate_response
+          {
+            :status => 200,
+            :headers => {},
+            :body => 'hello kitty'
+          }
         end
 
         def match_request? request
