@@ -8,17 +8,19 @@ describe Shokkenki::Consumer::Stubber::InteractionsMiddleware do
   let(:interactions) { double('interactions').as_null_object }
   let(:call_response) { subject.call env }
   let(:interaction) { double 'interaction' }
+  let(:rack_input) { StringIO.new('{"some":"json"}') }
 
   subject { Shokkenki::Consumer::Stubber::InteractionsMiddleware.new interactions }
 
   before do
-    allow(Shokkenki::Consumer::Stubber::Interaction).to receive(:from_rack).and_return(interaction)
+    allow(Shokkenki::Consumer::Stubber::Interaction).to receive(:from_json).with({'some' => 'json'}).and_return(interaction)
   end
 
   context 'when the request is to create a new interaction' do
     let(:env) do
       {
-        'REQUEST_METHOD' => 'POST'
+        'REQUEST_METHOD' => 'POST',
+        'rack.input' => rack_input
       }
     end
 

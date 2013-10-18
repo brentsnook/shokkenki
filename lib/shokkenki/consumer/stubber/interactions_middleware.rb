@@ -1,4 +1,5 @@
 require 'shokkenki/consumer/stubber/interaction'
+require 'json'
 
 module Shokkenki
   module Consumer
@@ -12,7 +13,7 @@ module Shokkenki
         def call env
           case env['REQUEST_METHOD'].upcase
           when 'POST'
-            @interactions.add Interaction.from_rack(env)
+            @interactions.add Interaction.from_json(body_json(env['rack.input']))
             [204, {}, []]
           when 'DELETE'
             @interactions.delete_all
@@ -20,6 +21,12 @@ module Shokkenki
           else
             [405, {'Allow' => ['POST', 'DELETE']}, []]
           end
+        end
+
+        private
+
+        def body_json body_io
+          JSON.parse body_io.read
         end
       end
     end

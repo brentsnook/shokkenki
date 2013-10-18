@@ -1,22 +1,37 @@
+require 'active_support/core_ext/hash/indifferent_access'
+require 'shokkenki/consumer/stubber/term'
+
 module Shokkenki
   module Consumer
     module Stubber
       class Interaction
 
-        def self.from_rack env
-          new
+        attr_reader :label, :request, :response, :time
+
+        def self.from_json json
+          attributes = json.with_indifferent_access
+
+          new(
+            :label => attributes[:label],
+            :request => Term.from_json(attributes[:request]),
+            :response => Term.from_json(attributes[:response]),
+            :time => attributes[:time]
+          )
+        end
+
+        def initialize attributes
+          @label = attributes[:label]
+          @request = attributes[:request]
+          @response = attributes[:response]
+          @time = attributes[:time]
         end
 
         def generate_response
-          {
-            :status => 200,
-            :headers => {},
-            :body => 'hello kitty'
-          }
+          @response.example
         end
 
         def match_request? request
-          true
+          @request.match? request
         end
       end
     end

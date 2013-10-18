@@ -20,7 +20,7 @@ module Shokkenki
 
         def stub_interaction interaction
           response = HTTParty.post(interactions_uri,
-            :body => interaction.to_hash,
+            :body => interaction.to_hash.to_json,
             :headers => { 'Content-Type' => 'application/json' }
           )
           raise "Failed to stub interaction: #{response.inspect}" unless successful?(response)

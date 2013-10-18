@@ -99,7 +99,7 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
         subject.stub_interaction interaction
         expect(HTTParty).to have_received(:post).with(
           interactions_uri,
-          :body => { :interaction => 'hash' },
+          :body => '{"interaction":"hash"}',
           :headers => {'Content-Type' => 'application/json'}
         )
       end
