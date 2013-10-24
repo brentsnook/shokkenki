@@ -11,7 +11,7 @@ module Shokkenki
         end
 
         def self.as_rack_headers headers
-          headers.inject({}) do |h, key_value|
+          (headers || []).inject({}) do |h, key_value|
             k, v = key_value
             h[as_header_name(k)] = v.to_s
             h

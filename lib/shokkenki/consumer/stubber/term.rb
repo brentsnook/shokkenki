@@ -10,8 +10,7 @@ module Shokkenki
         def example
           {
             :status => 200,
-            :body => 'hello kitty',
-            :headers => []
+            :body => 'hello kitty'
           }
         end
 

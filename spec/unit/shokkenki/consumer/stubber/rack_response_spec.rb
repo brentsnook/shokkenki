@@ -30,6 +30,20 @@ describe Shokkenki::Consumer::Stubber::RackResponse do
     it 'has the body' do
       expect(rack_response[2]).to eq(['the body'])
     end
+
+    context 'when there are no headers' do
+
+      let(:response) do
+        {
+          :body => 'the body',
+          :status => 200
+        }
+      end
+
+      it 'has no headers' do
+        expect(rack_response[1]).to be_empty
+      end
+    end
   end
 
   describe 'header' do
