@@ -97,6 +97,10 @@ describe Shokkenki::Consumer::Stubber::Term::TermFactory do
     it 'includes and expressions' do
       expect(subject.factory_for(:and_expression)).to_not be_nil
     end
+
+    it 'includes rexegp' do
+      expect(subject.factory_for(:regexp)).to_not be_nil
+    end
   end
 
 end

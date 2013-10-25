@@ -20,6 +20,7 @@ describe 'A consumer', :shokkenki_consumer => {:name => :my_consumer} do
           :path => '/greeting'
         )
         responds_with(
+          :status => 200,
           :body => /hello/
         )
       end
