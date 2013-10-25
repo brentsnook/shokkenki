@@ -7,7 +7,7 @@
 - regex term
 - regex term generates body using rubystringrandom [ ][ ]
 - add note to readme about rubystringrandom [ ]
-- separate parsing, interpretation and matching of interactions from actual stubbing - allow this logic to be used from stub server or from webmock
+- move things into a module same level as consumer - need a name
 
 - deal with 500 responses in the http_stubber
 - make startup failures in server easy to diagnose (eg. load path problem)
