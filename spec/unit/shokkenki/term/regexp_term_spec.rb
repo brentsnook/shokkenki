@@ -1,10 +1,10 @@
-require_relative '../../../../spec_helper'
-require 'shokkenki/consumer/stubber/term/regexp_term'
+require_relative '../../spec_helper'
+require 'shokkenki/term/regexp_term'
 
-describe Shokkenki::Consumer::Stubber::Term::RegexpTerm do
+describe Shokkenki::Term::RegexpTerm do
   context 'created from json' do
     let(:term) do
-      Shokkenki::Consumer::Stubber::Term::RegexpTerm.from_json(
+      Shokkenki::Term::RegexpTerm.from_json(
         'value' => 'value regex'
       )
     end
@@ -16,7 +16,7 @@ describe Shokkenki::Consumer::Stubber::Term::RegexpTerm do
 
   context 'generating an example' do
 
-    subject { Shokkenki::Consumer::Stubber::Term::RegexpTerm.new :value => value }
+    subject { Shokkenki::Term::RegexpTerm.new :value => value }
 
     [
       '/x/',
@@ -50,7 +50,7 @@ describe Shokkenki::Consumer::Stubber::Term::RegexpTerm do
 
   context 'matching a compare' do
     subject do
-      Shokkenki::Consumer::Stubber::Term::RegexpTerm.new :value => '9'
+      Shokkenki::Term::RegexpTerm.new :value => '9'
     end
 
     context 'when the compare matches the value pattern' do

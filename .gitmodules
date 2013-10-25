@@ -1,3 +1,4 @@
-[submodule "lib/shokkenki/consumer/stubber/term/ruby-string-random"]
-	path = lib/shokkenki/consumer/stubber/term/ruby-string-random
+
+[submodule "lib/shokkenki/term/ruby-string-random"]
+	path = lib/shokkenki/term/ruby-string-random
 	url = https://github.com/repeatedly/ruby-string-random.git

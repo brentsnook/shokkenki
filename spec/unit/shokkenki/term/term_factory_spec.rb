@@ -1,8 +1,8 @@
-require_relative '../../../../spec_helper'
-require 'shokkenki/consumer/stubber/term/term_factory'
+require_relative '../../spec_helper'
+require 'shokkenki/term/term_factory'
 
-describe Shokkenki::Consumer::Stubber::Term::TermFactory do
-  subject { Shokkenki::Consumer::Stubber::Term::TermFactory }
+describe Shokkenki::Term::TermFactory do
+  subject { Shokkenki::Term::TermFactory }
   context 'created from json' do
 
     let(:terminator) { double 'terminator' }

@@ -1,6 +1,6 @@
 require_relative '../../../spec_helper'
 require 'shokkenki/consumer/stubber/interaction'
-require 'shokkenki/consumer/stubber/term/term_factory'
+require 'shokkenki/term/term_factory'
 
 describe Shokkenki::Consumer::Stubber::Interaction do
   context 'created from json' do
@@ -19,8 +19,8 @@ describe Shokkenki::Consumer::Stubber::Interaction do
     let(:response_term) { double 'response term' }
 
     before do
-      allow(Shokkenki::Consumer::Stubber::Term::TermFactory).to receive(:from_json).with({ 'request' => 'json' }).and_return request_term
-      allow(Shokkenki::Consumer::Stubber::Term::TermFactory).to receive(:from_json).with({ 'response' => 'json' }).and_return response_term
+      allow(Shokkenki::Term::TermFactory).to receive(:from_json).with({ 'request' => 'json' }).and_return request_term
+      allow(Shokkenki::Term::TermFactory).to receive(:from_json).with({ 'response' => 'json' }).and_return response_term
     end
 
     it 'sets the label' do

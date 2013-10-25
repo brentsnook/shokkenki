@@ -1,21 +1,21 @@
-require_relative '../../../../spec_helper'
-require 'shokkenki/consumer/stubber/term/and_expression_term'
-require 'shokkenki/consumer/stubber/term/term_factory'
+require_relative '../../spec_helper'
+require 'shokkenki/term/and_expression_term'
+require 'shokkenki/term/term_factory'
 
-describe Shokkenki::Consumer::Stubber::Term::AndExpressionTerm do
+describe Shokkenki::Term::AndExpressionTerm do
 
   let(:child_term) { double 'child term' }
 
   context 'created from json' do
 
     let(:term) do
-      Shokkenki::Consumer::Stubber::Term::AndExpressionTerm.from_json(
+      Shokkenki::Term::AndExpressionTerm.from_json(
         'values' => {'child' => {'childterm' => 'json'}}
       )
     end
 
     before do
-      allow(Shokkenki::Consumer::Stubber::Term::TermFactory).to(
+      allow(Shokkenki::Term::TermFactory).to(
         receive(:from_json).with({'childterm' => 'json'}).and_return child_term
       )
     end
@@ -28,7 +28,7 @@ describe Shokkenki::Consumer::Stubber::Term::AndExpressionTerm do
   context 'generating an example' do
 
     let(:term) do
-      Shokkenki::Consumer::Stubber::Term::AndExpressionTerm.new(
+      Shokkenki::Term::AndExpressionTerm.new(
         :values => {:child => child_term}
       )
     end
@@ -48,7 +48,7 @@ describe Shokkenki::Consumer::Stubber::Term::AndExpressionTerm do
     let(:child2) { double 'child2'}
 
     subject do
-      Shokkenki::Consumer::Stubber::Term::AndExpressionTerm.new(
+      Shokkenki::Term::AndExpressionTerm.new(
         :values => {
           :child1 => child1,
           :child2 => child2

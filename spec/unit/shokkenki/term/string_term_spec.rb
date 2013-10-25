@@ -1,11 +1,11 @@
-require_relative '../../../../spec_helper'
-require 'shokkenki/consumer/stubber/term/string_term'
+require_relative '../../spec_helper'
+require 'shokkenki/term/string_term'
 
-describe Shokkenki::Consumer::Stubber::Term::StringTerm do
+describe Shokkenki::Term::StringTerm do
 
   context 'created from json' do
     let(:term) do
-      Shokkenki::Consumer::Stubber::Term::StringTerm.from_json(
+      Shokkenki::Term::StringTerm.from_json(
         'value' => 'some value'
       )
     end
@@ -17,7 +17,7 @@ describe Shokkenki::Consumer::Stubber::Term::StringTerm do
 
   context 'generating an example' do
     subject do
-      Shokkenki::Consumer::Stubber::Term::StringTerm.new :value => 'some value'
+      Shokkenki::Term::StringTerm.new :value => 'some value'
     end
 
     it 'uses the exact value' do
@@ -27,7 +27,7 @@ describe Shokkenki::Consumer::Stubber::Term::StringTerm do
 
   context 'matching a compare' do
     subject do
-      Shokkenki::Consumer::Stubber::Term::StringTerm.new :value => 'some value'
+      Shokkenki::Term::StringTerm.new :value => 'some value'
     end
 
     context 'when the compare is the same' do
