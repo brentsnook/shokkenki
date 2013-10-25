@@ -73,3 +73,11 @@ shokkenki.provider(:restaurant) {
 ```
 
 When run, [this provider example](examples/provider/restaurant_spec.rb) will define a series of rspec examples for each interaction in any found tickets. It will find the ticket created by the previous consumer example by default.
+
+## License
+
+See [LICENSE.txt](LICENSE.txt).
+
+This gem embeds and makes use of [ruby string random](https://github.com/repeatedly/ruby-string-random).
+
+
