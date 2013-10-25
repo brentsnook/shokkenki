@@ -1,12 +1,13 @@
+
+- make DSL closer to RSpec: shokkenki.order(:my_provider).to { receive('a greeting').with({}).and_respond({}) }
+
 ## Provider Stub - Remote Server - shokkenki/provider-stub/remote
 
-
-- regex term
-- regex term generates body using rubystringrandom [ ][ ]
-- add note to readme about rubystringrandom [ ]
 - move things into a module same level as consumer - need a name
 - unify term model?
 - better name for and expression term?
+
+
 
 - deal with 500 responses in the http_stubber
 - make startup failures in server easy to diagnose (eg. load path problem)
@@ -22,6 +23,8 @@
 - log unrecognised interactions to rack log - WARN
 - convert other http examples like http_stubber to use webmock
 - rename and restructure modules for middleware
+
+
 - add a call to action on README - "problems? Feature request? Doesn't work the way you want? Create an issue!"
 - rename shokkenki to shokkenki-consumer
 - Find a better way to stub new methods?
@@ -42,7 +45,6 @@
 
 ## Tidy Up
 
-- make DSL closer to RSpec: shokkenki.order(:my_provider).to { receive('a greeting').with({}).and_respond({}) }
 - check runtime ruby versions [ ]
 - update examples and ensure that they work [ ]
 - make provider stubbing method configurable
