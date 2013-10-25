@@ -1,7 +1,10 @@
 ## Provider Stub - Remote Server - shokkenki/provider-stub/remote
 
-- better name for and-term?
+- rename term to term_factory
+- and term
+  - better name for and-term?
 - string term
+- regex term
 - regex term generates body using rubystringrandom [ ][ ]
 - add note to readme about rubystringrandom [ ]
 - separate parsing, interpretation and matching of interactions from actual stubbing - allow this logic to be used from stub server or from webmock
