@@ -4,16 +4,22 @@ module Shokkenki
       module Term
         class StringTerm
 
+          attr_reader :value
+
           def self.from_json json
-            new
+            new :value => json['value']
+          end
+
+          def initialize attributes
+            @value = attributes[:value]
           end
 
           def example
-            raise 'kaboom'
+            @value
           end
 
-          def match? value
-            raise 'kaboom'
+          def match? compare
+            compare && (compare.strip == @value)
           end
         end
       end
