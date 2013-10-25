@@ -1,5 +1,5 @@
 require 'active_support/core_ext/hash/indifferent_access'
-require 'shokkenki/consumer/stubber/term'
+require 'shokkenki/consumer/stubber/term/term_factory'
 
 module Shokkenki
   module Consumer
@@ -13,8 +13,8 @@ module Shokkenki
 
           new(
             :label => attributes[:label],
-            :request => Term.from_json(attributes[:request]),
-            :response => Term.from_json(attributes[:response]),
+            :request => Term::TermFactory.from_json(attributes[:request]),
+            :response => Term::TermFactory.from_json(attributes[:response]),
             :time => attributes[:time]
           )
         end

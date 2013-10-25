@@ -1,7 +1,7 @@
-require_relative '../../../spec_helper'
-require 'shokkenki/consumer/stubber/term'
+require_relative '../../../../spec_helper'
+require 'shokkenki/consumer/stubber/term/term_factory'
 
-describe Shokkenki::Consumer::Stubber::Term do
+describe Shokkenki::Consumer::Stubber::Term::TermFactory do
   context 'created from json' do
     it 'needs some examples'
   end
