@@ -1,5 +1,4 @@
-require 'shokkenki/consumer/model/ticket'
-require 'shokkenki/consumer/model/interaction'
+require_relative 'ticket'
 
 module Shokkenki
   module Consumer

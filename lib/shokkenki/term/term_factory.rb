@@ -1,7 +1,7 @@
 require 'shokkenki/term/string_term'
-require 'shokkenki/term/and_expression_term'
-require 'shokkenki/term/regexp_term'
-require 'shokkenki/term/number_term'
+require_relative 'and_expression_term'
+require_relative 'regexp_term'
+require_relative 'number_term'
 
 module Shokkenki
   module Term

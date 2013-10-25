@@ -1,4 +1,4 @@
-require 'shokkenki/consumer/model/interaction'
+require_relative '../model/interaction'
 
 module Shokkenki
   module Consumer

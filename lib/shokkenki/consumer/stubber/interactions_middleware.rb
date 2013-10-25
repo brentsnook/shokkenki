@@ -1,4 +1,4 @@
-require 'shokkenki/consumer/stubber/interaction'
+require_relative 'interaction'
 require 'json'
 
 module Shokkenki

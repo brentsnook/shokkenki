@@ -1,4 +1,4 @@
-require 'shokkenki/consumer/model/simplification'
+require_relative 'simplification'
 require 'active_support/core_ext/string/inflections'
 
 module Shokkenki

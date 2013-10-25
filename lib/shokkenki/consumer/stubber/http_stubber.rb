@@ -1,7 +1,7 @@
+require_relative 'server'
+require_relative 'rack_server'
 require 'httparty'
 require 'uri'
-require 'shokkenki/consumer/stubber/server'
-require 'shokkenki/consumer/stubber/rack_server'
 require 'find_a_port'
 
 module Shokkenki

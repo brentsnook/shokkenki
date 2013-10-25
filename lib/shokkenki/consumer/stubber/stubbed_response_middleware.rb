@@ -1,6 +1,6 @@
 require 'json'
-require 'shokkenki/consumer/stubber/request'
-require 'shokkenki/consumer/stubber/rack_response'
+require_relative 'request'
+require_relative 'rack_response'
 
 module Shokkenki
   module Consumer

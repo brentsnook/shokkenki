@@ -1,5 +1,5 @@
-require 'shokkenki/consumer/model/role'
-require 'shokkenki/consumer/stubber/null_stubber'
+require_relative 'role'
+require_relative '../stubber/null_stubber'
 
 module Shokkenki
   module Consumer

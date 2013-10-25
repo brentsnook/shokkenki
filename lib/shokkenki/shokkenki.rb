@@ -1,4 +1,4 @@
-require 'shokkenki/consumer/session'
+require_relative 'consumer/session'
 
 module Shokkenki
 

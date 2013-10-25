@@ -1,6 +1,6 @@
-require 'shokkenki/consumer/stubber/interactions'
-require 'shokkenki/consumer/stubber/interactions_middleware'
-require 'shokkenki/consumer/stubber/stubbed_response_middleware'
+require_relative 'interactions'
+require_relative 'interactions_middleware'
+require_relative 'stubbed_response_middleware'
 
 module Shokkenki
   module Consumer

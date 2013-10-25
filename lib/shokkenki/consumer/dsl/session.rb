@@ -1,4 +1,4 @@
-require 'shokkenki/consumer/dsl/order'
+require_relative 'order'
 
 module Shokkenki
   module Consumer

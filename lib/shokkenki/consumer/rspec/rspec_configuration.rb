@@ -1,5 +1,5 @@
-require 'shokkenki/shokkenki'
-require 'shokkenki/consumer/rspec/example_group_binding'
+require_relative '../../shokkenki'
+require_relative '../rspec/example_group_binding'
 require 'rspec'
 
 RSpec.configure do |config|

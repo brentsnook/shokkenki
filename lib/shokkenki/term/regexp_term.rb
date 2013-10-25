@@ -1,4 +1,4 @@
-require 'shokkenki/term/ruby-string-random/lib/strrand'
+require_relative 'ruby-string-random/lib/strrand'
 
 module Shokkenki
   module Term

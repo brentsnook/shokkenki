@@ -1,2 +1,2 @@
-require 'shokkenki/consumer/consumer'
-require 'shokkenki/consumer/rspec/rspec_configuration'
+require_relative 'consumer'
+require_relative 'rspec/rspec_configuration'

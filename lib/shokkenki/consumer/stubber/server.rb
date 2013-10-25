@@ -2,7 +2,7 @@ require 'uri'
 require 'net/http'
 require 'rack'
 require 'rack/handler/webrick'
-require 'shokkenki/consumer/stubber/middleware'
+require_relative 'middleware'
 
 # pinched from https://github.com/jnicklas/capybara/blob/master/lib/capybara/server.rb
 module Shokkenki

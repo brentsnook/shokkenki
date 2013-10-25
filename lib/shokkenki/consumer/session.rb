@@ -1,10 +1,10 @@
-require 'shokkenki/shokkenki'
-require 'shokkenki/consumer/model/role'
-require 'shokkenki/consumer/model/provider'
-require 'shokkenki/consumer/model/patronage'
-require 'shokkenki/consumer/model/simplification'
-require 'shokkenki/consumer/dsl/session'
-require 'shokkenki/consumer/configuration/session'
+require_relative '../shokkenki'
+require_relative 'model/role'
+require_relative 'model/provider'
+require_relative 'model/patronage'
+require_relative 'model/simplification'
+require_relative 'dsl/session'
+require_relative 'configuration/session'
 
 module Shokkenki
   module Consumer

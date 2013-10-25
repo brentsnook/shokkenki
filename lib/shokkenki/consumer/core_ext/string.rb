@@ -1,4 +1,4 @@
-require 'shokkenki/consumer/term/string_term'
+require_relative '../term/string_term'
 
 class String
 

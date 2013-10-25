@@ -1,4 +1,4 @@
-require 'shokkenki/version'
+require_relative '../../version'
 require 'json'
 
 module Shokkenki

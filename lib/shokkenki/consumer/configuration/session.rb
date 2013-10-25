@@ -1,5 +1,5 @@
-require 'shokkenki/consumer/configuration/provider_configuration'
-require 'shokkenki/consumer/stubber/http_stubber'
+require_relative 'provider_configuration'
+require_relative '../stubber/http_stubber'
 
 module Shokkenki
   module Consumer
