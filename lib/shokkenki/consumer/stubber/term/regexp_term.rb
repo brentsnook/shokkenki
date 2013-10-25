@@ -1,19 +1,27 @@
+require 'shokkenki/consumer/stubber/term/ruby-string-random/lib/strrand'
+
 module Shokkenki
   module Consumer
     module Stubber
       module Term
         class RegexpTerm
 
+          attr_reader :value
+
           def self.from_json json
-            new
+            new :value => json['value']
+          end
+
+          def initialize attributes
+            @value = Regexp.new attributes[:value]
           end
 
           def example
-            'hello kitty'
+            StringRandom.random_regex @value.to_s
           end
 
           def match? compare
-            true
+            compare && !@value.match(compare.to_s).nil?
           end
 
         end

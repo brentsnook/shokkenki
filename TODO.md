@@ -1,13 +1,12 @@
 ## Provider Stub - Remote Server - shokkenki/provider-stub/remote
 
-- rename term to term_factory
-- and term
-  - better name for and-term?
-- string term
+
 - regex term
 - regex term generates body using rubystringrandom [ ][ ]
 - add note to readme about rubystringrandom [ ]
 - move things into a module same level as consumer - need a name
+- unify term model?
+- better name for and expression term?
 
 - deal with 500 responses in the http_stubber
 - make startup failures in server easy to diagnose (eg. load path problem)
@@ -27,6 +26,7 @@
 - rename shokkenki to shokkenki-consumer
 - Find a better way to stub new methods?
 - document what can be included in a request
+- split term model into separate gem
 
 ## Logging
   - Server response polling - debug
