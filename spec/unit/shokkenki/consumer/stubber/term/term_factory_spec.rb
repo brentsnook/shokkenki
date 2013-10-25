@@ -101,6 +101,10 @@ describe Shokkenki::Consumer::Stubber::Term::TermFactory do
     it 'includes rexegp' do
       expect(subject.factory_for(:regexp)).to_not be_nil
     end
+
+    it 'includes number' do
+      expect(subject.factory_for(:number)).to_not be_nil
+    end
   end
 
 end

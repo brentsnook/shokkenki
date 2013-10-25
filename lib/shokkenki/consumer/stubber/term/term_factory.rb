@@ -1,6 +1,7 @@
 require 'shokkenki/consumer/stubber/term/string_term'
 require 'shokkenki/consumer/stubber/term/and_expression_term'
 require 'shokkenki/consumer/stubber/term/regexp_term'
+require 'shokkenki/consumer/stubber/term/number_term'
 
 module Shokkenki
   module Consumer
@@ -12,7 +13,8 @@ module Shokkenki
             @factories ||= {
               :string => StringTerm,
               :and_expression => AndExpressionTerm,
-              :regexp => RegexpTerm
+              :regexp => RegexpTerm,
+              :number => NumberTerm
             }
           end
 

@@ -56,6 +56,10 @@ describe 'A consumer rspec spec' do
             {
               'type' => 'and_expression',
               'values' => {
+                'status' => {
+                  'type' => 'number',
+                  'value' => 200,
+                },
                 'body' => {
                   'type' => 'regexp',
                   'value' => '(?-mix:hello)'
