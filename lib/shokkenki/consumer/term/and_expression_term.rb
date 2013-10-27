@@ -6,11 +6,7 @@ module Shokkenki
         attr_reader :type, :values
 
         def initialize values
-          @values = values.to_hash.inject({}) do |mapped, keyvalue|
-            key, value = *keyvalue
-            mapped[key] = value.to_shokkenki_term
-            mapped
-          end
+          @values = values
           @type = :and_expression
         end
 
