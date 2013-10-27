@@ -1,19 +1,14 @@
 
-- make DSL closer to RSpec: shokkenki.order(:my_provider).to { receive('a greeting').with({}).and_respond({}) }
-
 ## Provider Stub - Remote Server - shokkenki/provider-stub/remote
 
-- move things into a module same level as consumer - need a name
-- unify term model?
 - better name for and expression term?
 
-
+- don't create a provider on the fly - require it to be declared
+- default providers to be stubbed with local server during config - this will be the case for most
+- make order fail when no provider name supplied to session
 
 - deal with 500 responses in the http_stubber
 - make startup failures in server easy to diagnose (eg. load path problem)
-- make http stubber default + remove null stubber
-- use http stubber in integration specs
-- make http stubber usable apart from server
 - add unique IDs to interactions - hashed from their contents - make it easier to spot unique interactions
 - key interactions by unique ID and warn when they are being overwritten
 - add a hit count to interactions - ensure this shows up on deletion log
@@ -24,12 +19,10 @@
 - convert other http examples like http_stubber to use webmock
 - rename and restructure modules for middleware
 
+## Given State Support
 
-- add a call to action on README - "problems? Feature request? Doesn't work the way you want? Create an issue!"
-- rename shokkenki to shokkenki-consumer
-- Find a better way to stub new methods?
-- document what can be included in a request
-- split term model into separate gem
+- add consumer support to generate givens in ticket:
+  - given('there is an apple', :colour => 'red')
 
 ## Logging
   - Server response polling - debug
@@ -40,6 +33,9 @@
 - run with hard coded interactions, pass or fail [ ]
 - read ticket from hardcoded location and test interactions [ ][ ][ ][ ]
 - read ticket from specified location [ ]
+- add producer support to recognise givens
+  - fail if state is not recognised
+  - otherwise set state up before running specs
 - nice syntax highlighting in results [ ][ ][ ]
 - Rake task [ ]
 
@@ -55,13 +51,11 @@
   - regex terms uses ruby standard for regex
 - release
 
-## Given State Support
-
-- add consumer support to generate givens in ticket:
-  - given('there is an apple', :colour => 'red')
-- add producer support to recognise givens
-  - fail if state is not recognised
-  - otherwise set state up before running specs
+- add a call to action on README - "problems? Feature request? Doesn't work the way you want? Create an issue!"
+- rename shokkenki to shokkenki-consumer
+- Find a better way to stub new methods?
+- document what can be included in a request
+- split term model into separate gem
 
 ## Support for non-Rack providers
 
