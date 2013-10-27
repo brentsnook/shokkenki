@@ -9,6 +9,13 @@ describe 'RSpec configuration' do
   let(:session) { double('Shokkenki session').as_null_object }
 
   before do
+    @filtered_to_consumer_examples = false
+    allow(config).to receive(:include).with(Shokkenki::Consumer::RSpec::ExampleGroupBinding, anything) do |scope, filter|
+      @filtered_to_consumer_examples = filter[:shokkenki_consumer].call ''
+    end
+  end
+
+  before do
     allow(::RSpec).to receive(:configure).and_yield(config)
     allow(Shokkenki).to receive(:consumer).and_return session
   end
@@ -20,7 +27,14 @@ describe 'RSpec configuration' do
 
   it 'includes the example group binding to make the DSL available' do
     load_config
-    expect(config).to have_received(:include).with(Shokkenki::Consumer::RSpec::ExampleGroupBinding)
+    expect(config).to have_received(:include).with(Shokkenki::Consumer::RSpec::ExampleGroupBinding, anything)
+  end
+
+  # we want to avoid defining methods on the example group unless we have to.
+  # this lessens the chance of a collision with something else
+  it 'only makes the DSL available to shokkenki consumer examples' do
+    load_config
+    expect(@filtered_to_consumer_examples).to be_true
   end
 
   context 'before each example runs' do
@@ -33,10 +47,10 @@ describe 'RSpec configuration' do
     before do
       # simulating what happens with an example group
       # sucks, need a better way to test this
-      @filter_result = false
+      @filtered_to_consumer_examples = false
       allow(config).to receive(:before).with(:each, anything) do |scope, filter, &block|
         example_group.instance_eval &block
-        @filter_result = filter[:shokkenki_consumer].call ''
+        @filtered_to_consumer_examples = filter[:shokkenki_consumer].call ''
       end
 
       load_config
@@ -48,7 +62,7 @@ describe 'RSpec configuration' do
     end
 
     it 'sets a new consumer for any shokkenki consumer example' do
-      expect(@filter_result).to be_true
+      expect(@filtered_to_consumer_examples).to be_true
     end
 
     it 'clears interaction stubs in the session' do
