@@ -7,11 +7,11 @@ module Shokkenki
       attr_reader :value
 
       def self.from_json json
-        new :value => json['value']
+        new json['value']
       end
 
-      def initialize attributes
-        @value = Regexp.new attributes[:value]
+      def initialize value
+        @value = Regexp.new value
       end
 
       def example

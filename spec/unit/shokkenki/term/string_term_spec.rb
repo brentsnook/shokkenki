@@ -17,7 +17,7 @@ describe Shokkenki::Term::StringTerm do
 
   context 'generating an example' do
     subject do
-      Shokkenki::Term::StringTerm.new :value => 'some value'
+      Shokkenki::Term::StringTerm.new 'some value'
     end
 
     it 'uses the exact value' do
@@ -27,7 +27,7 @@ describe Shokkenki::Term::StringTerm do
 
   context 'matching a compare' do
     subject do
-      Shokkenki::Term::StringTerm.new :value => 'some value'
+      Shokkenki::Term::StringTerm.new 'some value'
     end
 
     context 'when the compare is the same' do

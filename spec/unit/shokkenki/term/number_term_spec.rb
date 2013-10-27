@@ -17,7 +17,7 @@ describe Shokkenki::Term::NumberTerm do
 
   context 'generating an example' do
     subject do
-      Shokkenki::Term::NumberTerm.new :value => 9
+      Shokkenki::Term::NumberTerm.new 9
     end
 
     it 'uses the exact value' do
@@ -27,7 +27,7 @@ describe Shokkenki::Term::NumberTerm do
 
   context 'matching a compare' do
     subject do
-      Shokkenki::Term::NumberTerm.new :value => 9
+      Shokkenki::Term::NumberTerm.new 9
     end
 
     context 'when the compare is the same' do

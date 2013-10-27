@@ -11,11 +11,11 @@ module Shokkenki
           hash
         end
 
-        new :values => values
+        new values
       end
 
-      def initialize attributes
-        @values = attributes[:values]
+      def initialize values
+        @values = values
       end
 
       def example

@@ -16,7 +16,7 @@ describe Shokkenki::Term::RegexpTerm do
 
   context 'generating an example' do
 
-    subject { Shokkenki::Term::RegexpTerm.new :value => value }
+    subject { Shokkenki::Term::RegexpTerm.new value }
 
     [
       '/x/',
@@ -50,7 +50,7 @@ describe Shokkenki::Term::RegexpTerm do
 
   context 'matching a compare' do
     subject do
-      Shokkenki::Term::RegexpTerm.new :value => '9'
+      Shokkenki::Term::RegexpTerm.new '9'
     end
 
     context 'when the compare matches the value pattern' do

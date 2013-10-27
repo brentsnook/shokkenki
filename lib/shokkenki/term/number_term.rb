@@ -5,11 +5,11 @@ module Shokkenki
       attr_reader :value
 
       def self.from_json json
-        new :value => json['value']
+        new json['value']
       end
 
-      def initialize attributes
-        @value = attributes[:value]
+      def initialize value
+        @value = value
       end
 
       def example

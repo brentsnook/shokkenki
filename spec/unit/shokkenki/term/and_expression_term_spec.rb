@@ -29,7 +29,7 @@ describe Shokkenki::Term::AndExpressionTerm do
 
     let(:term) do
       Shokkenki::Term::AndExpressionTerm.new(
-        :values => {:child => child_term}
+        :child => child_term
       )
     end
 
@@ -49,10 +49,8 @@ describe Shokkenki::Term::AndExpressionTerm do
 
     subject do
       Shokkenki::Term::AndExpressionTerm.new(
-        :values => {
-          :child1 => child1,
-          :child2 => child2
-        }
+        :child1 => child1,
+        :child2 => child2
       )
     end
 
