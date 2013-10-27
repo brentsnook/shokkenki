@@ -6,29 +6,43 @@ describe Shokkenki::Consumer::DSL::Order do
 
   let(:response_attributes) { double('response attributes').as_null_object }
   let(:request_attributes) { double('request attributes').as_null_object }
+  let(:patronage) { double('patronage').as_null_object }
+
+  subject { Shokkenki::Consumer::DSL::Order.new :provider_name, patronage }
 
   before do
-    subject.provider ''
-    subject.during ''
-    subject.requested_with request_attributes
-    subject.responds_with response_attributes
-    subject.to_interaction
+    subject.receive request_attributes
+    subject.and_respond response_attributes
   end
 
   before do
     allow(Shokkenki::Consumer::Model::Interaction).to receive(:new)
   end
 
-  context 'provider' do
-    let(:order_with_provider) { subject.provider :providertron }
+  context 'to' do
 
-    it 'defines the provider that is being interacted with' do
-      expect(order_with_provider.provider_name).to eq(:providertron)
+    let(:interaction) { double 'interaction' }
+
+    before do
+      allow(subject).to receive(:validate!)
+      allow(subject).to receive(:set_details)
+      allow(subject).to receive(:to_interaction).and_return interaction
+
+      subject.to { set_details }
     end
 
-    it 'allows order calls to be chained' do
-      expect(order_with_provider).to be(subject)
+    it 'allows the details of the order to be collected' do
+      expect(subject).to have_received(:set_details)
     end
+
+    it 'validates the order' do
+      expect(subject).to have_received(:validate!)
+    end
+
+    it 'adds the resulting interaction to the patronage' do
+      expect(patronage).to have_received(:add_interaction).with(interaction)
+    end
+
   end
 
   context 'during' do
@@ -44,11 +58,11 @@ describe Shokkenki::Consumer::DSL::Order do
     end
   end
 
-  context 'requested with' do
+  context 'receive' do
 
     let(:request_term) { double 'request term' }
 
-    let(:order_with_request) { subject.requested_with request_attributes }
+    let(:order_with_request) { subject.receive request_attributes }
 
     before do
       allow(request_attributes).to receive(:to_shokkenki_term).and_return request_term
@@ -64,11 +78,11 @@ describe Shokkenki::Consumer::DSL::Order do
     end
   end
 
-  context 'responds with' do
+  context 'and respond' do
 
     let(:response_term) { double 'response term' }
 
-    let(:order_with_response) { subject.responds_with response_attributes }
+    let(:order_with_response) { subject.and_respond response_attributes }
 
     before do
       allow(response_attributes).to receive(:to_shokkenki_term).and_return response_term
@@ -87,7 +101,7 @@ describe Shokkenki::Consumer::DSL::Order do
   context "when 'provider' has not been specified" do
 
     before do
-      subject.provider nil
+      subject.provider_name = nil
     end
 
     it 'fails' do
@@ -98,37 +112,25 @@ describe Shokkenki::Consumer::DSL::Order do
 
   context 'validation' do
 
-    context "when 'during' has not been specified" do
-
-      before do
-        subject.during nil
-      end
-
-      it 'fails' do
-        expect { subject.validate! }.to raise_error("No 'during' has been specified.")
-      end
-
-    end
-
     context "when 'requested with' has not been specified" do
 
       before do
-        subject.requested_with nil
+        subject.receive nil
       end
 
       it 'fails' do
-        expect { subject.validate! }.to raise_error("No 'requested_with' has been specified.")
+        expect { subject.validate! }.to raise_error("No 'receive' has been specified.")
       end
     end
 
-    context "when 'responds with' has not been specified" do
+    context "when 'and respond' has not been specified" do
 
       before do
-        subject.responds_with nil
+        subject.and_respond nil
       end
 
       it 'fails' do
-        expect { subject.validate! }.to raise_error("No 'responds_with' has been specified.")
+        expect { subject.validate! }.to raise_error("No 'and_respond' has been specified.")
       end
     end
   end

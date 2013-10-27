@@ -14,28 +14,14 @@ describe Shokkenki::Consumer::DSL::Session do
 
     let(:order) { double('order').as_null_object }
     let(:patronage) { double('patronage').as_null_object }
-    let(:interaction) { double('interaction').as_null_object }
 
     before do
-      allow(Shokkenki::Consumer::DSL::Order).to receive(:new).and_return order
-      allow(order).to receive(:provider_name).and_return(:provider_name)
+      allow(Shokkenki::Consumer::DSL::Order).to receive(:new).with(:provider_name, patronage).and_return order
       allow(subject).to receive(:current_patronage_for).with(:provider_name).and_return patronage
-      allow(order).to receive(:to_interaction).and_return interaction
-      subject.order do
-        set_some_details
-      end
     end
 
-    it 'allows the details of the order to be collected' do
-      expect(order).to have_received(:set_some_details)
-    end
-
-    it 'validates the order' do
-      expect(order).to have_received(:validate!)
-    end
-
-    it 'creates a new interaction for the patronage of the named provider and current consumer' do
-      expect(patronage).to have_received(:add_interaction).with interaction
+    it 'creates a new order for the provider and patronage' do
+      expect(subject.order(:provider_name)).to be(order)
     end
   end
 end

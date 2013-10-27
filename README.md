@@ -40,14 +40,10 @@ describe HungryMan, :shokkenki => {:consumer => :hungry_man} do
   context 'when his ramen is hot' do
 
     before do
-      shokkenki.provider(:restaurant).
-        during('an order for ramen').
-        requested_with(
-          :method => :get, :path => '/order/ramen'
-        ).
-        responds_with(
-          :body => { :temperature => /hot/ }
-        )
+      shokkenki.order(:my_provider).during('an order for ramen').to do
+        receive(:method => :get, :path => '/order/ramen').
+        and_respond(:body => { :temperature => /hot/ })
+      end
     end
 
     it 'is happy' do

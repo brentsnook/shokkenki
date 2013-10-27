@@ -7,6 +7,10 @@ module Shokkenki
         def shokkenki
           Shokkenki.consumer
         end
+
+        def order provider
+          shokkenki.order provider
+        end
       end
     end
   end

@@ -13,13 +13,9 @@ describe 'A consumer', :shokkenki_consumer => {:name => :my_consumer} do
 
   context 'when a simple request is stubbed' do
     before do
-      shokkenki.order do
-        provider :my_provider
-        during 'a greeting'
-        requested_with(
-          :path => '/greeting'
-        )
-        responds_with(
+      order(:my_provider).during('a greeting').to do
+        receive(:path => '/greeting').
+        and_respond(
           :status => 200,
           :body => /hello/
         )

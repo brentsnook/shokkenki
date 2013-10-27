@@ -16,4 +16,16 @@ describe Shokkenki::Consumer::RSpec::ExampleGroupBinding do
   it "makes the consumer session available as 'shokkenki'" do
     expect(bound_example_group.shokkenki).to be(Shokkenki.consumer)
   end
+
+  context 'order' do
+    let(:order) { double 'order' }
+
+    before do
+      allow(Shokkenki.consumer).to receive(:order).with(:provider).and_return order
+    end
+
+    it 'creates an order on the consumer session' do
+      expect(bound_example_group.order(:provider)).to eq(order)
+    end
+  end
 end
