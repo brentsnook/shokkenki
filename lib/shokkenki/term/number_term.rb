@@ -2,7 +2,7 @@ module Shokkenki
   module Term
     class NumberTerm
 
-      attr_reader :value
+      attr_reader :type, :value
 
       def self.from_json json
         new json['value']
@@ -10,6 +10,14 @@ module Shokkenki
 
       def initialize value
         @value = value
+        @type = :number
+      end
+
+      def to_hash
+        {
+          :type => @type,
+          :value => @value
+        }
       end
 
       def example

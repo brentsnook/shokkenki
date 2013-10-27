@@ -1,4 +1,4 @@
-require_relative '../term/and_expression_term'
+require 'shokkenki/term/and_expression_term'
 
 class Hash
 
@@ -8,7 +8,7 @@ class Hash
       mapped[key] = value.to_shokkenki_term
       mapped
     end
-    Shokkenki::Consumer::Term::AndExpressionTerm.new values
+    Shokkenki::Term::AndExpressionTerm.new values
   end
 
 end

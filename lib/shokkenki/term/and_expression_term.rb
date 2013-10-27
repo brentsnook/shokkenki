@@ -2,7 +2,7 @@ module Shokkenki
   module Term
     class AndExpressionTerm
 
-      attr_reader :values
+      attr_reader :type, :values
 
       def self.from_json json
         values = json['values'].inject({}) do |hash, kv|
@@ -16,6 +16,20 @@ module Shokkenki
 
       def initialize values
         @values = values
+        @type = :and_expression
+      end
+
+      def to_hash
+        mapped_values = @values.inject({}) do |mapped, keyvalue|
+          key, value = *keyvalue
+          mapped[key] = value.respond_to?(:to_hash) ? value.to_hash : value
+          mapped
+        end
+
+        {
+          :type => @type,
+          :values => mapped_values
+        }
       end
 
       def example

@@ -1,9 +1,9 @@
-require_relative '../term/regexp_term'
+require 'shokkenki/term/regexp_term'
 
 class Regexp
 
   def to_shokkenki_term
-    Shokkenki::Consumer::Term::RegexpTerm.new self
+    Shokkenki::Term::RegexpTerm.new self
   end
 
 end
