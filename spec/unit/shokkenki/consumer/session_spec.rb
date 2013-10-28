@@ -66,19 +66,29 @@ describe Shokkenki::Consumer::Session do
    let(:consumer) { double('consumer', :name => :consumername)}
 
     before do
-      subject.add_provider provider
       subject.add_consumer consumer
       subject.set_current_consumer :consumername
     end
 
     let(:patronage) { subject.current_patronage_for(:providername) }
 
-    it 'is for the current consumer' do
-      expect(patronage.consumer.name).to eq(:consumername)
+    context 'the provider exists' do
+
+      before { subject.add_provider provider }
+
+      it 'is for the current consumer' do
+        expect(patronage.consumer.name).to eq(:consumername)
+      end
+
+      it 'is of the given provider' do
+        expect(patronage.provider.name).to eq(:providername)
+      end
     end
 
-    it 'is of the given provider' do
-      expect(patronage.provider.name).to eq(:providername)
+    context 'when the provider does not exist' do
+      it 'fails' do
+        expect{patronage}.to raise_error("The provider 'providername' is not recognised. Have you defined it?")
+      end
     end
 
   end

@@ -22,7 +22,7 @@ module Shokkenki
 
       def current_patronage_for provider_name
         consumer = @current_consumer
-        provider = provider provider_name
+        provider = provider(provider_name) || raise("The provider '#{provider_name}' is not recognised. Have you defined it?")
         key = { consumer => provider }
         @patronages[key] ||= Shokkenki::Consumer::Model::Patronage.new :consumer => consumer, :provider => provider
       end
