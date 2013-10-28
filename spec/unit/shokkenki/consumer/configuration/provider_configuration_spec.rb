@@ -39,23 +39,6 @@ describe Shokkenki::Consumer::Configuration::ProviderConfiguration do
     end
   end
 
-  context 'validation' do
-
-    subject do
-      Shokkenki::Consumer::Configuration::ProviderConfiguration.new(
-        :provider_name,
-        {}
-      )
-    end
-
-    context 'with no stubber' do
-
-      it 'fails' do
-        expect { subject.validate! }.to raise_error("No 'stub_with' has been specified.")
-      end
-    end
-  end
-
   context 'as a provider' do
     subject do
       Shokkenki::Consumer::Configuration::ProviderConfiguration.new(

@@ -4,9 +4,7 @@ require 'httparty'
 
 Shokkenki.consumer.configure do |c|
   c.ticket_location = ENV['ticket_directory']
-  c.define_provider(:my_provider) do |p|
-    p.stub_with :local_server
-  end
+  c.define_provider :my_provider
 end
 
 describe 'A consumer', :shokkenki_consumer => {:name => :my_consumer} do

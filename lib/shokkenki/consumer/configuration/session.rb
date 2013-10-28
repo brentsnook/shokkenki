@@ -25,8 +25,7 @@ module Shokkenki
             name,
             stubber_classes
           )
-          yield provider_config
-          provider_config.validate!
+          yield provider_config if block_given?
           add_provider provider_config.to_provider
         end
       end

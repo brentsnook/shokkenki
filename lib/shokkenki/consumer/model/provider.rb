@@ -1,5 +1,5 @@
 require_relative 'role'
-require_relative '../stubber/null_stubber'
+require_relative '../stubber/http_stubber'
 
 module Shokkenki
   module Consumer
@@ -10,7 +10,7 @@ module Shokkenki
 
         def initialize attributes
           super attributes
-          @stubber = attributes[:stubber] || Shokkenki::Consumer::Stubber::NullStubber.new
+          @stubber = attributes[:stubber] || Shokkenki::Consumer::Stubber::HttpStubber.new({})
         end
 
         def stub_interaction interaction

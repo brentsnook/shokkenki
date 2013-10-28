@@ -60,9 +60,11 @@ describe Shokkenki::Consumer::Configuration::Session do
     before do
       allow(Shokkenki::Consumer::Configuration::ProviderConfiguration).to receive(:new).and_return configuration
       allow(subject).to receive(:add_provider)
-      subject.define_provider(:provider_name) do |p|
-        p.set_some_details
-      end
+      define_provider
+    end
+
+    let(:define_provider) do
+      subject.define_provider :provider_name
     end
 
     it 'sets the name of the provider' do
@@ -73,12 +75,17 @@ describe Shokkenki::Consumer::Configuration::Session do
       expect(Shokkenki::Consumer::Configuration::ProviderConfiguration).to have_received(:new).with(anything, subject.stubber_classes)
     end
 
-    it 'allows the details of the provider to be collected' do
-      expect(configuration).to have_received(:set_some_details)
-    end
+    context 'with directives' do
 
-    it 'validates the provider details' do
-      expect(configuration).to have_received(:validate!)
+      let(:define_provider) do
+        subject.define_provider(:provider_name) do |p|
+          p.set_some_details
+        end
+      end
+
+      it 'configures the provider' do
+        expect(configuration).to have_received(:set_some_details)
+      end
     end
 
     it 'adds a new provider using the details' do

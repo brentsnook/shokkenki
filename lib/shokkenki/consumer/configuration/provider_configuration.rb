@@ -17,10 +17,6 @@ module Shokkenki
           @stubber = stubber_class.new attributes
         end
 
-        def validate!
-          raise "No 'stub_with' has been specified." unless @stubber
-        end
-
         def to_provider
           Shokkenki::Consumer::Model::Provider.new(
             :stubber => @stubber,

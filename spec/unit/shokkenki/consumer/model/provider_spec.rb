@@ -1,6 +1,6 @@
 require_relative '../../../spec_helper'
 require 'shokkenki/consumer/model/provider'
-require 'shokkenki/consumer/stubber/null_stubber'
+require 'shokkenki/consumer/stubber/http_stubber'
 
 describe Shokkenki::Consumer::Model::Provider do
 
@@ -20,14 +20,14 @@ describe Shokkenki::Consumer::Model::Provider do
 
       subject { Shokkenki::Consumer::Model::Provider.new(:stubber => nil) }
 
-      let(:null_stubber) { double('null stubber') }
+      let(:http_stubber) { double('http stubber') }
 
       before do
-        allow(Shokkenki::Consumer::Stubber::NullStubber).to receive(:new).and_return null_stubber
+        allow(Shokkenki::Consumer::Stubber::HttpStubber).to receive(:new).and_return http_stubber
       end
 
-      it 'has a new null stubber' do
-        expect(subject.stubber).to eq(null_stubber)
+      it 'has a new HTTP stubber' do
+        expect(subject.stubber).to eq(http_stubber)
       end
 
     end
