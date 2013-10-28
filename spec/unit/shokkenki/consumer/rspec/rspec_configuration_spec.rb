@@ -1,5 +1,6 @@
 require_relative '../../../spec_helper'
 require 'shokkenki/consumer/rspec/example_group_binding'
+require 'shokkenki/consumer/model/role'
 require 'shokkenki/shokkenki'
 
 describe 'RSpec configuration' do
@@ -39,7 +40,7 @@ describe 'RSpec configuration' do
 
   context 'before each example runs' do
 
-    let(:consumer_metadata) { double('metadata') }
+    let(:consumer_metadata) { {:name => :consumername } }
     let(:metadata) { {:shokkenki_consumer => consumer_metadata} }
     let(:example) { double('example', :metadata => metadata)}
     let(:example_group) { double('example group', :example => example) }
@@ -52,21 +53,41 @@ describe 'RSpec configuration' do
         example_group.instance_eval &block
         @filtered_to_consumer_examples = filter[:shokkenki_consumer].call ''
       end
-
-      load_config
     end
 
-    # this allows an implicit consumer to be referred to in the DSL
-    it 'sets a new consumer using the shokkenki metadata' do
-      expect(session).to have_received(:current_consumer=).with consumer_metadata
+    context 'regardless of whether consumer exists' do
+
+      before { load_config }
+
+      # this allows an implicit consumer to be referred to in the DSL
+      it 'sets a new consumer using the shokkenki metadata' do
+        expect(session).to have_received(:set_current_consumer).with :consumername
+      end
+
+      it 'sets a new consumer for any shokkenki consumer example' do
+        expect(@filtered_to_consumer_examples).to be_true
+      end
+
+      it 'clears interaction stubs in the session' do
+        expect(session).to have_received(:clear_interaction_stubs)
+      end
     end
 
-    it 'sets a new consumer for any shokkenki consumer example' do
-      expect(@filtered_to_consumer_examples).to be_true
-    end
+    context 'when no consumer exists with the given name' do
+      let(:role) { double 'role' }
 
-    it 'clears interaction stubs in the session' do
-      expect(session).to have_received(:clear_interaction_stubs)
+      before do
+        allow(session).to receive(:add_consumer)
+        allow(session).to receive(:consumer).with(:consumername).and_return nil
+        allow(Shokkenki::Consumer::Model::Role).to receive(:new).with(consumer_metadata).and_return(role)
+
+        load_config
+      end
+
+      it 'creates the consumer' do
+        expect(session).to have_received(:add_consumer).with(role)
+      end
+
     end
 
   end

@@ -1,6 +1,4 @@
 require_relative '../shokkenki'
-require_relative 'model/role'
-require_relative 'model/provider'
 require_relative 'model/patronage'
 require_relative 'model/simplification'
 require_relative 'dsl/session'
@@ -13,7 +11,7 @@ module Shokkenki
       include Shokkenki::Consumer::DSL::Session
       include Shokkenki::Consumer::Configuration::Session
 
-      attr_reader :current_consumer, :patronages, :configuration
+      attr_reader :current_consumer, :patronages, :configuration, :providers, :consumers
       attr_accessor :ticket_location
 
       def initialize
@@ -33,17 +31,24 @@ module Shokkenki
         @providers[simplify(provider.name)] = provider
       end
 
+      def add_provider provider
+        @providers[simplify(provider.name)] = provider
+      end
+
+      def add_consumer consumer
+        @consumers[simplify(consumer.name)] = consumer
+      end
+
       def provider name
         @providers[simplify(name)]
       end
 
-      def consumer attributes
-        name = simplify(attributes[:name])
-        @consumers[name] ||= Shokkenki::Consumer::Model::Role.new attributes
+      def consumer name
+        @consumers[simplify(name)]
       end
 
-      def current_consumer= attributes
-        @current_consumer = consumer attributes
+      def set_current_consumer name
+        @current_consumer = consumer name
       end
 
       def clear_interaction_stubs

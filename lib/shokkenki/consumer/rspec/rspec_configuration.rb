@@ -1,5 +1,6 @@
 require_relative '../../shokkenki'
 require_relative '../rspec/example_group_binding'
+require_relative '../model/role'
 require 'rspec'
 
 RSpec.configure do |config|
@@ -10,7 +11,9 @@ RSpec.configure do |config|
   )
 
   config.before(:each, :shokkenki_consumer => lambda{ |x| true }) do
-    Shokkenki.consumer.current_consumer = example.metadata[:shokkenki_consumer]
+    name = example.metadata[:shokkenki_consumer][:name]
+    Shokkenki.consumer.add_consumer(Shokkenki::Consumer::Model::Role.new(example.metadata[:shokkenki_consumer])) unless Shokkenki.consumer.consumer(name)
+    Shokkenki.consumer.set_current_consumer name
     Shokkenki.consumer.clear_interaction_stubs
   end
 
