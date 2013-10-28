@@ -1,11 +1,9 @@
+## Given State Support
+
+- add consumer support to generate givens in ticket:
+  - given('there is an apple', :colour => 'red')
 
 ## Provider Stub - Remote Server - shokkenki/provider-stub/remote
-
-- better name for and expression term?
-
-- don't create a provider on the fly - require it to be declared
-- default providers to be stubbed with local server during config - this will be the case for most
-- make order fail when no provider name supplied to session
 
 - deal with 500 responses in the http_stubber
 - make startup failures in server easy to diagnose (eg. load path problem)
@@ -18,11 +16,6 @@
 - log unrecognised interactions to rack log - WARN
 - convert other http examples like http_stubber to use webmock
 - rename and restructure modules for middleware
-
-## Given State Support
-
-- add consumer support to generate givens in ticket:
-  - given('there is an apple', :colour => 'red')
 
 ## Logging
   - Server response polling - debug
@@ -41,6 +34,7 @@
 
 ## Tidy Up
 
+- better name for and expression term?
 - check runtime ruby versions [ ]
 - update examples and ensure that they work [ ]
 - make provider stubbing method configurable
