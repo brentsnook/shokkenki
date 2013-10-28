@@ -5,16 +5,8 @@ module Shokkenki
     module DSL
       class Order
 
-        attr_accessor :provider_name
-
-        def initialize provider_name, patronage
-          @provider_name = provider_name
+        def initialize patronage
           @patronage = patronage
-        end
-
-        def provider provider_name
-          @provider_name = provider_name
-          self
         end
 
         def during label
@@ -33,7 +25,6 @@ module Shokkenki
         end
 
         def validate!
-          raise "No 'provider' has been specified." unless @provider_name
           raise "No 'receive' has been specified." unless @request_details
           raise "No 'and_respond' has been specified." unless @response_details
         end

@@ -16,11 +16,11 @@ describe Shokkenki::Consumer::DSL::Session do
     let(:patronage) { double('patronage').as_null_object }
 
     before do
-      allow(Shokkenki::Consumer::DSL::Order).to receive(:new).with(:provider_name, patronage).and_return order
+      allow(Shokkenki::Consumer::DSL::Order).to receive(:new).with(patronage).and_return order
       allow(subject).to receive(:current_patronage_for).with(:provider_name).and_return patronage
     end
 
-    it 'creates a new order for the provider and patronage' do
+    it 'creates a new order for the patronage' do
       expect(subject.order(:provider_name)).to be(order)
     end
   end

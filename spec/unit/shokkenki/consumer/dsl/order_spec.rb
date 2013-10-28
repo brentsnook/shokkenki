@@ -8,7 +8,7 @@ describe Shokkenki::Consumer::DSL::Order do
   let(:request_attributes) { double('request attributes').as_null_object }
   let(:patronage) { double('patronage').as_null_object }
 
-  subject { Shokkenki::Consumer::DSL::Order.new :provider_name, patronage }
+  subject { Shokkenki::Consumer::DSL::Order.new patronage }
 
   before do
     subject.receive request_attributes
@@ -96,18 +96,6 @@ describe Shokkenki::Consumer::DSL::Order do
     it 'allows order calls to be chained' do
       expect(order_with_response).to be(subject)
     end
-  end
-
-  context "when 'provider' has not been specified" do
-
-    before do
-      subject.provider_name = nil
-    end
-
-    it 'fails' do
-      expect { subject.validate! }.to raise_error("No 'provider' has been specified.")
-    end
-
   end
 
   context 'validation' do
