@@ -23,7 +23,7 @@ describe 'A consumer', :shokkenki_consumer => {:name => :my_consumer} do
     end
 
     it 'receives the stubbed response' do
-      stubber = shokkenki.provider(:name => :my_provider).stubber
+      stubber = shokkenki.provider(:my_provider).stubber
       url = "http://#{stubber.host}:#{stubber.port}/greeting"
       expect(HTTParty.get(url).body).to match(/hello/)
     end

@@ -13,14 +13,26 @@ describe Shokkenki::Consumer::Session do
   end
 
   describe 'provider' do
-    it 'is always the same when requested by name' do
-      provider = subject.provider(:name => :providertron)
-      expect(subject.provider(:name => :providertron)).to be(provider)
+    let(:provider) { double('provider', :name => :providername)}
+
+    before do
+      subject.add_provider provider
     end
 
-    it 'is stored and retrieved using a simplified name' do
-      provider = subject.provider(:name => :PROvidertron)
-      expect(subject.provider(:name => :providertron)).to be(provider)
+    it 'is retrieved using a simplified name' do
+      expect(subject.provider(:PROVidername)).to be(provider)
+    end
+  end
+
+  describe 'adding a provider' do
+    let(:provider) { double('provider', :name => :providername)}
+
+    before do
+      subject.add_provider provider
+    end
+
+    it 'adds the provider to the list of providers' do
+      expect(subject.provider(:providername)).to be(provider)
     end
   end
 
@@ -39,18 +51,21 @@ describe Shokkenki::Consumer::Session do
 
   describe 'current patronage' do
 
+   let(:provider) { double('provider', :name => :providername)}
+
     before do
+      subject.add_provider provider
       subject.current_consumer = {:name => :consumertron}
     end
 
-    let(:patronage) { subject.current_patronage_for(:providertron) }
+    let(:patronage) { subject.current_patronage_for(:providername) }
 
     it 'is for the current consumer' do
       expect(patronage.consumer.name).to eq(:consumertron)
     end
 
     it 'is of the given provider' do
-      expect(patronage.provider.name).to eq(:providertron)
+      expect(patronage.provider.name).to eq(:providername)
     end
 
   end
@@ -88,9 +103,10 @@ describe Shokkenki::Consumer::Session do
   end
 
   context 'clearing interaction stubs' do
+    let(:provider) { double('provider', :name => :providername)}
 
-    let(:provider) { subject.provider(:name => :providertron) }
     before do
+      subject.add_provider provider
       allow(provider).to receive(:clear_interaction_stubs)
       subject.clear_interaction_stubs
     end
@@ -134,8 +150,10 @@ describe Shokkenki::Consumer::Session do
   end
 
   context 'when started' do
-    let(:provider) { subject.provider(:name => :providertron) }
+    let(:provider) { double('provider', :name => :providername)}
+
     before do
+      subject.add_provider provider
       allow(provider).to receive(:session_started)
       subject.start
     end
@@ -146,8 +164,10 @@ describe Shokkenki::Consumer::Session do
   end
 
   context 'when closed' do
-    let(:provider) { subject.provider(:name => :providertron) }
+    let(:provider) { double('provider', :name => :providername)}
+
     before do
+      subject.add_provider provider
       allow(provider).to receive(:session_closed)
       subject.close
     end

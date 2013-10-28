@@ -23,7 +23,7 @@ describe Shokkenki::Consumer::Configuration::ProviderConfiguration do
       end
 
       it 'stores a newly created stubber' do
-        expect(subject.to_attributes[:stubber]).to be(stubber)
+        expect(subject.to_provider.stubber).to be(stubber)
       end
 
       it 'creates the stubber with the given attributes' do
@@ -56,8 +56,7 @@ describe Shokkenki::Consumer::Configuration::ProviderConfiguration do
     end
   end
 
-  context 'as attributes' do
-
+  context 'as a provider' do
     subject do
       Shokkenki::Consumer::Configuration::ProviderConfiguration.new(
         :provider_name,
@@ -65,13 +64,17 @@ describe Shokkenki::Consumer::Configuration::ProviderConfiguration do
       )
     end
 
-    it 'includes name' do
-      expect(subject.to_attributes[:name]).to eq(:provider_name)
+    let(:provider) { subject.to_provider }
+
+    before { subject.label = 'provider label' }
+
+    it 'has the provider name' do
+      expect(provider.name).to eq(:provider_name)
     end
 
-    it 'includes label' do
-      subject.label = 'provider label'
-      expect(subject.to_attributes[:label]).to eq('provider label')
+    it 'has the provider label' do
+      expect(provider.label).to eq('provider label')
     end
   end
+
 end

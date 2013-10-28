@@ -1,3 +1,5 @@
+require_relative '../model/provider'
+
 module Shokkenki
   module Consumer
     module Configuration
@@ -19,12 +21,12 @@ module Shokkenki
           raise "No 'stub_with' has been specified." unless @stubber
         end
 
-        def to_attributes
-          {
+        def to_provider
+          Shokkenki::Consumer::Model::Provider.new(
             :stubber => @stubber,
             :name => @name,
             :label => @label
-          }
+          )
         end
       end
     end

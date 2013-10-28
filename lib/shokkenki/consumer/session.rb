@@ -24,14 +24,17 @@ module Shokkenki
 
       def current_patronage_for provider_name
         consumer = @current_consumer
-        provider = provider(:name => provider_name)
+        provider = provider provider_name
         key = { consumer => provider }
         @patronages[key] ||= Shokkenki::Consumer::Model::Patronage.new :consumer => consumer, :provider => provider
       end
 
-      def provider attributes
-        name = simplify(attributes[:name])
-        @providers[name] ||= Shokkenki::Consumer::Model::Provider.new attributes
+      def add_provider provider
+        @providers[simplify(provider.name)] = provider
+      end
+
+      def provider name
+        @providers[simplify(name)]
       end
 
       def consumer attributes

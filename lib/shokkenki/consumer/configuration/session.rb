@@ -27,7 +27,7 @@ module Shokkenki
           )
           yield provider_config
           provider_config.validate!
-          provider provider_config.to_attributes
+          add_provider provider_config.to_provider
         end
       end
     end

@@ -54,12 +54,12 @@ describe Shokkenki::Consumer::Configuration::Session do
 
   context 'defining a provider' do
 
-    let(:configuration) { double('provider configuration', :to_attributes => provider_attributes).as_null_object }
-    let(:provider_attributes) { {:provider => 'attributes'} }
+    let(:configuration) { double('provider configuration', :to_provider => provider).as_null_object }
+    let(:provider) { double 'provider' }
 
     before do
       allow(Shokkenki::Consumer::Configuration::ProviderConfiguration).to receive(:new).and_return configuration
-      allow(subject).to receive(:provider)
+      allow(subject).to receive(:add_provider)
       subject.define_provider(:provider_name) do |p|
         p.set_some_details
       end
@@ -82,7 +82,7 @@ describe Shokkenki::Consumer::Configuration::Session do
     end
 
     it 'adds a new provider using the details' do
-      expect(subject).to have_received(:provider).with provider_attributes
+      expect(subject).to have_received(:add_provider).with provider
     end
   end
 end
