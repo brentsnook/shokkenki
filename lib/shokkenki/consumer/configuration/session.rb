@@ -20,7 +20,7 @@ module Shokkenki
           stubber_classes[name] = clazz
         end
 
-        def add_provider name
+        def define_provider name
           provider_config = ProviderConfiguration.new(
             name,
             stubber_classes
