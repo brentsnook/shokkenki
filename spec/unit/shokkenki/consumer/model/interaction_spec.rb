@@ -42,18 +42,28 @@ describe Shokkenki::Consumer::Model::Interaction do
     let(:response) { double 'response', :to_hash => {'response' => 'hash'}  }
     let(:current_time) { Time.parse '2012-04-23T18:25:43Z' }
 
+    let(:label) { 'interaction label' }
     subject do
       Timecop.freeze(current_time) do
         Shokkenki::Consumer::Model::Interaction.new(
-          :label => 'interaction label',
+          :label => label,
           :request => request,
           :response => response
         )
       end
     end
 
-    it 'includes the label' do
-      expect(subject.to_hash[:label]).to eq('interaction label')
+    context 'when there is a label' do
+      it 'includes the label' do
+        expect(subject.to_hash[:label]).to eq('interaction label')
+      end
+    end
+
+    context 'when there is no label' do
+      let(:label) { nil }
+      it 'does not include the label' do
+        expect(subject.to_hash).to_not have_key(:label)
+      end
     end
 
     it 'includes the request hash' do

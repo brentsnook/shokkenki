@@ -13,12 +13,12 @@ module Shokkenki
         end
 
         def to_hash
-          {
-            :label => @label,
+          hash = {
             :request => @request.to_hash,
             :response => @response.to_hash,
             :time => @time.utc.iso8601
           }
+          hash.merge!(:label => @label) if @label
         end
       end
     end
