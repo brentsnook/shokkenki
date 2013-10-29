@@ -9,13 +9,15 @@ describe Shokkenki::Consumer::Model::Interaction do
     let(:request) { double 'request' }
     let(:response) { double 'response' }
     let(:current_time) { Time.now }
+    let(:fixture) { double 'fixture' }
 
     subject do
       Timecop.freeze(current_time) do
         Shokkenki::Consumer::Model::Interaction.new(
           :label => 'interaction label',
           :request => request,
-          :response => response
+          :response => response,
+          :fixtures => [fixture]
         )
       end
     end
@@ -35,20 +37,28 @@ describe Shokkenki::Consumer::Model::Interaction do
     it 'has the current time' do
       expect(subject.time).to eq(current_time)
     end
+
+    it 'has the given fixtures' do
+      expect(subject.fixtures).to eq([fixture])
+    end
   end
 
   context 'converted to a hash' do
     let(:request) { double 'request', :to_hash => {'request' => 'hash'} }
-    let(:response) { double 'response', :to_hash => {'response' => 'hash'}  }
+    let(:response) { double 'response', :to_hash => {'response' => 'hash'} }
+    let(:fixture) { double 'fixture', :to_hash => {'fixture' => 'hash'} }
     let(:current_time) { Time.parse '2012-04-23T18:25:43Z' }
 
     let(:label) { 'interaction label' }
+    let(:fixtures) { [fixture] }
+
     subject do
       Timecop.freeze(current_time) do
         Shokkenki::Consumer::Model::Interaction.new(
           :label => label,
           :request => request,
-          :response => response
+          :response => response,
+          :fixtures => fixtures
         )
       end
     end
@@ -76,6 +86,19 @@ describe Shokkenki::Consumer::Model::Interaction do
 
     it 'includes the time formatted as an ISO 8601 date' do
       expect(subject.to_hash[:time]).to eq('2012-04-23T18:25:43Z')
+    end
+
+    context 'when there are fixtures' do
+      it 'includes the fixtures as a hash' do
+        expect(subject.to_hash[:fixtures]).to eq([{'fixture' => 'hash'}])
+      end
+    end
+
+    context 'when there are no fixtures' do
+      let(:fixtures) { nil }
+      it 'does not include the fixtures hash' do
+        expect(subject.to_hash).to_not have_key(:fixtures)
+      end
     end
   end
 

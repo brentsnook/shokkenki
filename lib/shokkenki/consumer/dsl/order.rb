@@ -1,4 +1,5 @@
 require_relative '../model/interaction'
+require_relative '../model/fixture'
 
 module Shokkenki
   module Consumer
@@ -7,6 +8,7 @@ module Shokkenki
 
         def initialize patronage
           @patronage = patronage
+          @fixtures = []
         end
 
         def during label
@@ -24,6 +26,14 @@ module Shokkenki
           self
         end
 
+        def given name, arguments=nil
+          @fixtures << Shokkenki::Consumer::Model::Fixture.new(
+            :name => name,
+            :arguments => arguments
+          )
+          self
+        end
+
         def validate!
           raise "No 'receive' has been specified." unless @request_details
           raise "No 'and_respond' has been specified." unless @response_details
@@ -33,7 +43,8 @@ module Shokkenki
           Shokkenki::Consumer::Model::Interaction.new(
             :label => @interaction_label,
             :request => @request_details.to_shokkenki_term,
-            :response => @response_details.to_shokkenki_term
+            :response => @response_details.to_shokkenki_term,
+            :fixtures => @fixtures
           )
         end
 

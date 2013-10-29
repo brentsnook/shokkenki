@@ -62,11 +62,25 @@ describe 'A consumer rspec spec' do
                 },
                 'body' => {
                   'type' => 'regexp',
-                  'value' => '(?-mix:hello)'
+                  'value' => '(?-mix:hello there, its a warm one today )'
                 }
               }
             }
           ))
+        end
+
+        describe 'fixtures' do
+
+          let(:fixture) { interaction['fixtures'].first }
+
+          it 'includes the fixture name' do
+            expect(fixture['name']).to eq('weather')
+          end
+
+          it 'includes the fixture arguments' do
+            expect(fixture['arguments']).to eq('temperature' => 30)
+          end
+
         end
       end
     end

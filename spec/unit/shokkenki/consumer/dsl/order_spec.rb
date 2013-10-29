@@ -1,6 +1,7 @@
 require_relative '../../../spec_helper'
 require 'shokkenki/consumer/dsl/order'
 require 'shokkenki/consumer/model/interaction'
+require 'shokkenki/consumer/model/fixture'
 
 describe Shokkenki::Consumer::DSL::Order do
 
@@ -41,6 +42,30 @@ describe Shokkenki::Consumer::DSL::Order do
 
     it 'adds the resulting interaction to the patronage' do
       expect(patronage).to have_received(:add_interaction).with(interaction)
+    end
+
+  end
+
+  context 'given' do
+
+    let(:request_term) { double 'request term' }
+    let(:fixture) { double 'fixture' }
+    let(:order_with_given) { subject.given :fixture_name, {:fixture => :arguments} }
+
+    before do
+      allow(Shokkenki::Consumer::Model::Fixture).to(
+        receive(:new).with(:name => :fixture_name, :arguments => {:fixture => :arguments}).
+        and_return(fixture)
+      )
+    end
+
+    it 'defines the fixture of the interaction' do
+      order_with_given.to_interaction
+      expect(Shokkenki::Consumer::Model::Interaction).to have_received(:new).with(hash_including(:fixtures => [fixture]))
+    end
+
+    it 'allows order calls to be chained' do
+      expect(order_with_given).to be(subject)
     end
 
   end
