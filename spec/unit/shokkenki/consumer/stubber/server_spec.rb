@@ -88,16 +88,6 @@ describe Shokkenki::Consumer::Stubber::Server do
     end
   end
 
-  context 'resetting errors' do
-
-    before { subject.reset_error! }
-
-    it 'resets the errors on the middleware' do
-      expect(middleware).to have_received(:error=).with(nil)
-    end
-
-  end
-
   context 'errors' do
 
     before { allow(middleware).to receive(:error).and_return 'error!' }

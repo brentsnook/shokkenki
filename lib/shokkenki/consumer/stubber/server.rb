@@ -20,10 +20,6 @@ module Shokkenki
           @port = attributes[:port]
         end
 
-        def reset_error!
-          @middleware.error = nil
-        end
-
         def error
           @middleware.error
         end
