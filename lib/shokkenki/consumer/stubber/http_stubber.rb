@@ -23,11 +23,13 @@ module Shokkenki
             :body => interaction.to_hash.to_json,
             :headers => { 'Content-Type' => 'application/json' }
           )
+          server.assert_ok!
           raise "Failed to stub interaction: #{response.inspect}" unless successful?(response)
         end
 
         def clear_interaction_stubs
           response = HTTParty.delete interactions_uri
+          server.assert_ok!
           raise "Failed to clear interaction stubs: #{response.inspect}" unless successful?(response)
         end
 

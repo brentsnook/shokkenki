@@ -245,4 +245,24 @@ describe Shokkenki::Consumer::Stubber::Server do
       expect(thread).to have_received(:kill)
     end
   end
+
+  context 'asserting everything is ok' do
+
+    context 'when there is an error' do
+      let(:error) { Exception.new 'server error' }
+      before { allow(subject).to receive(:error).and_return error }
+
+      it 'raises the error' do
+        expect{ subject.assert_ok! }.to raise_error(error)
+      end
+    end
+
+    context 'when there is no error' do
+      before { allow(subject).to receive(:error).and_return nil }
+
+      it 'does nothing' do
+        expect{ subject.assert_ok! }.to_not raise_error
+      end
+    end
+  end
 end

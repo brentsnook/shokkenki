@@ -7,6 +7,7 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
 
   let(:interaction) { double('interaction').as_null_object }
   let(:interactions_uri) { 'http://stubby.com/interaction_path' }
+  let(:server) { double('server').as_null_object }
 
   subject do
     Shokkenki::Consumer::Stubber::HttpStubber.new({})
@@ -89,6 +90,7 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
     before do
       allow(HTTParty).to receive(:post).and_return response
       allow(subject).to receive(:interactions_uri).and_return interactions_uri
+      allow(subject).to receive(:server).and_return server
     end
 
     context 'when the request succeeds' do
@@ -114,6 +116,16 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
         )
       end
     end
+
+    context 'in all cases' do
+      let(:response) { double('response', :code => 200) }
+
+      before { subject.stub_interaction interaction }
+
+      it 'ensures that the server experienced no errors' do
+        expect(server).to have_received(:assert_ok!)
+      end
+    end
   end
 
   context 'clearing interaction stubs' do
@@ -121,6 +133,7 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
     before do
       allow(HTTParty).to receive(:delete).and_return response
       allow(subject).to receive(:interactions_uri).and_return interactions_uri
+      allow(subject).to receive(:server).and_return server
     end
 
     context 'when the request succeeds' do
@@ -142,6 +155,16 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
         expect{ subject.clear_interaction_stubs }.to raise_error(
           'Failed to clear interaction stubs: response details'
         )
+      end
+    end
+
+    context 'in all cases' do
+      let(:response) { double('response', :code => 200) }
+
+      before { subject.clear_interaction_stubs }
+
+      it 'ensures that the server experienced no errors' do
+        expect(server).to have_received(:assert_ok!)
       end
     end
   end

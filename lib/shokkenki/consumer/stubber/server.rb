@@ -10,7 +10,7 @@ module Shokkenki
     module Stubber
       class Server
 
-        attr_reader :app, :port, :host, :server_thread
+        attr_reader :app, :port, :host, :server_thread, :error
 
         def initialize attributes
           @app = attributes[:app]
@@ -26,6 +26,10 @@ module Shokkenki
 
         def error
           @middleware.error
+        end
+
+        def assert_ok!
+          raise error if error
         end
 
         def responsive?
