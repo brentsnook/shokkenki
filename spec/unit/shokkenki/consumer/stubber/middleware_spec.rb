@@ -23,6 +23,30 @@ describe Shokkenki::Consumer::Stubber::Middleware do
       end
     end
 
+    context 'when the wrapped application fails' do
+
+      let(:env) { {'PATH_INFO' => '/'} }
+
+      before do
+        allow(application).to receive(:call).and_raise 'kaboom'
+      end
+
+      it 'stores the error for reference' do
+        response rescue
+        expect(subject.error.message).to eq('kaboom')
+      end
+
+      it 'fails' do
+        expect { response }.to raise_error('kaboom')
+      end
+
+      it 'avoid clobbering existing errors' do
+        subject.error = 'I was here first!'
+        response rescue
+        expect(subject.error).to eq('I was here first!')
+      end
+    end
+
     context 'with any other request' do
 
       let(:env) { {'PATH_INFO' => '/otherpath'} }
@@ -30,28 +54,6 @@ describe Shokkenki::Consumer::Stubber::Middleware do
       it 'calls the wrapped application' do
         response
         expect(application).to have_received(:call).with(env)
-      end
-
-      context 'when the wrapped application fails' do
-
-        before do
-          allow(application).to receive(:call).and_raise 'kaboom'
-        end
-
-        it 'stores the error for reference' do
-          response rescue
-          expect(subject.error.message).to eq('kaboom')
-        end
-
-        it 'fails' do
-          expect { response }.to raise_error('kaboom')
-        end
-
-        it 'avoid clobbering existing errors' do
-          subject.error = 'I was here first!'
-          response rescue
-          expect(subject.error).to eq('I was here first!')
-        end
       end
     end
   end

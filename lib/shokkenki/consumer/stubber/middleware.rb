@@ -13,15 +13,15 @@ module Shokkenki
         end
 
         def call(env)
-          if env['PATH_INFO'] == IDENTIFY_PATH
-            [200, {}, [@app.object_id.to_s]]
-          else
-            begin
+          begin
+            if env['PATH_INFO'] == IDENTIFY_PATH
+              [200, {}, [@app.object_id.to_s]]
+            else
               @app.call(env)
-            rescue StandardError => e
-              @error = e unless @error
-              raise e
             end
+          rescue StandardError => e
+            @error = e unless @error
+            raise e
           end
         end
       end
