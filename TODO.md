@@ -45,9 +45,6 @@ Hungry Man (describe)
       body
         matches /sdsd/ (RegexTerm: 'matches #{pattern}')
 
-
-
-
 - run with hard coded interactions, pass or fail [ ]
 - read ticket from hardcoded location and test interactions [ ][ ][ ][ ]
 - read tickets from specified location (file path, URI or lambda) [ ]
@@ -99,6 +96,20 @@ Hungry Man (describe)
 - Find a better way to stub new methods?
 - document what can be included in a request
 - split term model into separate gem
+
+## JSON Matcher
+    order(:my_provider).during('order for ramen').to do
+        receive(:method => :get, :path => '/order/ramen').
+        and_respond(:body => json('$.temperature' => /hot/)))
+
+    order for ramen
+      response
+        body
+          json
+            $.temperature
+              matches /hot/
+
+-  use JSONPath syntax and maybe https://github.com/joshbuddy/jsonpath
 
 ## Support for non-Rack providers
 
