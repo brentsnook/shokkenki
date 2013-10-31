@@ -29,20 +29,18 @@ Remaining before a usable release:
 require 'shokkenki/consumer/rspec'
 require_relative 'hungry_man'
 
-describe HungryMan, :shokkenki => {:consumer => :hungry_man} do
+Shokkenki.consumer.configure do |c|
+  c.define_provider :restaurant
+end
 
-  shokkenki.provider :restaurant do
-    stubbed_as_server do
-      on_port 1234
-    end
-  end
+describe HungryMan, :shokkenki_consumer => {:name => :hungry_man} do
 
   context 'when his ramen is hot' do
 
     before do
-      shokkenki.order(:my_provider).during('an order for ramen').to do
+      order(:my_provider).during('order for ramen').to do
         receive(:method => :get, :path => '/order/ramen').
-        and_respond(:body => { :temperature => /hot/ })
+        and_respond(:body => /tasty/))
       end
     end
 
@@ -62,13 +60,19 @@ require 'shokkenki/provider/rspec'
 require 'shokkenki/provider/rack'
 require 'restaurant'
 
-shokkenki.provider(:restaurant) {
-  racked_up_as { Restaurant }
-}.honours_tickets!
+Shokkenki.provider(:restaurant){ racked_up_as Restaurant.new }.honours_tickets!
 
 ```
 
 When run, [this provider example](examples/provider/restaurant_spec.rb) will define a series of rspec examples for each interaction in any found tickets. It will find the ticket created by the previous consumer example by default.
+
+```
+Hungry Man
+  order for ramen
+    response
+      body
+        matches /sdsd/
+```
 
 ## License
 
