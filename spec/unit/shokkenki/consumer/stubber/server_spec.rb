@@ -136,6 +136,7 @@ describe Shokkenki::Consumer::Stubber::Server do
   end
 
   context 'responsive?' do
+    before { allow(subject).to receive(:assert_ok!) }
     context 'when there is a server thread but it is not running' do
       let(:thread) { double('thread').as_null_object }
 
@@ -146,6 +147,17 @@ describe Shokkenki::Consumer::Stubber::Server do
 
       it 'is not responsive' do
         expect(subject).to_not be_responsive
+      end
+    end
+
+    context 'for each poll' do
+      before do
+        stub_request(:get, identify_url).to_return(:body => '', :status => 200)
+        subject.responsive?
+      end
+
+      it 'asserts that the server is ok' do
+        expect(subject).to have_received(:assert_ok!)
       end
     end
 

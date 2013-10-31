@@ -33,6 +33,7 @@ module Shokkenki
           res = Net::HTTP.start(host, @port) do |http|
             http.get Middleware::IDENTIFY_PATH
           end
+          assert_ok!
           ok?(res) && is_app?(res)
         rescue SystemCallError
           return false
