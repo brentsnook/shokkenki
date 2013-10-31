@@ -1,21 +1,19 @@
-## Given State Support
-
-- add consumer support to generate givens in ticket:
-  - given('there is an apple', :colour => 'red')
-
 ## Provider Stub - Remote Server - shokkenki/provider-stub/remote
 
-- deal with 500 responses in the http_stubber
-- make startup failures in server easy to diagnose (eg. load path problem)
+- Rename rack_server to stub_server_middleware
+- Merge middleware and stub_server_middleware - makes error reporting clearer
+- In server.assert_ok?
+
+- provide interactions as an endpoint: GET shokkenki/interactions
+  - id (hash of interaction)
+  - matched_requests
+- provide requests as an endpoint: GET shokkenki/requests
+  - matched_interaction
+  - response
+- log stubbed request to rack log - INFO
+
 - add unique IDs to interactions - hashed from their contents - make it easier to spot unique interactions
 - key interactions by unique ID and warn when they are being overwritten
-- add a hit count to interactions - ensure this shows up on deletion log
-- log created interactions to rack log - INFO
-- log stubbed request to rack log - INFO
-- log deleted requests - INFO
-- log unrecognised interactions to rack log - WARN
-- convert other http examples like http_stubber to use webmock
-- rename and restructure modules for middleware
 
 ## Logging
   - Server response polling - debug
@@ -40,10 +38,33 @@
 - make provider stubbing method configurable
   - including consumer/provider-stub/server mixes it into the configuration
 - watch out for require_relative and target version
+- convert other http examples like http_stubber to use webmock
 - better end to end coverage around tickets?
-- document terms
-  - regex terms uses ruby standard for regex
-- release
+- differentiate between providers when there is a failure in server
+- document
+  - what is a shokkenki?
+    - food ticket machine
+    - as a consumer you insert coins, press a button to select your meal
+    - a paper ticket is dispensed which you hand to your food provider behind the counter
+    - they prepare the food and call you over when it is finished
+  - consumer driven contracts
+  - consumer
+  - provider
+  - ticket
+  - terms
+    - regex terms uses ruby standard for regex
+      - generate terms with ruby string random
+    - creating your own
+      - as long as both the provider and consumer support them
+  - fixtures
+  - wtf is going on
+    - use pry to interrogate the provider
+      provider.stubber.interactions
+      provider.stubber.unused_interactions
+      provider.stubber.requests
+        /interactions?hit_count='0'
+
+- release !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 - add a call to action on README - "problems? Feature request? Doesn't work the way you want? Create an issue!"
 - rename shokkenki to shokkenki-consumer
@@ -75,6 +96,12 @@
 - what will it hopefully target? (Javascript consumers via unit tests + stubbing, http mocking in Angular/Ember/Backbone - shokkenki-consumer-angular)
 - how can it be used to test a provider that I don't control? Using it to test github API as an example
 - Issues/contributing
+
+## Tests
+
+- Multiple nested scenarios
+- What happends when you specify different consumers in nested contexts?
+
 
 ## Later
 
