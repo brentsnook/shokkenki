@@ -2,31 +2,59 @@
 
 - Rename rack_server to stub_server_middleware
 - Merge middleware and stub_server_middleware - makes error reporting clearer
-- In server.assert_ok?
+- Introduce StubbedServerMiddlewareException
+  - accepts an exception
+  - uses the message from the given exception
+  - uses Kernel.caller to add to the stack trace
+  - strips out first line of caller (inside of the exception class)
+- Throw StubbedServerMiddlewareException from assert_ok!
 
-- provide interactions as an endpoint: GET shokkenki/interactions
-  - id (hash of interaction)
-  - matched_requests
+- After each example ->
+  - Fail if unmatched requests were found:
+    The following requests were not matched by any interaction:
+      []
+  - Fail if unused interactions were found:
+    The following interactions did not match any request:
+      []
+
+- provide a verbose mode enabled with SHOKKENKI_OPTIONS='-verbose'
+  - prints out all interactions
+    All interactions:
+      []
+    All requests:
+      []
+- provide all interactions as an endpoint: GET shokkenki/interactions
 - provide requests as an endpoint: GET shokkenki/requests
-  - matched_interaction
-  - response
-- log stubbed request to rack log - INFO
+- add matched_requests to interaction
+- add matching_interaction to request
+- add response to request
 
 - add unique IDs to interactions - hashed from their contents - make it easier to spot unique interactions
 - key interactions by unique ID and warn when they are being overwritten
 
-## Logging
-  - Server response polling - debug
-  - Actual server logging
-
 ## Provider
+
+Hungry Man (describe)
+  order for ramen (describe)
+    response (describe)
+      status (describe)
+        is 200 (it)
+      header (describe)
+        Content-Type
+          is application/json (it - StringTerm: 'is #{value}')
+      body
+        matches /sdsd/ (RegexTerm: 'matches #{pattern}')
+
+
+
 
 - run with hard coded interactions, pass or fail [ ]
 - read ticket from hardcoded location and test interactions [ ][ ][ ][ ]
-- read ticket from specified location [ ]
+- read tickets from specified location (file path, URI or lambda) [ ]
 - add producer support to recognise givens
   - fail if state is not recognised
   - otherwise set state up before running specs
+- RSpec support just registers a new TicketListener? that creates examples from ticket
 - nice syntax highlighting in results [ ][ ][ ]
 - Rake task [ ]
 
@@ -105,7 +133,9 @@
 
 ## Later
 
-
+- Cucumber support
+- Minitest support
+- Steak support
 - add default response params for those that are not given
   - for example, default status to 200
 - streaming content support - add to a wiki page of things it doesnt support
