@@ -51,9 +51,18 @@ Hungry Man (describe)
 - add producer support to recognise givens
   - fail if state is not recognised
   - otherwise set state up before running specs
+
+  Shokkenki.provider.fixtures do
+
+    given 'a thing exists' do |thing|
+       ...
+    end
+
+  end
 - RSpec support just registers a new TicketListener? that creates examples from ticket
 - nice syntax highlighting in results [ ][ ][ ]
 - Rake task [ ]
+- Add documentation on selective spec running with --example
 
 ## Tidy Up
 
