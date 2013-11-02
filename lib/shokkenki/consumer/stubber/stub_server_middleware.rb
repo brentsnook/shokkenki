@@ -5,7 +5,7 @@ require_relative 'stubbed_response_middleware'
 module Shokkenki
   module Consumer
     module Stubber
-      class RackServer
+      class StubServerMiddleware
 
         def initialize
           @interactions = Interactions.new

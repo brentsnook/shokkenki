@@ -1,6 +1,7 @@
 require_relative '../../../spec_helper'
 require 'httparty'
 require 'shokkenki/consumer/stubber/http_stubber'
+require 'shokkenki/consumer/stubber/stub_server_middleware'
 require 'find_a_port'
 
 describe Shokkenki::Consumer::Stubber::HttpStubber do
@@ -193,7 +194,7 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
 
     before do
       allow(Shokkenki::Consumer::Stubber::Server).to receive(:new).and_return(server)
-      allow(Shokkenki::Consumer::Stubber::RackServer).to receive(:new).and_return(app)
+      allow(Shokkenki::Consumer::Stubber::StubServerMiddleware).to receive(:new).and_return(app)
     end
 
     context 'when a port has been supplied' do

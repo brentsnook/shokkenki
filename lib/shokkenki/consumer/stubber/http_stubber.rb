@@ -1,5 +1,5 @@
 require_relative 'server'
-require_relative 'rack_server'
+require_relative 'stub_server_middleware'
 require 'httparty'
 require 'uri'
 require 'find_a_port'
@@ -44,7 +44,7 @@ module Shokkenki
           @port = FindAPort.available_port unless @port
 
           @server = Server.new(
-            :app => RackServer.new,
+            :app => StubServerMiddleware.new,
             :host => @host,
             :port => @port
           )

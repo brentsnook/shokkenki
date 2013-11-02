@@ -1,17 +1,17 @@
 require_relative '../../../spec_helper'
-require 'shokkenki/consumer/stubber/rack_server'
+require 'shokkenki/consumer/stubber/stub_server_middleware'
 require 'shokkenki/consumer/stubber/interactions'
 require 'shokkenki/consumer/stubber/interactions_middleware'
 require 'shokkenki/consumer/stubber/stubbed_response_middleware'
 
-describe Shokkenki::Consumer::Stubber::RackServer do
+describe Shokkenki::Consumer::Stubber::StubServerMiddleware do
 
   let(:call) { subject.call env }
   let(:interactions_middleware) { double 'interactions middleware', :call => 'interactions middleware' }
   let(:stubbed_response_middleware) { double 'stubbed response middleware', :call => 'stubbed response middleware' }
   let(:interactions) { double 'interactions' }
 
-  subject { Shokkenki::Consumer::Stubber::RackServer.new }
+  subject { Shokkenki::Consumer::Stubber::StubServerMiddleware.new }
 
   before do
     allow(Shokkenki::Consumer::Stubber::Interactions).to receive(:new).and_return interactions
