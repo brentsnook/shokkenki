@@ -1,5 +1,6 @@
 require_relative '../../../spec_helper'
 require 'shokkenki/consumer/stubber/server'
+require 'shokkenki/consumer/stubber/server_application_error'
 require 'rack/handler/webrick'
 require 'webmock/rspec'
 
@@ -244,12 +245,14 @@ describe Shokkenki::Consumer::Stubber::Server do
 
   context 'asserting everything is ok' do
 
+    let(:server_error) { double('server error') }
+    let(:error) { Exception.new 'exception' }
+
     context 'when there is an error' do
-      let(:error) { Exception.new 'server error' }
       before { allow(subject).to receive(:error).and_return error }
 
-      it 'raises the error' do
-        expect{ subject.assert_ok! }.to raise_error(error)
+      it 'raises a ServerApplicationError' do
+        expect{ subject.assert_ok! }.to raise_error(Shokkenki::Consumer::Stubber::ServerApplicationError)
       end
     end
 

@@ -2,6 +2,7 @@ require 'uri'
 require 'net/http'
 require 'rack'
 require 'rack/handler/webrick'
+require_relative 'server_application_error'
 
 # pinched from https://github.com/jnicklas/capybara/blob/master/lib/capybara/server.rb
 module Shokkenki
@@ -23,7 +24,7 @@ module Shokkenki
         end
 
         def assert_ok!
-          raise error if error
+          raise ServerApplicationError.new(error) if error
         end
 
         def responsive?
