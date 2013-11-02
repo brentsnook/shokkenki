@@ -19,6 +19,18 @@ describe Shokkenki::Consumer::Stubber::StubServerMiddleware do
     allow(Shokkenki::Consumer::Stubber::StubbedResponseMiddleware).to receive(:new).with(interactions).and_return stubbed_response_middleware
   end
 
+  context 'responding to requests to identify its self' do
+    let(:env) { {'PATH_INFO' => subject.identify_path} }
+
+    it 'identifies using the object ID of the middleware' do
+      expect(call[2]).to eq([subject.object_id.to_s])
+    end
+
+    it 'is successful' do
+      expect(call[0]).to eq(200)
+    end
+  end
+
   context 'responding to shokkenki interactions requests' do
     let(:env) { {'PATH_INFO' => '/shokkenki/interactions'} }
     it 'uses the interactions middleware to process the request' do
@@ -30,6 +42,30 @@ describe Shokkenki::Consumer::Stubber::StubServerMiddleware do
     let(:env) { {'PATH_INFO' => '/some_other_request'} }
     it 'uses the stubbed response middleware to handle the request' do
       expect(call).to eq('stubbed response middleware')
+    end
+  end
+
+  context 'when the request fails' do
+
+    let(:env) { {'PATH_INFO' => '/'} }
+
+    before do
+      allow(stubbed_response_middleware).to receive(:call).and_raise('kaboom')
+    end
+
+    it 'stores the error for reference' do
+      call rescue
+      expect(subject.error.message).to eq('kaboom')
+    end
+
+    it 'fails' do
+      expect { call }.to raise_error('kaboom')
+    end
+
+    it 'avoid clobbering existing errors' do
+      subject.error = 'I was here first!'
+      call rescue
+      expect(subject.error).to eq('I was here first!')
     end
   end
 end

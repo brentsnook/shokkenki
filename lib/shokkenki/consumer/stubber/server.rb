@@ -2,7 +2,6 @@ require 'uri'
 require 'net/http'
 require 'rack'
 require 'rack/handler/webrick'
-require_relative 'middleware'
 
 # pinched from https://github.com/jnicklas/capybara/blob/master/lib/capybara/server.rb
 module Shokkenki
@@ -14,14 +13,13 @@ module Shokkenki
 
         def initialize attributes
           @app = attributes[:app]
-          @middleware = Middleware.new(@app)
           @server_thread = nil # suppress warnings
           @host = attributes[:host]
           @port = attributes[:port]
         end
 
         def error
-          @middleware.error
+          @app.error
         end
 
         def assert_ok!
@@ -31,7 +29,7 @@ module Shokkenki
         def responsive?
           return false if server_thread && server_thread.join(0)
           res = Net::HTTP.start(host, @port) do |http|
-            http.get Middleware::IDENTIFY_PATH
+            http.get @app.identify_path
           end
           assert_ok!
           ok?(res) && is_app?(res)
@@ -53,7 +51,7 @@ module Shokkenki
 
         def start
           @server_thread = Thread.new do
-            run @middleware, @host, @port
+            run @app, @host, @port
           end
 
           Timeout.timeout(10) { @server_thread.join(0.1) until responsive? }

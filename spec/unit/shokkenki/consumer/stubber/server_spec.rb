@@ -1,27 +1,21 @@
 require_relative '../../../spec_helper'
 require 'shokkenki/consumer/stubber/server'
-require 'shokkenki/consumer/stubber/middleware'
 require 'rack/handler/webrick'
 require 'webmock/rspec'
 
 describe Shokkenki::Consumer::Stubber::Server do
 
-  let(:rack_app) { double('server', :to_s => 'appname') }
   let(:port) { 1234 }
   let(:host) { 'localhost' }
-  let(:middleware) { double('middleware').as_null_object }
-  let(:identify_url) { "http://localhost:1234#{Shokkenki::Consumer::Stubber::Middleware::IDENTIFY_PATH}" }
+  let(:app) { double('app', :to_s => 'appname', :identify_path => '/IDENTIFY_PATH' ).as_null_object }
+  let(:identify_url) { "http://localhost:1234/IDENTIFY_PATH" }
 
   subject do
     Shokkenki::Consumer::Stubber::Server.new(
-      :app => rack_app,
       :port => port,
-      :host => host
+      :host => host,
+      :app => app
     )
-  end
-
-  before do
-    allow(Shokkenki::Consumer::Stubber::Middleware).to receive(:new).with(rack_app).and_return(middleware)
   end
 
   let(:start_server) do
@@ -39,8 +33,8 @@ describe Shokkenki::Consumer::Stubber::Server do
       expect(subject.host).to eq(host)
     end
 
-    it 'uses the rack application given' do
-      expect(subject.app).to eq(rack_app)
+    it 'uses the application given' do
+      expect(subject.app).to eq(app)
     end
   end
 
@@ -59,7 +53,7 @@ describe Shokkenki::Consumer::Stubber::Server do
       end
 
       it 'runs the rack app wrapped in middleware in a new thread' do
-        expect(subject).to have_received(:run).with middleware, anything, anything
+        expect(subject).to have_received(:run).with app, anything, anything
       end
 
       it 'starts the server on the configured port' do
@@ -90,10 +84,10 @@ describe Shokkenki::Consumer::Stubber::Server do
 
   context 'errors' do
 
-    before { allow(middleware).to receive(:error).and_return 'error!' }
+    before { allow(app).to receive(:error).and_return 'error!' }
 
-    it 'are the middleware errors' do
-      expect(middleware.error).to eq('error!')
+    it 'are the app errors' do
+      expect(app.error).to eq('error!')
     end
 
   end
@@ -105,12 +99,12 @@ describe Shokkenki::Consumer::Stubber::Server do
     before do
       allow(Rack::Handler::WEBrick).to receive(:run)
       allow(WEBrick::Log).to receive(:new).and_return(stderr_logger)
-      subject.run rack_app, host, port
+      subject.run app, host, port
     end
 
     context 'as a new Webrick instance' do
       it 'runs the given app' do
-        expect(Rack::Handler::WEBrick).to have_received(:run).with(rack_app, anything)
+        expect(Rack::Handler::WEBrick).to have_received(:run).with(app, anything)
       end
 
       it 'runs on the given port' do
@@ -204,7 +198,7 @@ describe Shokkenki::Consumer::Stubber::Server do
       context 'when the body contains the rack app ID' do
 
         before do
-          stub_request(:get, identify_url).to_return(:body => rack_app.object_id)
+          stub_request(:get, identify_url).to_return(:body => app.object_id)
         end
 
         it 'is responsive' do
