@@ -1,7 +1,6 @@
 require_relative '../../../spec_helper'
 require 'shokkenki/consumer/rspec/example_group_binding'
-require 'shokkenki/consumer/model/role'
-require 'shokkenki/shokkenki'
+require 'shokkenki/consumer/rspec/hooks'
 
 describe 'RSpec configuration' do
 
@@ -16,9 +15,14 @@ describe 'RSpec configuration' do
     end
   end
 
+  let(:hooks) { Shokkenki::Consumer::RSpec::Hooks }
+
   before do
     allow(::RSpec).to receive(:configure).and_yield(config)
     allow(Shokkenki).to receive(:consumer).and_return session
+    allow(hooks).to receive(:before_each)
+    allow(hooks).to receive(:before_suite)
+    allow(hooks).to receive(:after_suite)
   end
 
   it 'treats symbols as keys to prepare for RSpec 3' do
@@ -55,39 +59,14 @@ describe 'RSpec configuration' do
       end
     end
 
-    context 'regardless of whether consumer exists' do
+    before { load_config }
 
-      before { load_config }
-
-      # this allows an implicit consumer to be referred to in the DSL
-      it 'sets a new consumer using the shokkenki metadata' do
-        expect(session).to have_received(:set_current_consumer).with :consumername
-      end
-
-      it 'sets a new consumer for any shokkenki consumer example' do
-        expect(@filtered_to_consumer_examples).to be_true
-      end
-
-      it 'clears interaction stubs in the session' do
-        expect(session).to have_received(:clear_interaction_stubs)
-      end
+    it 'only runs the hook for shokkenki consumer examples' do
+      expect(@filtered_to_consumer_examples).to be_true
     end
 
-    context 'when no consumer exists with the given name' do
-      let(:role) { double 'role' }
-
-      before do
-        allow(session).to receive(:add_consumer)
-        allow(session).to receive(:consumer).with(:consumername).and_return nil
-        allow(Shokkenki::Consumer::Model::Role).to receive(:new).with(consumer_metadata).and_return(role)
-
-        load_config
-      end
-
-      it 'creates the consumer' do
-        expect(session).to have_received(:add_consumer).with(role)
-      end
-
+    it 'runs the before each hook with the metadata' do
+      expect(hooks).to have_received(:before_each).with(consumer_metadata)
     end
 
   end
@@ -98,8 +77,8 @@ describe 'RSpec configuration' do
       load_config
     end
 
-    it 'starts the session' do
-      expect(session).to have_received(:start)
+    it 'runs the before suite hook' do
+      expect(hooks).to have_received(:before_suite)
     end
 
   end
@@ -111,12 +90,8 @@ describe 'RSpec configuration' do
       load_config
     end
 
-    it 'prints out all tickets' do
-      expect(session).to have_received(:print_tickets)
-    end
-
-    it 'closes the session' do
-      expect(session).to have_received(:close)
+    it 'runs the after suite hook' do
+      expect(hooks).to have_received(:after_suite)
     end
   end
 end
