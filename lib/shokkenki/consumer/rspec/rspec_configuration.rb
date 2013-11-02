@@ -1,6 +1,5 @@
-require_relative '../../shokkenki'
-require_relative '../rspec/example_group_binding'
-require_relative '../model/role'
+require_relative 'example_group_binding'
+require_relative 'hooks'
 require 'rspec'
 
 RSpec.configure do |config|
@@ -10,16 +9,11 @@ RSpec.configure do |config|
     :shokkenki_consumer => lambda{ |x| true }
   )
 
+  config.before(:suite) { Shokkenki::Consumer::RSpec::Hooks.before_suite }
+
   config.before(:each, :shokkenki_consumer => lambda{ |x| true }) do
-    name = example.metadata[:shokkenki_consumer][:name]
-    Shokkenki.consumer.add_consumer(Shokkenki::Consumer::Model::Role.new(example.metadata[:shokkenki_consumer])) unless Shokkenki.consumer.consumer(name)
-    Shokkenki.consumer.set_current_consumer name
-    Shokkenki.consumer.clear_interaction_stubs
+    Shokkenki::Consumer::RSpec::Hooks.before_each example.metadata[:shokkenki_consumer]
   end
 
-  config.before(:suite) { Shokkenki.consumer.start }
-  config.after(:suite) do
-    Shokkenki.consumer.print_tickets
-    Shokkenki.consumer.close
-  end
+  config.after(:suite) { Shokkenki::Consumer::RSpec::Hooks.after_suite }
 end
