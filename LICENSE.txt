@@ -1,3 +1,5 @@
+Copyright (c) 2013 Brent Snook
+
                     GNU GENERAL PUBLIC LICENSE
                        Version 2, June 1991
 
