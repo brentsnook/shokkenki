@@ -70,6 +70,10 @@ module Shokkenki
         end
       end
 
+      def assert_all_requests_matched!
+        @providers.values.each { |p| p.assert_all_requests_matched! }
+      end
+
     end
   end
 end

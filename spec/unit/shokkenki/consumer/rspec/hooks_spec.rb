@@ -50,6 +50,15 @@ describe Shokkenki::Consumer::RSpec::Hooks do
 
   end
 
+  context 'after each example runs' do
+    before { subject.after_each }
+
+    it 'asserts that no provider had unmatched requests' do
+      expect(session).to have_received(:assert_all_requests_matched!)
+    end
+
+  end
+
   context 'before the test suite begins' do
     before { subject.before_suite }
 

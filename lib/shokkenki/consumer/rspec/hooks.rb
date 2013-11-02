@@ -6,6 +6,10 @@ module Shokkenki
     module RSpec
       class Hooks
 
+        def self.before_suite
+          Shokkenki.consumer.start
+        end
+
         def self.before_each metadata
           name = metadata[:name]
           Shokkenki.consumer.add_consumer(Shokkenki::Consumer::Model::Role.new(metadata)) unless Shokkenki.consumer.consumer(name)
@@ -13,8 +17,8 @@ module Shokkenki
           Shokkenki.consumer.clear_interaction_stubs
         end
 
-        def self.before_suite
-          Shokkenki.consumer.start
+        def self.after_each
+          Shokkenki.consumer.assert_all_requests_matched!
         end
 
         def self.after_suite

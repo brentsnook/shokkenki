@@ -1,17 +1,29 @@
 require_relative '../../../spec_helper'
-require 'httparty'
 require 'shokkenki/consumer/stubber/http_stubber'
 require 'shokkenki/consumer/stubber/stub_server_middleware'
 require 'find_a_port'
+require 'webmock/rspec'
 
 describe Shokkenki::Consumer::Stubber::HttpStubber do
 
   let(:interaction) { double('interaction').as_null_object }
-  let(:interactions_uri) { 'http://stubby.com/interaction_path' }
+  let(:interactions_uri) { 'https://stubby.com:1235/interactions' }
+  let(:unmatched_requests_uri) { 'https://stubby.com:1235/shokkenki/requests/unmatched' }
   let(:server) { double('server').as_null_object }
 
+  let(:default_attributes) do
+    {
+      :host => 'stubby.com',
+      :scheme => :https,
+      :port => 1235,
+      :interactions_path => '/interactions'
+    }
+  end
+
+  let(:attributes) { default_attributes }
+
   subject do
-    Shokkenki::Consumer::Stubber::HttpStubber.new({})
+    Shokkenki::Consumer::Stubber::HttpStubber.new(attributes)
   end
 
   before do
@@ -20,21 +32,7 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
 
   context 'when created' do
 
-    let(:default_attributes) do
-      {
-        :host => 'stubby.com',
-        :scheme => :https,
-        :port => 1235,
-        :interactions_path => '/interactions'
-      }
-    end
-
-    subject do
-      Shokkenki::Consumer::Stubber::HttpStubber.new(attributes)
-    end
-
     context 'with all values supplied' do
-      let(:attributes) { default_attributes }
 
       it 'has the scheme provided' do
         expect(subject.scheme).to eq(:https)
@@ -88,20 +86,21 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
 
   context 'stubbing an interaction' do
 
+    let(:attributes) { default_attributes }
+
     before do
-      allow(HTTParty).to receive(:post).and_return response
-      allow(subject).to receive(:interactions_uri).and_return interactions_uri
+      stub_request(:post, /.*/).to_return(response)
       allow(subject).to receive(:server).and_return server
     end
 
     context 'when the request succeeds' do
 
-      let(:response) { double('response', :code => 200) }
+      let(:response) { {:status => 200} }
+
+      before { subject.stub_interaction interaction }
 
       it 'posts the interaction to the interactions collection' do
-        subject.stub_interaction interaction
-        expect(HTTParty).to have_received(:post).with(
-          interactions_uri,
+        expect(WebMock).to have_requested(:post, interactions_uri).with(
           :body => '{"interaction":"hash"}',
           :headers => {'Content-Type' => 'application/json'}
         )
@@ -109,19 +108,58 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
     end
 
     context 'when the request fails' do
-      let(:response) { double('response', :code => 404, :inspect => 'response details') }
+      let(:response) { {:status => 404} }
 
       it 'fails with the details of the response' do
         expect{ subject.stub_interaction interaction }.to raise_error(
-          'Failed to stub interaction: response details'
+          /Failed to stub interaction: .*404/
         )
       end
     end
 
     context 'in all cases' do
-      let(:response) { double('response', :code => 200) }
+      let(:response) { {:status => 200} }
 
       before { subject.stub_interaction interaction }
+
+      it 'ensures that the server experienced no errors' do
+        expect(server).to have_received(:assert_ok!)
+      end
+    end
+  end
+
+  context 'unmatched requests' do
+
+    before do
+      allow(subject).to receive(:server).and_return server
+      stub_request(:get, unmatched_requests_uri).to_return(response)
+    end
+
+    context 'when the request succeeds' do
+
+      let(:response) { {:status => 200, :body => [{'a' => 'b'}].to_json} }
+
+      before { subject.unmatched_requests }
+
+      it 'retrieves unmatched requests as JSON' do
+        expect(subject.unmatched_requests).to eq([{'a' => 'b'}])
+      end
+    end
+
+    context 'when the request fails' do
+      let(:response) { {:status => 404} }
+
+      it 'fails with the details of the response' do
+        expect{ subject.unmatched_requests }.to raise_error(
+          /Failed to find unmatched requests: .*404/
+        )
+      end
+    end
+
+    context 'in all cases' do
+      let(:response) { {:status => 200, :body => [].to_json} }
+
+      before { subject.unmatched_requests }
 
       it 'ensures that the server experienced no errors' do
         expect(server).to have_received(:assert_ok!)
@@ -132,35 +170,32 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
   context 'clearing interaction stubs' do
 
     before do
-      allow(HTTParty).to receive(:delete).and_return response
-      allow(subject).to receive(:interactions_uri).and_return interactions_uri
+      stub_request(:delete, /.*/).to_return(response)
       allow(subject).to receive(:server).and_return server
     end
 
     context 'when the request succeeds' do
 
-      let(:response) { double('response', :code => 200) }
+      let(:response) { {:status => 200} }
 
       it 'deletes the entire interactions collection' do
         subject.clear_interaction_stubs
-        expect(HTTParty).to have_received(:delete).with(
-          interactions_uri
-        )
+        expect(WebMock).to have_requested(:delete, interactions_uri)
       end
     end
 
     context 'when the request fails' do
-      let(:response) { double('response', :code => 404, :inspect => 'response details') }
+      let(:response) { {:status => 404} }
 
       it 'fails with the details of the response' do
         expect{ subject.clear_interaction_stubs }.to raise_error(
-          'Failed to clear interaction stubs: response details'
+          /Failed to clear interaction stubs: .*404/
         )
       end
     end
 
     context 'in all cases' do
-      let(:response) { double('response', :code => 200) }
+      let(:response) { {:status => 200} }
 
       before { subject.clear_interaction_stubs }
 
@@ -171,18 +206,18 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
   end
 
   describe 'response' do
-    context 'when code is in the range of 200-299' do
+    context 'when status is in the range of 200-299' do
       it 'is successful' do
-        expect(subject.successful?(double('response', :code => 200))).to be_true
-        expect(subject.successful?(double('response', :code => 250))).to be_true
-        expect(subject.successful?(double('response', :code => 299))).to be_true
+        expect(subject.successful?(200)).to be_true
+        expect(subject.successful?(250)).to be_true
+        expect(subject.successful?(299)).to be_true
       end
     end
 
-    context 'when code is outside of the range of 200-299' do
+    context 'when status is outside of the range of 200-299' do
       it 'is not successful' do
-        expect(subject.successful?(double('response', :code => 300))).to be_false
-        expect(subject.successful?(double('response', :code => 400))).to be_false
+        expect(subject.successful?(300)).to be_false
+        expect(subject.successful?(400)).to be_false
       end
     end
 

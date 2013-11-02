@@ -4,7 +4,7 @@ require 'shokkenki/consumer/rspec/hooks'
 
 describe 'RSpec configuration' do
 
-  let(:config) { double('RSpec configuration', :before => '').as_null_object }
+  let(:config) { double('RSpec configuration', :before => '', :after => '').as_null_object }
   let(:load_config) { load 'shokkenki/consumer/rspec/rspec_configuration.rb' }
   let(:session) { double('Shokkenki session').as_null_object }
 
@@ -21,6 +21,7 @@ describe 'RSpec configuration' do
     allow(::RSpec).to receive(:configure).and_yield(config)
     allow(Shokkenki).to receive(:consumer).and_return session
     allow(hooks).to receive(:before_each)
+    allow(hooks).to receive(:after_each)
     allow(hooks).to receive(:before_suite)
     allow(hooks).to receive(:after_suite)
   end
@@ -67,6 +68,30 @@ describe 'RSpec configuration' do
 
     it 'runs the before each hook with the metadata' do
       expect(hooks).to have_received(:before_each).with(consumer_metadata)
+    end
+
+  end
+
+  context 'after each example runs' do
+
+    let(:example_group) { double('example group', :example => example) }
+
+    before do
+      @filtered_to_consumer_examples = false
+      allow(config).to receive(:after).with(:each, anything) do |scope, filter, &block|
+        example_group.instance_eval &block
+        @filtered_to_consumer_examples = filter[:shokkenki_consumer].call ''
+      end
+    end
+
+    before { load_config }
+
+    it 'only runs the hook for shokkenki consumer examples' do
+      expect(@filtered_to_consumer_examples).to be_true
+    end
+
+    it 'runs the after each hook' do
+      expect(hooks).to have_received(:after_each)
     end
 
   end

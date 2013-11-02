@@ -5,6 +5,9 @@ module Shokkenki
   module Consumer
     module Model
       class Provider < Role
+        extend Forwardable
+        def_delegators :@stubber, :stub_interaction, :clear_interaction_stubs,
+          :session_started, :session_closed
 
         attr_reader :stubber
 
@@ -13,20 +16,10 @@ module Shokkenki
           @stubber = attributes[:stubber] || Shokkenki::Consumer::Stubber::HttpStubber.new({})
         end
 
-        def stub_interaction interaction
-          @stubber.stub_interaction interaction
-        end
-
-        def clear_interaction_stubs
-          @stubber.clear_interaction_stubs
-        end
-
-        def session_started
-          @stubber.session_started
-        end
-
-        def session_closed
-          @stubber.session_closed
+        def assert_all_requests_matched!
+          unmatched_requests = @stubber.unmatched_requests
+          message = "In provider '#{@name}' the following requests were not matched: #{JSON.pretty_generate(unmatched_requests)}"
+          raise message unless unmatched_requests.empty?
         end
       end
     end

@@ -1,6 +1,7 @@
 require_relative 'interactions'
 require_relative 'interactions_middleware'
 require_relative 'stubbed_response_middleware'
+require_relative 'requests_middleware'
 
 # adapted from middleware in https://github.com/jnicklas/capybara/blob/master/lib/capybara/server.rb
 module Shokkenki
@@ -14,7 +15,8 @@ module Shokkenki
           @interactions = Interactions.new
           @middlewares = {
             %r{^#{identify_path}} => lambda(&method(:identify)),
-            %r{^/shokkenki/} => InteractionsMiddleware.new(@interactions),
+            %r{^/shokkenki/interactions} => InteractionsMiddleware.new(@interactions),
+            %r{^/shokkenki/requests} => RequestsMiddleware.new(@interactions),
             /.*/ => StubbedResponseMiddleware.new(@interactions)
           }
         end

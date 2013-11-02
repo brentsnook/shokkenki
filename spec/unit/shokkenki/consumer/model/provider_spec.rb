@@ -1,12 +1,13 @@
 require_relative '../../../spec_helper'
 require 'shokkenki/consumer/model/provider'
 require 'shokkenki/consumer/stubber/http_stubber'
+require 'json'
 
 describe Shokkenki::Consumer::Model::Provider do
 
   let(:stubber) { double('stubber').as_null_object }
 
-  subject { Shokkenki::Consumer::Model::Provider.new(:stubber => stubber) }
+  subject { Shokkenki::Consumer::Model::Provider.new(:stubber => stubber, :name => 'providertron') }
 
   context 'when created' do
     context 'with a stubber' do
@@ -76,6 +77,30 @@ describe Shokkenki::Consumer::Model::Provider do
 
     it 'notifies its stubber of the session close' do
       expect(stubber).to have_received(:session_closed)
+    end
+  end
+
+  context 'asserting that all requests matched' do
+
+    context 'when there are unmatched requests' do
+      before do
+        allow(JSON).to receive(:pretty_generate).with(['request', 'request2']).and_return('pretty json')
+        allow(stubber).to receive(:unmatched_requests).and_return(['request', 'request2'])
+      end
+
+      it 'fails with a pretty printed list of unmatched requests' do
+        expect{ subject.assert_all_requests_matched! }.to raise_error("In provider 'providertron' the following requests were not matched: pretty json")
+      end
+    end
+
+    context 'when there are no unmatched requests' do
+      before do
+        allow(stubber).to receive(:unmatched_requests).and_return([])
+      end
+
+      it 'does nothing' do
+        expect{ subject.assert_all_requests_matched! }.to_not raise_error
+      end
     end
   end
 end

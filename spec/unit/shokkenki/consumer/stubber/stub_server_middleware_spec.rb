@@ -3,12 +3,14 @@ require 'shokkenki/consumer/stubber/stub_server_middleware'
 require 'shokkenki/consumer/stubber/interactions'
 require 'shokkenki/consumer/stubber/interactions_middleware'
 require 'shokkenki/consumer/stubber/stubbed_response_middleware'
+require 'shokkenki/consumer/stubber/requests_middleware'
 
 describe Shokkenki::Consumer::Stubber::StubServerMiddleware do
 
   let(:call) { subject.call env }
   let(:interactions_middleware) { double 'interactions middleware', :call => 'interactions middleware' }
   let(:stubbed_response_middleware) { double 'stubbed response middleware', :call => 'stubbed response middleware' }
+  let(:requests_middleware) { double 'requests middleware', :call => 'requests middleware' }
   let(:interactions) { double 'interactions' }
 
   subject { Shokkenki::Consumer::Stubber::StubServerMiddleware.new }
@@ -17,6 +19,7 @@ describe Shokkenki::Consumer::Stubber::StubServerMiddleware do
     allow(Shokkenki::Consumer::Stubber::Interactions).to receive(:new).and_return interactions
     allow(Shokkenki::Consumer::Stubber::InteractionsMiddleware).to receive(:new).with(interactions).and_return interactions_middleware
     allow(Shokkenki::Consumer::Stubber::StubbedResponseMiddleware).to receive(:new).with(interactions).and_return stubbed_response_middleware
+    allow(Shokkenki::Consumer::Stubber::RequestsMiddleware).to receive(:new).with(interactions).and_return requests_middleware
   end
 
   context 'responding to requests to identify its self' do
@@ -35,6 +38,13 @@ describe Shokkenki::Consumer::Stubber::StubServerMiddleware do
     let(:env) { {'PATH_INFO' => '/shokkenki/interactions'} }
     it 'uses the interactions middleware to process the request' do
       expect(call).to eq('interactions middleware')
+    end
+  end
+
+  context 'responding to shokkenki HTTP request requests' do
+    let(:env) { {'PATH_INFO' => '/shokkenki/requests'} }
+    it 'uses the interactions middleware to process the request' do
+      expect(call).to eq('requests middleware')
     end
   end
 

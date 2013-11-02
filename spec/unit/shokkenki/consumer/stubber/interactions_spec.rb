@@ -6,7 +6,7 @@ describe Shokkenki::Consumer::Stubber::Interactions do
 
     let(:request) { double 'request' }
 
-    context 'when a interaction was found' do
+    context 'when an interaction was found' do
 
       let(:matching_interaction) { double 'matching interaction' }
 
@@ -21,6 +21,11 @@ describe Shokkenki::Consumer::Stubber::Interactions do
       it 'finds the matching interaction' do
         expect(subject.find(request)).to eq(matching_interaction)
       end
+
+      describe 'saved request' do
+        it 'has the matching interaction'
+        it 'has the generated response'
+      end
     end
 
     context 'when no response was found' do
@@ -33,6 +38,10 @@ describe Shokkenki::Consumer::Stubber::Interactions do
         expect(subject.find(request)).to be_nil
       end
 
+      describe 'saved request' do
+        it 'has no matching interaction'
+        it 'has no generated response'
+      end
     end
   end
 
@@ -48,6 +57,8 @@ describe Shokkenki::Consumer::Stubber::Interactions do
     it 'removes all interactions' do
       expect(subject.interactions).to be_empty
     end
+
+    it 'removes all requests'
   end
 
   context 'adding a new interaction' do
@@ -58,7 +69,7 @@ describe Shokkenki::Consumer::Stubber::Interactions do
       subject.add interaction
     end
 
-    it 'removes all interactions' do
+    it 'adds the interaction to the list' do
       expect(subject.interactions).to include(interaction)
     end
   end

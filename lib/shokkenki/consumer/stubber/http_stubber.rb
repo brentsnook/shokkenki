@@ -16,6 +16,7 @@ module Shokkenki
           @scheme = attributes[:scheme] || :http
           @host = attributes[:host] || 'localhost'
           @interactions_path = attributes[:interactions_path] || '/shokkenki/interactions'
+          @unmatched_requests_path = '/shokkenki/requests/unmatched'
         end
 
         def stub_interaction interaction
@@ -24,17 +25,17 @@ module Shokkenki
             :headers => { 'Content-Type' => 'application/json' }
           )
           server.assert_ok!
-          raise "Failed to stub interaction: #{response.inspect}" unless successful?(response)
+          raise "Failed to stub interaction: #{response.inspect}" unless successful?(response.code)
         end
 
         def clear_interaction_stubs
           response = HTTParty.delete interactions_uri
           server.assert_ok!
-          raise "Failed to clear interaction stubs: #{response.inspect}" unless successful?(response)
+          raise "Failed to clear interaction stubs: #{response.inspect}" unless successful?(response.code)
         end
 
-        def successful? response
-          (200 <= response.code) &&  (response.code < 300)
+        def successful? response_code
+          (200 <= response_code) &&  (response_code < 300)
         end
 
         def session_started
@@ -55,13 +56,27 @@ module Shokkenki
           @server.shutdown
         end
 
-        def interactions_uri
-          URI::Generic.build(
+        def unmatched_requests
+          response = HTTParty.get unmatched_requests_uri
+          server.assert_ok!
+          raise "Failed to find unmatched requests: #{response.inspect}" unless successful?(response.code)
+          JSON.parse response.body
+        end
+
+        def server_properties
+          {
             :scheme => @scheme.to_s,
             :host => @host.to_s,
-            :port => @port,
-            :path => @interactions_path.to_s
-          ).to_s
+            :port => @port
+          }
+        end
+
+        def interactions_uri
+          URI::Generic.build(server_properties.merge(:path => @interactions_path.to_s)).to_s
+        end
+
+        def unmatched_requests_uri
+          URI::Generic.build(server_properties.merge(:path => @unmatched_requests_path.to_s)).to_s
         end
 
       end

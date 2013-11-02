@@ -11,8 +11,14 @@ RSpec.configure do |config|
 
   config.before(:suite) { Shokkenki::Consumer::RSpec::Hooks.before_suite }
 
-  config.before(:each, :shokkenki_consumer => lambda{ |x| true }) do
+  shokkenki_consumer_examples = { :shokkenki_consumer => lambda{ |x| true } }
+
+  config.before(:each, shokkenki_consumer_examples) do
     Shokkenki::Consumer::RSpec::Hooks.before_each example.metadata[:shokkenki_consumer]
+  end
+
+  config.after(:each, shokkenki_consumer_examples) do
+    Shokkenki::Consumer::RSpec::Hooks.after_each
   end
 
   config.after(:suite) { Shokkenki::Consumer::RSpec::Hooks.after_suite }

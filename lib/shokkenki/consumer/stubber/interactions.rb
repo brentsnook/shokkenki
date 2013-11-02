@@ -22,6 +22,10 @@ module Shokkenki
         def add interaction
           @interactions << interaction
         end
+
+        def requests
+          []
+        end
       end
     end
   end

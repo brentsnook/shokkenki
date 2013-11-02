@@ -181,4 +181,18 @@ describe Shokkenki::Consumer::Session do
       expect(provider).to have_received(:session_closed)
     end
   end
+
+  context 'asserting that all requests matched' do
+    let(:provider) { double('provider', :name => :providername).as_null_object }
+
+    before do
+      subject.add_provider provider
+      allow(provider).to receive(:clear_interaction_stubs)
+      subject.assert_all_requests_matched!
+    end
+
+    it 'asserts that requests matched on all providers' do
+      expect(provider).to have_received(:assert_all_requests_matched!)
+    end
+  end
 end
