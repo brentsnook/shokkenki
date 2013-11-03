@@ -26,6 +26,12 @@ module Shokkenki
           @time = attributes[:time]
         end
 
+        def to_hash
+          {
+            :label => @label
+          }
+        end
+
         def generate_response
           @response.example
         end

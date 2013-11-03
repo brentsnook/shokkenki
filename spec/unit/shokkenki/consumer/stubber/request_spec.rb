@@ -3,6 +3,7 @@ require 'shokkenki/consumer/stubber/request'
 
 describe Shokkenki::Consumer::Stubber::Request do
 
+  let(:interaction) { double 'interaction' }
   context 'created from a rack env' do
 
     subject do
@@ -118,34 +119,61 @@ describe Shokkenki::Consumer::Stubber::Request do
   end
 
   context 'as a hash' do
-    let(:hash) do
+
+    subject do
       Shokkenki::Consumer::Stubber::Request.new(
         :path => '/path',
         :body => 'body',
         :method => :get,
         :query => {'paramname' => 'value'},
         :headers => {'Content-Type' => 'application/json'}
-      ).to_hash
+      )
     end
 
+    before { allow(interaction).to receive(:to_hash).and_return({:interaction => :hash}) }
+
     it 'has the path' do
-      expect(hash[:path]).to eq('/path')
+      expect(subject.to_hash[:path]).to eq('/path')
     end
 
     it 'has the method' do
-      expect(hash[:method]).to eq(:get)
+      expect(subject.to_hash[:method]).to eq(:get)
     end
 
     it 'has the body' do
-      expect(hash[:body]).to eq('body')
+      expect(subject.to_hash[:body]).to eq('body')
     end
 
     it 'has the headers' do
-      expect(hash[:headers]).to eq('Content-Type' => 'application/json')
+      expect(subject.to_hash[:headers]).to eq('Content-Type' => 'application/json')
     end
 
     it 'has the query' do
-      expect(hash[:query]).to eq('paramname' => 'value')
+      expect(subject.to_hash[:query]).to eq('paramname' => 'value')
+    end
+
+    context 'when there is an interaction' do
+      before { subject.interaction = interaction }
+      it 'has the interaction hash' do
+        expect(subject.to_hash[:interaction]).to eq({:interaction => :hash})
+      end
+    end
+
+    context 'when there is no interaction' do
+      before { subject.interaction = nil }
+      it 'has no interaction' do
+        expect(subject.to_hash.keys).to_not include(:interaction)
+      end
+    end
+  end
+
+  context 'interaction' do
+    subject { Shokkenki::Consumer::Stubber::Request.new({}) }
+
+    before { subject.interaction = interaction }
+
+    it 'can be set' do
+      expect(subject.interaction).to eq(interaction)
     end
   end
 end

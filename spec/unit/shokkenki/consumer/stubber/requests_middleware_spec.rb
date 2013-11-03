@@ -19,7 +19,7 @@ describe Shokkenki::Consumer::Stubber::RequestsMiddleware do
     let(:request) { double('request', :to_hash => {:request => 'json'}).as_null_object }
 
     before do
-      allow(interactions).to receive(:requests).and_return([request])
+      allow(interactions).to receive(:unmatched_requests).and_return([request])
     end
 
     it 'renders all interaction requests as pretty printed JSON' do

@@ -6,6 +6,7 @@ module Shokkenki
       class Request
 
         attr_reader :path, :method, :body, :query, :headers
+        attr_accessor :interaction
 
         def self.from_rack rack_env
           env = rack_env.dup
@@ -27,13 +28,15 @@ module Shokkenki
         end
 
         def to_hash
-          {
+          hash = {
             :path => @path,
             :method => @method,
             :headers => @headers,
             :query => @query,
             :body => @body
           }
+          hash.merge!(:interaction => @interaction.to_hash) if @interaction
+          hash
         end
 
         def self.headers_from env

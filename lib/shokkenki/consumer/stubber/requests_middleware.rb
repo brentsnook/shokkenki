@@ -19,7 +19,7 @@ module Shokkenki
         def find_unmatched env
           case env['REQUEST_METHOD'].upcase
           when 'GET'
-            requests = @interactions.requests
+            requests = @interactions.unmatched_requests
             json = JSON.pretty_generate(requests.collect{|r| r.to_hash})
             [200, {'Content-Type' => 'application/json'}, [json]]
           else

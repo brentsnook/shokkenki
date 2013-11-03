@@ -2,9 +2,10 @@ require_relative '../../../spec_helper'
 require 'shokkenki/consumer/stubber/interactions'
 
 describe Shokkenki::Consumer::Stubber::Interactions do
-  context 'finding an interaction for a request' do
 
-    let(:request) { double 'request' }
+  let(:request) { double('request').as_null_object }
+
+  context 'finding an interaction for a request' do
 
     context 'when an interaction was found' do
 
@@ -22,9 +23,18 @@ describe Shokkenki::Consumer::Stubber::Interactions do
         expect(subject.find(request)).to eq(matching_interaction)
       end
 
-      describe 'saved request' do
-        it 'has the matching interaction'
-        it 'has the generated response'
+      it 'adds the matched interaction to the request' do
+        subject.find request
+        expect(request).to have_received(:interaction=).with(matching_interaction)
+      end
+
+    end
+
+    context 'in all cases' do
+      before { subject.find request }
+
+      it 'adds the request to the list of requests' do
+        expect(subject.requests).to include(request)
       end
     end
 
@@ -32,16 +42,31 @@ describe Shokkenki::Consumer::Stubber::Interactions do
 
       before do
         subject.add double('non matching interaction', :match_request? => false)
-       end
+      end
 
       it 'finds nothing' do
         expect(subject.find(request)).to be_nil
       end
 
-      describe 'saved request' do
-        it 'has no matching interaction'
-        it 'has no generated response'
+      it 'adds nothing to the request' do
+        subject.find request
+        expect(request).to_not have_received(:interaction=)
       end
+
+    end
+  end
+
+  context 'unmatched requests' do
+    let(:unmatched_request) { double('unmatched_request', :interaction => nil)}
+
+    before do
+      allow(request).to receive(:interaction).and_return 'interaction'
+      subject.requests << request
+      subject.requests << unmatched_request
+    end
+
+    it 'includes requests that have no interaction' do
+      expect(subject.unmatched_requests).to eq([unmatched_request])
     end
   end
 
@@ -50,6 +75,7 @@ describe Shokkenki::Consumer::Stubber::Interactions do
     before do
       subject.add double('interaction')
       subject.add double('interaction 2')
+      subject.requests << request
 
       subject.delete_all
     end
@@ -58,7 +84,9 @@ describe Shokkenki::Consumer::Stubber::Interactions do
       expect(subject.interactions).to be_empty
     end
 
-    it 'removes all requests'
+    it 'removes all requests' do
+      expect(subject.requests).to eq([])
+    end
   end
 
   context 'adding a new interaction' do

@@ -76,4 +76,16 @@ describe Shokkenki::Consumer::Stubber::Interaction do
     end
   end
 
+  context 'as a hash' do
+    subject do
+      Shokkenki::Consumer::Stubber::Interaction.new(
+        :label => 'label'
+      )
+    end
+
+    it 'has a label' do
+      expect(subject.to_hash[:label]).to eq('label')
+    end
+  end
+
 end
