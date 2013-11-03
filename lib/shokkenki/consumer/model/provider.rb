@@ -21,6 +21,12 @@ module Shokkenki
           message = "In provider '#{@name}' the following requests were not matched: #{JSON.pretty_generate(unmatched_requests)}"
           raise message unless unmatched_requests.empty?
         end
+
+        def assert_all_interactions_used!
+          unused_interactions = @stubber.unused_interactions
+          message = "In provider '#{@name}' the following interactions were never used: #{JSON.pretty_generate(unused_interactions)}"
+          raise message unless unused_interactions.empty?
+        end
       end
     end
   end

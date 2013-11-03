@@ -74,6 +74,10 @@ module Shokkenki
         @providers.values.each { |p| p.assert_all_requests_matched! }
       end
 
+      def assert_all_interactions_used!
+        @providers.values.each { |p| p.assert_all_interactions_used! }
+      end
+
     end
   end
 end

@@ -19,6 +19,7 @@ module Shokkenki
 
         def self.after_each
           Shokkenki.consumer.assert_all_requests_matched!
+          Shokkenki.consumer.assert_all_interactions_used!
         end
 
         def self.after_suite

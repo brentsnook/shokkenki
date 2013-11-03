@@ -57,6 +57,10 @@ describe Shokkenki::Consumer::RSpec::Hooks do
       expect(session).to have_received(:assert_all_requests_matched!)
     end
 
+    it 'asserts that no provider had unused interactions' do
+      expect(session).to have_received(:assert_all_interactions_used!)
+    end
+
   end
 
   context 'before the test suite begins' do

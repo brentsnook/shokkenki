@@ -9,6 +9,7 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
   let(:interaction) { double('interaction').as_null_object }
   let(:interactions_uri) { 'https://stubby.com:1235/interactions' }
   let(:unmatched_requests_uri) { 'https://stubby.com:1235/shokkenki/requests/unmatched' }
+  let(:unused_interactions_uri) { 'https://stubby.com:1235/shokkenki/interactions/unused' }
   let(:server) { double('server').as_null_object }
 
   let(:default_attributes) do
@@ -160,6 +161,45 @@ describe Shokkenki::Consumer::Stubber::HttpStubber do
       let(:response) { {:status => 200, :body => [].to_json} }
 
       before { subject.unmatched_requests }
+
+      it 'ensures that the server experienced no errors' do
+        expect(server).to have_received(:assert_ok!)
+      end
+    end
+  end
+
+  context 'unused interactions' do
+
+    before do
+      allow(subject).to receive(:server).and_return server
+      stub_request(:get, unused_interactions_uri).to_return(response)
+    end
+
+    context 'when the request succeeds' do
+
+      let(:response) { {:status => 200, :body => [{'a' => 'b'}].to_json} }
+
+      before { subject.unused_interactions }
+
+      it 'retrieves unused interactions as JSON' do
+        expect(subject.unused_interactions).to eq([{'a' => 'b'}])
+      end
+    end
+
+    context 'when the request fails' do
+      let(:response) { {:status => 404} }
+
+      it 'fails with the details of the response' do
+        expect{ subject.unused_interactions }.to raise_error(
+          /Failed to find unused interactions: .*404/
+        )
+      end
+    end
+
+    context 'in all cases' do
+      let(:response) { {:status => 200, :body => [].to_json} }
+
+      before { subject.unused_interactions }
 
       it 'ensures that the server experienced no errors' do
         expect(server).to have_received(:assert_ok!)

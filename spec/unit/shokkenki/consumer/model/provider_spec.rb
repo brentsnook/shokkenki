@@ -103,4 +103,28 @@ describe Shokkenki::Consumer::Model::Provider do
       end
     end
   end
+
+  context 'asserting that all interactions were used' do
+
+    context 'when there are unused interactions' do
+      before do
+        allow(JSON).to receive(:pretty_generate).with(['interaction1', 'interaction2']).and_return('pretty json')
+        allow(stubber).to receive(:unused_interactions).and_return(['interaction1', 'interaction2'])
+      end
+
+      it 'fails with a pretty printed list of unused interactions' do
+        expect{ subject.assert_all_interactions_used! }.to raise_error("In provider 'providertron' the following interactions were never used: pretty json")
+      end
+    end
+
+    context 'when there are no unused interactions' do
+      before do
+        allow(stubber).to receive(:unused_interactions).and_return([])
+      end
+
+      it 'does nothing' do
+        expect{ subject.assert_all_interactions_used! }.to_not raise_error
+      end
+    end
+  end
 end

@@ -17,6 +17,7 @@ module Shokkenki
           @host = attributes[:host] || 'localhost'
           @interactions_path = attributes[:interactions_path] || '/shokkenki/interactions'
           @unmatched_requests_path = '/shokkenki/requests/unmatched'
+          @unused_interactions_path = '/shokkenki/interactions/unused'
         end
 
         def stub_interaction interaction
@@ -63,6 +64,13 @@ module Shokkenki
           JSON.parse response.body
         end
 
+        def unused_interactions
+          response = HTTParty.get unused_interactions_uri
+          server.assert_ok!
+          raise "Failed to find unused interactions: #{response.inspect}" unless successful?(response.code)
+          JSON.parse response.body
+        end
+
         def server_properties
           {
             :scheme => @scheme.to_s,
@@ -77,6 +85,10 @@ module Shokkenki
 
         def unmatched_requests_uri
           URI::Generic.build(server_properties.merge(:path => @unmatched_requests_path.to_s)).to_s
+        end
+
+        def unused_interactions_uri
+          URI::Generic.build(server_properties.merge(:path => @unused_interactions_path.to_s)).to_s
         end
 
       end

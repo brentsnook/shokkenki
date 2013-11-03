@@ -11,6 +11,8 @@ module Shokkenki
           @interactions = interactions
         end
 
+        get { |env| [200, {}, ["[]"]] }
+
         post do |env|
           @interactions.add Interaction.from_json(body_json(env['rack.input']))
           [204, {}, []]
