@@ -5,16 +5,34 @@ module Shokkenki
     module Stubber
       class Request
 
-        attr_reader :path
+        attr_reader :path, :method, :body, :query, :headers
 
         def self.from_rack rack_env
           env = rack_env.dup
-          {
+          new(
             :path => env['PATH_INFO'],
             :method => env['REQUEST_METHOD'].downcase,
             :body => env['rack.input'].read,
             :query => query_from(env['QUERY_STRING']),
             :headers => headers_from(env)
+          )
+        end
+
+        def initialize attributes
+          @path = attributes[:path]
+          @method = attributes[:method]
+          @body = attributes[:body]
+          @query = attributes[:query]
+          @headers = attributes[:headers]
+        end
+
+        def to_hash
+          {
+            :path => @path,
+            :method => @method,
+            :headers => @headers,
+            :query => @query,
+            :body => @body
           }
         end
 

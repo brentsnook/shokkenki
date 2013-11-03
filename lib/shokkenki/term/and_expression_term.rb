@@ -42,7 +42,7 @@ module Shokkenki
 
       def match? compare
         compare && @values.all? do |key, value|
-          value.match? compare[key]
+          value.match? compare.to_hash[key]
         end
       end
     end

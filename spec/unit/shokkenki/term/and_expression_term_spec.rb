@@ -102,6 +102,16 @@ describe Shokkenki::Term::AndExpressionTerm do
     context 'when there is no compare' do
       it("doesn't match"){ expect(subject.match?(nil)).to be_false }
     end
+
+    context 'in all cases' do
+      before do
+        allow(child1).to receive(:match?).with('child 1 value').and_return true
+        allow(child2).to receive(:match?).with('child 2 value').and_return true
+      end
+
+      let(:compare) { double('compare', :to_hash => {:child1 => 'child 1 value', :child2 => 'child 2 value'}) }
+      it('coerces the compare to a hash'){ expect(subject.match?(compare)).to be_true }
+    end
   end
 
   context 'as a hash' do
