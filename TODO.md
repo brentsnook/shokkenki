@@ -1,33 +1,9 @@
 ## Provider Stub - Remote Server - shokkenki/provider-stub/remote
 
-- Rename rack_server to stub_server_middleware
-- Merge middleware and stub_server_middleware - makes error reporting clearer
-- Introduce StubbedServerMiddlewareException
-  - accepts an exception
-  - uses the message from the given exception
-  - uses Kernel.caller to add to the stack trace
-  - strips out first line of caller (inside of the exception class)
-- Throw StubbedServerMiddlewareException from assert_ok!
-
 - After each example ->
-  - Fail if unmatched requests were found:
-    The following requests were not matched by any interaction:
-      []
   - Fail if unused interactions were found:
     The following interactions did not match any request:
       []
-
-- provide a verbose mode enabled with SHOKKENKI_OPTIONS='-verbose'
-  - prints out all interactions
-    All interactions:
-      []
-    All requests:
-      []
-- provide all interactions as an endpoint: GET shokkenki/interactions
-- provide requests as an endpoint: GET shokkenki/requests
-- add matched_requests to interaction
-- add matching_interaction to request
-- add response to request
 
 - add unique IDs to interactions - hashed from their contents - make it easier to spot unique interactions
 - key interactions by unique ID and warn when they are being overwritten
@@ -59,8 +35,11 @@ Hungry Man (describe)
     end
 
   end
+  - stores fixtures as lambdas, runs them as before blocks at order level
+
 - RSpec support just registers a new TicketListener? that creates examples from ticket
 - nice syntax highlighting in results [ ][ ][ ]
+- allow custom terms to be configured
 - Rake task [ ]
 - Add documentation on selective spec running with --example
 
@@ -106,6 +85,13 @@ Hungry Man (describe)
 - document what can be included in a request
 - split term model into separate gem
 
+- provide a verbose mode enabled with SHOKKENKI_OPTIONS='-verbose'
+  - prints out all interactions
+    All interactions:
+      []
+    All requests:
+      []
+
 ## JSON Matcher
     order(:my_provider).during('order for ramen').to do
         receive(:method => :get, :path => '/order/ramen').
@@ -119,6 +105,12 @@ Hungry Man (describe)
               matches /hot/
 
 -  use JSONPath syntax and maybe https://github.com/joshbuddy/jsonpath
+
+## Either Matcher
+ order(:my_provider).during('order for ramen').to do
+        receive(:method => either(:get, :post, :options))
+
+
 
 ## Support for non-Rack providers
 
@@ -153,6 +145,7 @@ Hungry Man (describe)
 
 ## Later
 
+- Use Machinist to simplify specs
 - Cucumber support
 - Minitest support
 - Steak support
