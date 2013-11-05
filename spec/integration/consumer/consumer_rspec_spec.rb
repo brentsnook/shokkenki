@@ -15,7 +15,7 @@ describe 'A consumer rspec spec' do
       run_spec 'spec/integration/consumer/consumer_rspec_spec_harness.rb', 'ticket_directory' => ticket_directory
     end
 
-    describe 'the created ticket' do
+    describe "the created ticket found in #{ticket_directory}" do
 
       let(:ticket) do
         JSON.parse File.read(File.expand_path(File.join(ticket_directory, 'my_consumer-my_provider.json')))
