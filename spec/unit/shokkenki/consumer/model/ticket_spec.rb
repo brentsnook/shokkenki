@@ -79,5 +79,9 @@ describe Shokkenki::Consumer::Model::Ticket do
     it 'includes the JSON of each interaction' do
       expect(json['interactions']).to eq([{'interaction' => 'json'}])
     end
+
+    it 'is pretty printed' do
+      expect(subject.to_json).to match(/{\n    /)
+    end
   end
 end

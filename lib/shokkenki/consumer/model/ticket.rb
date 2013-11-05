@@ -30,7 +30,7 @@ module Shokkenki
         end
 
         def to_json
-          to_hash.to_json
+          JSON.pretty_generate to_hash
         end
       end
     end
