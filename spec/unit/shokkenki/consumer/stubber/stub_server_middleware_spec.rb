@@ -43,7 +43,7 @@ describe Shokkenki::Consumer::Stubber::StubServerMiddleware do
 
   context 'responding to shokkenki unmatched HTTP request requests' do
     let(:env) { {'PATH_INFO' => '/shokkenki/requests/unmatched'} }
-    it 'uses the interactions middleware to process the request' do
+    it 'uses the unmatched requests middleware to process the request' do
       expect(call).to eq('unmatched requests middleware')
     end
   end
