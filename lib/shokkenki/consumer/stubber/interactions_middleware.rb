@@ -19,7 +19,7 @@ module Shokkenki
             @interactions.delete_all
             [204, {}, []]
           else
-            [405, {'Allow' => ['POST', 'DELETE']}, []]
+            [405, {'Allow' => 'POST, DELETE'}, []]
           end
         end
 

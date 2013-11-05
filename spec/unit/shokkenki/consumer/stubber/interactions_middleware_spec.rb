@@ -65,7 +65,7 @@ describe Shokkenki::Consumer::Stubber::InteractionsMiddleware do
     end
 
     it 'returns a list of the allowed methods' do
-      expect(call_response[1]).to include({'Allow' => ['POST', 'DELETE']})
+      expect(call_response[1]).to include({'Allow' => 'POST, DELETE'})
     end
 
   end

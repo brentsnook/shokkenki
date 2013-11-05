@@ -23,7 +23,7 @@ module Shokkenki
             json = JSON.pretty_generate(requests.collect{|r| r.to_hash})
             [200, {'Content-Type' => 'application/json'}, [json]]
           else
-            [405, {'Allow' => ['GET']}, []]
+            [405, {'Allow' => 'GET'}, []]
           end
         end
 

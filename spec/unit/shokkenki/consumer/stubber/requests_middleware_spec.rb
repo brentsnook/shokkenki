@@ -73,7 +73,7 @@ JSON
     end
 
     it 'returns a list of the allowed methods' do
-      expect(call_response[1]).to include({'Allow' => ['GET']})
+      expect(call_response[1]).to include({'Allow' => 'GET'})
     end
   end
 end
