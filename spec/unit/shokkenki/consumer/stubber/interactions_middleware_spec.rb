@@ -52,21 +52,4 @@ describe Shokkenki::Consumer::Stubber::InteractionsMiddleware do
     end
 
   end
-
-  context 'when the method is not recognised' do
-    let(:env) do
-      {
-        'REQUEST_METHOD' => 'GET'
-      }
-    end
-
-    it 'returns a status to indicate that the method is not allowed (405)' do
-      expect(call_response[0]).to eq(405)
-    end
-
-    it 'returns a list of the allowed methods' do
-      expect(call_response[1]).to include({'Allow' => 'POST, DELETE'})
-    end
-
-  end
 end

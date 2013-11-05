@@ -1,26 +1,24 @@
 require_relative 'interaction'
+require_relative 'restful_middleware'
 require 'json'
 
 module Shokkenki
   module Consumer
     module Stubber
-      class InteractionsMiddleware
+      class InteractionsMiddleware < RestfulMiddleware
 
         def initialize interactions
           @interactions = interactions
         end
 
-        def call env
-          case env['REQUEST_METHOD'].upcase
-          when 'POST'
-            @interactions.add Interaction.from_json(body_json(env['rack.input']))
-            [204, {}, []]
-          when 'DELETE'
-            @interactions.delete_all
-            [204, {}, []]
-          else
-            [405, {'Allow' => 'POST, DELETE'}, []]
-          end
+        post do |env|
+          @interactions.add Interaction.from_json(body_json(env['rack.input']))
+          [204, {}, []]
+        end
+
+        delete do |env|
+          @interactions.delete_all
+          [204, {}, []]
         end
 
         private

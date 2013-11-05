@@ -59,21 +59,4 @@ JSON
       expect(call_response[2]).to be_empty
     end
   end
-
-  context 'when the method is not recognised' do
-    let(:env) do
-      {
-        'PATH_INFO' => 'shokkenki/requests/unmatched',
-        'REQUEST_METHOD' => 'PUT'
-      }
-    end
-
-    it 'returns a status to indicate that the method is not allowed (405)' do
-      expect(call_response[0]).to eq(405)
-    end
-
-    it 'returns a list of the allowed methods' do
-      expect(call_response[1]).to include({'Allow' => 'GET'})
-    end
-  end
 end
