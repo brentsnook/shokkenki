@@ -88,4 +88,19 @@ describe Shokkenki::Consumer::Stubber::Interaction do
     end
   end
 
+  context 'adding a match' do
+    subject { Shokkenki::Consumer::Stubber::Interaction.new({}) }
+
+    let(:request) { double('request').as_null_object }
+    before { subject.add_match request}
+
+    it 'adds the request to the list of matches' do
+      expect(subject.matched_requests).to eq([request])
+    end
+
+    it "sets the interaction as the request's interaction" do
+      expect(request).to have_received(:interaction=).with(subject)
+    end
+  end
+
 end

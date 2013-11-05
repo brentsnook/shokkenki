@@ -2,6 +2,7 @@ require_relative '../../../spec_helper'
 require 'shokkenki/consumer/stubber/stub_server_middleware'
 require 'shokkenki/consumer/stubber/interactions'
 require 'shokkenki/consumer/stubber/interactions_middleware'
+require 'shokkenki/consumer/stubber/unused_interactions_middleware'
 require 'shokkenki/consumer/stubber/stubbed_response_middleware'
 require 'shokkenki/consumer/stubber/unmatched_requests_middleware'
 
@@ -11,6 +12,8 @@ describe Shokkenki::Consumer::Stubber::StubServerMiddleware do
   let(:interactions_middleware) { double 'interactions middleware', :call => 'interactions middleware' }
   let(:stubbed_response_middleware) { double 'stubbed response middleware', :call => 'stubbed response middleware' }
   let(:unmatched_requests_middleware) { double 'unmatched requests middleware', :call => 'unmatched requests middleware' }
+  let(:unused_interactions_middleware) { double 'unused interactions middleware', :call => 'unused interactions middleware' }
+
   let(:interactions) { double 'interactions' }
 
   subject { Shokkenki::Consumer::Stubber::StubServerMiddleware.new }
@@ -20,6 +23,7 @@ describe Shokkenki::Consumer::Stubber::StubServerMiddleware do
     allow(Shokkenki::Consumer::Stubber::InteractionsMiddleware).to receive(:new).with(interactions).and_return interactions_middleware
     allow(Shokkenki::Consumer::Stubber::StubbedResponseMiddleware).to receive(:new).with(interactions).and_return stubbed_response_middleware
     allow(Shokkenki::Consumer::Stubber::UnmatchedRequestsMiddleware).to receive(:new).with(interactions).and_return unmatched_requests_middleware
+    allow(Shokkenki::Consumer::Stubber::UnusedInteractionsMiddleware).to receive(:new).with(interactions).and_return unused_interactions_middleware
   end
 
   context 'responding to requests to identify its self' do
@@ -45,6 +49,13 @@ describe Shokkenki::Consumer::Stubber::StubServerMiddleware do
     let(:env) { {'PATH_INFO' => '/shokkenki/requests/unmatched'} }
     it 'uses the unmatched requests middleware to process the request' do
       expect(call).to eq('unmatched requests middleware')
+    end
+  end
+
+  context 'responding to shokkenki unused interactions requests' do
+    let(:env) { {'PATH_INFO' => '/shokkenki/interactions/unused'} }
+    it 'uses the unused interactions middleware to process the request' do
+      expect(call).to eq('unused interactions middleware')
     end
   end
 

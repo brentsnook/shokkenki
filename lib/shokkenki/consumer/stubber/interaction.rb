@@ -6,7 +6,7 @@ module Shokkenki
     module Stubber
       class Interaction
 
-        attr_reader :label, :request, :response, :time
+        attr_reader :label, :request, :response, :time, :matched_requests
 
         def self.from_json json
           attributes = json.with_indifferent_access
@@ -24,6 +24,7 @@ module Shokkenki
           @request = attributes[:request]
           @response = attributes[:response]
           @time = attributes[:time]
+          @matched_requests = []
         end
 
         def to_hash
@@ -38,6 +39,11 @@ module Shokkenki
 
         def match_request? request
           @request.match? request
+        end
+
+        def add_match request
+          @matched_requests << request
+          request.interaction = self
         end
       end
     end

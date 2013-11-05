@@ -9,7 +9,7 @@ describe Shokkenki::Consumer::Stubber::Interactions do
 
     context 'when an interaction was found' do
 
-      let(:matching_interaction) { double 'matching interaction' }
+      let(:matching_interaction) { double('matching interaction').as_null_object }
 
       before do
         subject.add double('non matching interaction', :match_request? => false)
@@ -23,9 +23,9 @@ describe Shokkenki::Consumer::Stubber::Interactions do
         expect(subject.find(request)).to eq(matching_interaction)
       end
 
-      it 'adds the matched interaction to the request' do
+      it 'adds the matched request to the interaction' do
         subject.find request
-        expect(request).to have_received(:interaction=).with(matching_interaction)
+        expect(matching_interaction).to have_received(:add_match).with(request)
       end
 
     end
@@ -57,7 +57,7 @@ describe Shokkenki::Consumer::Stubber::Interactions do
   end
 
   context 'unmatched requests' do
-    let(:unmatched_request) { double('unmatched_request', :interaction => nil)}
+    let(:unmatched_request) { double('unmatched request', :interaction => nil)}
 
     before do
       allow(request).to receive(:interaction).and_return 'interaction'
@@ -68,6 +68,21 @@ describe Shokkenki::Consumer::Stubber::Interactions do
     it 'includes requests that have no interaction' do
       expect(subject.unmatched_requests).to eq([unmatched_request])
     end
+  end
+
+  context 'unused interactions' do
+    let(:unused_interaction) { double('unused interaction', :matched_requests => [])}
+    let(:interaction) { double 'interaction', :matched_requests => [request]}
+
+    before do
+      subject.interactions << interaction
+      subject.interactions << unused_interaction
+    end
+
+    it 'includes interactions that have no requests that matched' do
+      expect(subject.unused_interactions).to eq([unused_interaction])
+    end
+
   end
 
   context 'deleting all interactions' do

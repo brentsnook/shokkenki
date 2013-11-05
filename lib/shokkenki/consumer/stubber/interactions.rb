@@ -14,7 +14,7 @@ module Shokkenki
           matching_interaction = @interactions.find do |interaction|
             interaction.match_request? request
           end
-          request.interaction = matching_interaction if matching_interaction
+          matching_interaction.add_match(request) if matching_interaction
           @requests << request
           matching_interaction
         end
@@ -30,6 +30,10 @@ module Shokkenki
 
         def unmatched_requests
           @requests.select{ |r| r.interaction.nil? }
+        end
+
+        def unused_interactions
+          @interactions.select { |i| i.matched_requests.empty? }
         end
       end
     end
