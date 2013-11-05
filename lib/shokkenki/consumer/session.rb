@@ -1,4 +1,3 @@
-require_relative '../shokkenki'
 require_relative 'model/patronage'
 require_relative 'model/simplification'
 require_relative 'dsl/session'

@@ -1,5 +1,5 @@
 require_relative '../../../spec_helper'
-require 'shokkenki/shokkenki'
+require 'shokkenki/consumer/consumer'
 require 'shokkenki/consumer/rspec/example_group_binding'
 
 describe Shokkenki::Consumer::RSpec::ExampleGroupBinding do

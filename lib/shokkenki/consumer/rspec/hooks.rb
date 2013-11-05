@@ -1,4 +1,4 @@
-require_relative '../../shokkenki'
+require_relative '../consumer'
 require_relative '../model/role'
 
 module Shokkenki

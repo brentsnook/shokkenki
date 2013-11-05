@@ -1,5 +1,5 @@
-require_relative '../spec_helper'
-require 'shokkenki/shokkenki'
+require_relative '../../spec_helper'
+require 'shokkenki/consumer/consumer'
 
 describe Shokkenki do
 

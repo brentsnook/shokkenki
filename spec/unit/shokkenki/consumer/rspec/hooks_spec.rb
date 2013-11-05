@@ -1,7 +1,7 @@
 require_relative '../../../spec_helper'
 require 'shokkenki/consumer/rspec/hooks'
 require 'shokkenki/consumer/model/role'
-require 'shokkenki/shokkenki'
+require 'shokkenki/consumer/consumer'
 
 describe Shokkenki::Consumer::RSpec::Hooks do
 

@@ -1,4 +1,4 @@
-require_relative '../../shokkenki'
+require_relative '../consumer'
 
 module Shokkenki
   module Consumer
