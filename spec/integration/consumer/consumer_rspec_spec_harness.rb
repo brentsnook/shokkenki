@@ -1,4 +1,4 @@
-require_relative 'harness_helper'
+require_relative '../harness_helper'
 require 'shokkenki/consumer/rspec'
 require 'httparty'
 
