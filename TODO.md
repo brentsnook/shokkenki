@@ -1,14 +1,18 @@
-## Provider Stub - Remote Server - shokkenki/provider-stub/remote
-
-- After each example ->
-  - Fail if unused interactions were found:
-    The following interactions did not match any request:
-      []
-
-- add unique IDs to interactions - hashed from their contents - make it easier to spot unique interactions
-- key interactions by unique ID and warn when they are being overwritten
-
 ## Provider
+
+- spec that reads a pre-generated ticket, run with specdoc format and assert on it.
+- Shokkenki.provider(:restaurant).honours_tickets!
+Hungry Man (describe)
+  order for ramen (describe)
+    response (describe)
+      status (describe)
+        is 200 (it)
+- Rack server to respond 200
+- Support body
+- Support headers
+- Allow Rack server to be configured
+  Shokkenki.provider(:restaurant){ racked_up_as Restaurant.new }.honours_tickets!
+- Allow server to be configured
 
 Hungry Man (describe)
   order for ramen (describe)
@@ -20,10 +24,8 @@ Hungry Man (describe)
           is application/json (it - StringTerm: 'is #{value}')
       body
         matches /sdsd/ (RegexTerm: 'matches #{pattern}')
-
-- run with hard coded interactions, pass or fail [ ]
-- read ticket from hardcoded location and test interactions [ ][ ][ ][ ]
 - read tickets from specified location (file path, URI or lambda) [ ]
+
 - add producer support to recognise givens
   - fail if state is not recognised
   - otherwise set state up before running specs
@@ -38,9 +40,6 @@ Hungry Man (describe)
   - stores fixtures as lambdas, runs them as before blocks at order level
 
 - RSpec support just registers a new TicketListener? that creates examples from ticket
-- nice syntax highlighting in results [ ][ ][ ]
-- allow custom terms to be configured
-- Rake task [ ]
 - Add documentation on selective spec running with --example
 
 ## Tidy Up
@@ -144,7 +143,18 @@ Hungry Man (describe)
 
 
 ## Later
-
+- Allow any server to be configured
+  Shokkenki.provider(:restaurant){ already_running(:port => 3000) }.honours_tickets!
+- Require a port but default to localhost for host
+- Add hooks to allow server to be started/stopped as part of test run
+  - Shokkenki.provider(:restaurant) do
+    start { }
+    stop { }
+  end
+- allow custom terms to be configured
+- Rake task for provider tests
+- add unique IDs to interactions - hashed from their contents - make it easier to spot unique interactions
+- key interactions by unique ID and warn when they are being overwritten
 - Use Machinist to simplify specs
 - Cucumber support
 - Minitest support
