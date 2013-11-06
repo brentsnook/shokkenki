@@ -1,13 +1,22 @@
 ## Provider
 
-- spec that reads a pre-generated ticket, run with specdoc format and assert on it.
-- Shokkenki.provider(:restaurant).honours_tickets!
-Hungry Man (describe)
-  order for ramen (describe)
-    response (describe)
-      status (describe)
-        is 200 (it)
-- Rack server to respond 200
+- Implement honours_tickets
+- Make Rspec require set session ticket_listener to RSpecTicketListener
+- RSpecTicketListener provides callbacks for when a ticket is interpreted:
+  - consumer
+  - provider
+  - interaction
+    - fixture
+      - name
+      - arguments
+    - label
+    - request
+      - headers
+      - body
+      - path
+    - response
+      - headers
+      - body
 - Support body
 - Support headers
 - Allow Rack server to be configured
@@ -109,7 +118,7 @@ Hungry Man (describe)
  order(:my_provider).during('order for ramen').to do
         receive(:method => either(:get, :post, :options))
 
-
+## Remove argument passed in to configuration methods
 
 ## Support for non-Rack providers
 
