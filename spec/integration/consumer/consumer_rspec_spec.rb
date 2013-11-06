@@ -12,7 +12,7 @@ describe 'A consumer rspec spec' do
     # careful with before(:all)! note that this runs once for the entire group
     # running the command each time is quite slow
     before(:all) do
-      run_spec 'spec/integration/consumer/consumer_rspec_spec_harness.rb', 'ticket_directory' => ticket_directory
+      run_spec 'spec/integration/consumer/consumer_rspec_spec_harness.rb -f progress', 'ticket_directory' => ticket_directory
     end
 
     describe "the created ticket found in #{ticket_directory}" do
