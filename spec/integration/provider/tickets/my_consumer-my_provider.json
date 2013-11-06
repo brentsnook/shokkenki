@@ -1,0 +1,47 @@
+{
+  "consumer": {
+    "name": "my_consumer",
+    "label": "My Consumer"
+  },
+  "provider": {
+    "name": "my_provider",
+    "label": "My Provider"
+  },
+  "interactions": [
+    {
+      "request": {
+        "type": "and_expression",
+        "values": {
+          "path": {
+            "type": "string",
+            "value": "/greeting"
+          }
+        }
+      },
+      "response": {
+        "type": "and_expression",
+        "values": {
+          "status": {
+            "type": "number",
+            "value": 200
+          },
+          "body": {
+            "type": "regexp",
+            "value": "(?-mix:hello there)"
+          }
+        }
+      },
+      "time": "2013-11-05T08:22:34Z",
+      "label": "greeting",
+      "fixtures": [
+        {
+          "name": "weather",
+          "arguments": {
+            "temperature": 30
+          }
+        }
+      ]
+    }
+  ],
+  "version": "0.0.0"
+}
