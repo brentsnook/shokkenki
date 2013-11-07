@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email = 'brent@fuglylogic.com'
   s.homepage = 'http://github.com/brentsnook/shokkenki'
   s.summary = "shokkenki-#{Shokkenki::Version::STRING}"
-  s.description = 'Consumer-driven contracts recorded from real examples.'
+  s.description = 'Example-driven consumer-driven contracts.'
 
   s.files = `git ls-files -- lib/*`.split("\n")
   s.test_files = s.files.grep(%r{^spec/})
