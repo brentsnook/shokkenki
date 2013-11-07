@@ -1,5 +1,6 @@
 ## Provider
 
+- default ticket location in consumer and provider
 - Implement honours_tickets
 - Make Rspec require set session ticket_listener to RSpecTicketListener
 - RSpecTicketListener provides callbacks for when a ticket is interpreted:
@@ -20,8 +21,6 @@
 - Support body
 - Support headers
 - Allow Rack server to be configured
-  Shokkenki.provider(:restaurant){ racked_up_as Restaurant.new }.honours_tickets!
-- Allow server to be configured
 
 Hungry Man (describe)
   order for ramen (describe)
@@ -53,6 +52,7 @@ Hungry Man (describe)
 
 ## Tidy Up
 
+- split into shokkenki-provider and shokkenki-consumer gems. Don't forget to remove unused gem dependencies.
 - better name for and expression term?
 - check runtime ruby versions [ ]
 - update examples and ensure that they work [ ]
@@ -86,6 +86,9 @@ Hungry Man (describe)
         /interactions?hit_count='0'
 
 - release !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+- Allow server other than rack to be configured with host + port
 
 - add a call to action on README - "problems? Feature request? Doesn't work the way you want? Create an issue!"
 - rename shokkenki to shokkenki-consumer
