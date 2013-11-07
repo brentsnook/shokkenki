@@ -1,21 +1,18 @@
-require 'rspec/core/dsl'
+require_relative 'ticket_reader'
 
 module Shokkenki
   module Provider
     class Session
-      include RSpec::Core::DSL
+
+      attr_accessor :ticket_location
+      attr_accessor :ticket_verifier
+
+      def initialize
+        @ticket_reader = TicketReader.new
+      end
 
       def honour_tickets
-        describe 'My Consumer' do
-          describe 'greeting' do
-            describe 'status' do
-              it('is 200'){}
-            end
-            describe 'body' do
-              it('matches /hello there/'){}
-            end
-          end
-        end
+        @ticket_verifier.verify_all @ticket_reader.read_from(ticket_location)
       end
     end
   end
