@@ -3,13 +3,12 @@ module Shokkenki
     module RSpec
       module AndExpressionTerm
         def verify_within context
+          values.each do |name, term|
+            context.describe name do
+              let(:actual_value) { actual_values[name] }
 
-          context.describe 'status' do
-            it('is 200'){}
-          end
-
-          context.describe 'body' do
-            it('matches /hello there/'){}
+              term.verify_within self
+            end
           end
         end
       end

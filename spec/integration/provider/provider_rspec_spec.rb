@@ -16,7 +16,7 @@ My Consumer
     status
       is 200
     body
-      matches /hello there/
+      matches /(?-mix:hello there)/
 OUTPUT
 
       expect(spec_output.strip).to start_with(output.strip)
