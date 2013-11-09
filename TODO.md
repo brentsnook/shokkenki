@@ -1,37 +1,15 @@
+
+# Now
+
 ## Provider
 
-- default ticket location in consumer and provider
-- Implement honours_tickets
-- Make Rspec require set session ticket_listener to RSpecTicketListener
-- RSpecTicketListener provides callbacks for when a ticket is interpreted:
-  - consumer
-  - provider
-  - interaction
-    - fixture
-      - name
-      - arguments
-    - label
-    - request
-      - headers
-      - body
-      - path
-    - response
-      - headers
-      - body
+- ensure that multiple nested and terms will not overwrite actual_values ???
+- Interaction defines actual_values as provider response
+- Use Faraday to make HTTP requests - default to NetHttp and using rack adapter (rack::test)
 - Support body
 - Support headers
 - Allow Rack server to be configured
 
-Hungry Man (describe)
-  order for ramen (describe)
-    response (describe)
-      status (describe)
-        is 200 (it)
-      header (describe)
-        Content-Type
-          is application/json (it - StringTerm: 'is #{value}')
-      body
-        matches /sdsd/ (RegexTerm: 'matches #{pattern}')
 - read tickets from specified location (file path, URI or lambda) [ ]
 
 - add producer support to recognise givens
@@ -52,15 +30,11 @@ Hungry Man (describe)
 
 ## Tidy Up
 
-- split into shokkenki-provider and shokkenki-consumer gems. Don't forget to remove unused gem dependencies.
+- split into shokkenki-provider, shokkenki-consumer and shokkenki-core gems. Don't forget to remove unused gem dependencies. Move version into Shokkenki core
 - better name for and expression term?
 - check runtime ruby versions [ ]
 - update examples and ensure that they work [ ]
-- make provider stubbing method configurable
-  - including consumer/provider-stub/server mixes it into the configuration
 - watch out for require_relative and target version
-- convert other http examples like http_stubber to use webmock
-- better end to end coverage around tickets?
 - differentiate between providers when there is a failure in server
 - document
   - what is a shokkenki?
@@ -78,6 +52,7 @@ Hungry Man (describe)
     - creating your own
       - as long as both the provider and consumer support them
   - fixtures
+  - add a call to action on README - "problems? Feature request? Doesn't work the way you want? Create an issue!"
   - wtf is going on
     - use pry to interrogate the provider
       provider.stubber.interactions
@@ -87,21 +62,7 @@ Hungry Man (describe)
 
 - release !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-
-- Allow server other than rack to be configured with host + port
-
-- add a call to action on README - "problems? Feature request? Doesn't work the way you want? Create an issue!"
-- rename shokkenki to shokkenki-consumer
-- Find a better way to stub new methods?
-- document what can be included in a request
-- split term model into separate gem
-
-- provide a verbose mode enabled with SHOKKENKI_OPTIONS='-verbose'
-  - prints out all interactions
-    All interactions:
-      []
-    All requests:
-      []
+# Next ...
 
 ## JSON Matcher
     order(:my_provider).during('order for ramen').to do
@@ -121,22 +82,36 @@ Hungry Man (describe)
  order(:my_provider).during('order for ramen').to do
         receive(:method => either(:get, :post, :options))
 
+- support passing additional configuration to faraday in the provider config
+
+- Allow any server to be configured
+  Shokkenki.provider(:restaurant){ already_running(:port => 3000) }.honours_tickets!
+- Require a port but default to localhost for host
+- Add hooks to allow server to be started/stopped as part of test run
+  - Shokkenki.provider(:restaurant) do
+    start { }
+    stop { }
+  end
+
+- Find a better way to stub new methods?
+- document what can be included in a request
+- convert other http examples like http_stubber to use webmock
+- better end to end coverage around tickets?
+
+- provide a verbose mode enabled with SHOKKENKI_OPTIONS='-verbose'
+  - prints out all interactions
+    All interactions:
+      []
+    All requests:
+      []
+
+
+
 ## Remove argument passed in to configuration methods
 
 ## Support for non-Rack providers
 
 - Just test running webapps at a particular address and port - [ ][ ][ ]
-
-## Webmock Producer Stubbing
-
-- Use to_rack to hook up to existing rack server [ ][ ][ ][ ]
-  - https://github.com/bblimke/webmock#rack-responses
-
-## shokkenki-angular.js
-
-- Allow tickets to be produced from Jasmine run angular specs. [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
-
-- support and doco for running the server on the command line [ ][ ][ ]
 
 ## README/Wiki notes
 
@@ -155,14 +130,12 @@ Hungry Man (describe)
 
 
 ## Later
-- Allow any server to be configured
-  Shokkenki.provider(:restaurant){ already_running(:port => 3000) }.honours_tickets!
-- Require a port but default to localhost for host
-- Add hooks to allow server to be started/stopped as part of test run
-  - Shokkenki.provider(:restaurant) do
-    start { }
-    stop { }
-  end
+
+## shokkenki-angular.js
+
+- Allow tickets to be produced from Jasmine run angular specs. [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
+
+- support and doco for running the server on the command line [ ][ ][ ]
 - allow custom terms to be configured
 - Rake task for provider tests
 - add unique IDs to interactions - hashed from their contents - make it easier to spot unique interactions
