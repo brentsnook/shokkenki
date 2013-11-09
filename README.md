@@ -1,6 +1,6 @@
 # Shokkenki
 
-Shokkenki (食券機) records [consumer-driven contracts](http://martinfowler.com/articles/consumerDrivenContracts.html) from real examples and uses them to test both ends of the consumer-provider relationship.
+Shokkenki (食券機) records [consumer-driven contracts](http://martinfowler.com/articles/consumerDrivenContracts.html) from real examples and uses them to test both ends of a RESTful consumer-provider relationship.
 
 Consumer tests can express a contract as a series of HTTP interactions that can be used to stub out the provider in those tests. Those interactions can then be saved as a shokkenki ticket and then used within provider tests to ensure that a provider honours that contract.
 
@@ -14,7 +14,6 @@ This gem is still being built and will not work in the meantime.
 
 Remaining before a usable release:
 
-- allow provider to be stubbed as a running server
 - add provider test support
 
 ## Install
@@ -60,7 +59,7 @@ require 'shokkenki/provider/rspec'
 require 'shokkenki/provider/rack'
 require 'restaurant'
 
-Shokkenki.provider(:restaurant){ racked_up_as Restaurant.new }.honours_tickets!
+Shokkenki.provider.redeem_tickets{ provider(:restaurant){ racked_up_as Restaurant.new } }
 
 ```
 

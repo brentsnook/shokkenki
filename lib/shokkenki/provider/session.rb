@@ -11,7 +11,7 @@ module Shokkenki
         @ticket_reader = TicketReader.new
       end
 
-      def honour_tickets
+      def redeem_tickets
         @ticket_verifier.verify_all @ticket_reader.read_from(ticket_location)
       end
     end

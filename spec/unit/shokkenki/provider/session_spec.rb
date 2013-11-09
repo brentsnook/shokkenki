@@ -3,7 +3,7 @@ require 'shokkenki/provider/session'
 require 'shokkenki/provider/ticket_reader'
 
 describe Shokkenki::Provider::Session do
-  context 'honouring tickets' do
+  context 'redeeming tickets' do
     let(:ticket) { double 'ticket' }
     let(:ticket2) { double 'ticket2' }
     let(:ticket_reader) { double('ticket reader', :read_from => [ticket, ticket2]) }
@@ -14,7 +14,7 @@ describe Shokkenki::Provider::Session do
       subject.ticket_verifier = ticket_verifier
       subject.ticket_location = 'ticket location'
 
-      subject.honour_tickets
+      subject.redeem_tickets
     end
 
     it 'reads tickets from the configured ticket location' do
