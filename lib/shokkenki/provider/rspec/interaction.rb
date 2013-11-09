@@ -4,15 +4,12 @@ module Shokkenki
       module Interaction
 
         def verify_within context
+          interaction = self
           context.describe label do
-            describe 'status' do
-              it('is 200'){}
-            end
-            describe 'body' do
-              it('matches /hello there/'){}
-            end
+            interaction.response.verify_within self
           end
         end
+
       end
     end
   end
