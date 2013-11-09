@@ -36,15 +36,25 @@ describe Shokkenki::Provider::Session do
   end
 
   context 'redeeming tickets' do
-    let(:ticket) { double 'ticket' }
-    let(:ticket2) { double 'ticket2' }
+    let(:ticket) do
+      double('ticket',
+        :provider => double('ticket provider', :name => :provider)
+      ).as_null_object
+    end
+    let(:ticket2) do
+      double('ticket',
+        :provider => double('ticket2 provider', :name => :provider2)
+      ).as_null_object
+    end
+    let(:provider) { double 'provider' }
+    let(:provider2) { double 'provider2' }
     let(:ticket_reader) { double('ticket reader', :read_from => [ticket, ticket2]) }
-    let(:ticket_verifier) { double('ticket verifier').as_null_object }
 
     before do
       allow(Shokkenki::Provider::TicketReader).to receive(:new).and_return ticket_reader
-      subject.ticket_verifier = ticket_verifier
       subject.ticket_location = 'ticket location'
+      subject.providers[:provider] = provider
+      subject.providers[:provider2] = provider2
 
       subject.redeem_tickets
     end
@@ -53,8 +63,9 @@ describe Shokkenki::Provider::Session do
       expect(ticket_reader).to have_received(:read_from).with 'ticket location'
     end
 
-    it 'verifies each ticket' do
-      expect(ticket_verifier).to have_received(:verify_all).with [ticket, ticket2]
+    it 'verifies each ticket with its provider' do
+      expect(ticket).to have_received(:verify_with).with provider
+      expect(ticket2).to have_received(:verify_with).with provider2
     end
   end
 end

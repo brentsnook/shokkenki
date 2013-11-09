@@ -1,4 +1,5 @@
 require_relative 'provider'
-require_relative 'rspec/rspec_ticket_verifier'
+require_relative 'model/ticket'
+require_relative 'rspec/ticket'
 
-Shokkenki.provider.ticket_verifier = Shokkenki::Provider::RSpec::RSpecTicketVerifier.new
+Shokkenki::Provider::Model::Ticket.send :include, Shokkenki::Provider::RSpec::Ticket

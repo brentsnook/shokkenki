@@ -1,16 +1,14 @@
 require_relative '../../spec_helper'
-require 'shokkenki/provider/rspec/rspec_ticket_verifier'
+require 'shokkenki/provider/model/ticket'
 
 describe 'RSpec' do
   context 'when required' do
-    let(:rspec_verifier) { double 'rspec verifier' }
     before do
-      allow(Shokkenki::Provider::RSpec::RSpecTicketVerifier).to receive(:new).and_return(rspec_verifier)
       load 'shokkenki/provider/rspec.rb'
     end
 
-    it 'uses the RSpec ticket verify to verify tickets' do
-      expect(Shokkenki.provider.ticket_verifier).to be rspec_verifier
+    it 'allows a ticket to verify its self with a provider' do
+      expect(Shokkenki::Provider::Model::Ticket.new).to respond_to(:verify_with)
     end
   end
 end

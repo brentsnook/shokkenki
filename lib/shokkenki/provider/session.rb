@@ -7,7 +7,6 @@ module Shokkenki
       include Shokkenki::Provider::Configuration::Session
 
       attr_accessor :ticket_location
-      attr_accessor :ticket_verifier
       attr_reader :providers
 
       def initialize
@@ -21,7 +20,9 @@ module Shokkenki
       end
 
       def redeem_tickets
-        @ticket_verifier.verify_all @ticket_reader.read_from(ticket_location)
+        @ticket_reader.read_from(ticket_location).each do |ticket|
+          ticket.verify_with providers[ticket.provider.name]
+        end
       end
     end
   end
