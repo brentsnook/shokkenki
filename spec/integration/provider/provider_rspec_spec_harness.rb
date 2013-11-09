@@ -6,9 +6,9 @@ class ProviderApp
   end
 end
 
-Shokkenki.provider.redeem_tickets do |t|
-  t.ticket_location = ENV['ticket_directory']
-  t.provider(:my_provider) do
-    app { ProviderApp.new }
+Shokkenki.provider.redeem_tickets do
+  tickets ENV['ticket_directory']
+  provider(:my_provider) do
+    run ProviderApp.new
   end
 end
