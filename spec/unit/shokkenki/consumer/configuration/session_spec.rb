@@ -6,7 +6,13 @@ describe Shokkenki::Consumer::Configuration::Session do
 
   class StubSession
     include Shokkenki::Consumer::Configuration::Session
-    attr_accessor :property
+    attr_reader :property
+    attr_accessor :ticket_location
+
+    def set_property value
+      @property = value
+    end
+
   end
 
   subject { StubSession.new }
@@ -23,8 +29,8 @@ describe Shokkenki::Consumer::Configuration::Session do
 
     context 'with directives' do
       before do
-        subject.configure do |config|
-          config.property = 'some value'
+        subject.configure do
+          set_property 'some value'
         end
       end
 
@@ -38,6 +44,11 @@ describe Shokkenki::Consumer::Configuration::Session do
         expect{ subject.configure }.to_not raise_error
       end
     end
+  end
+
+  it 'allows ticket location to be specified' do
+    subject.tickets 'location'
+    expect(subject.ticket_location).to eq('location')
   end
 
   context 'registering a stubber' do
@@ -78,8 +89,8 @@ describe Shokkenki::Consumer::Configuration::Session do
     context 'with directives' do
 
       let(:define_provider) do
-        subject.define_provider(:provider_name) do |p|
-          p.set_some_details
+        subject.define_provider(:provider_name) do
+          set_some_details
         end
       end
 

@@ -8,8 +8,12 @@ module Shokkenki
 
         attr_reader :stubber_classes
 
-        def configure
-          yield self if block_given?
+        def configure &block
+          instance_eval &block if block
+        end
+
+        def tickets location
+          self.ticket_location = location
         end
 
         def stubber_classes
@@ -20,12 +24,12 @@ module Shokkenki
           stubber_classes[name] = clazz
         end
 
-        def define_provider name
+        def define_provider name, &block
           provider_config = ProviderConfiguration.new(
             name,
             stubber_classes
           )
-          yield provider_config if block_given?
+          provider_config.instance_eval &block if block
           add_provider provider_config.to_provider
         end
       end

@@ -2,9 +2,9 @@ require_relative '../harness_helper'
 require 'shokkenki/consumer/rspec'
 require 'httparty'
 
-Shokkenki.consumer.configure do |c|
-  c.ticket_location = ENV['ticket_directory']
-  c.define_provider :my_provider
+Shokkenki.consumer.configure do
+  tickets ENV['ticket_directory']
+  define_provider :my_provider
 end
 
 describe 'A consumer', :shokkenki_consumer => {:name => :my_consumer} do
