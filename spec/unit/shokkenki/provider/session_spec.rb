@@ -3,6 +3,13 @@ require 'shokkenki/provider/session'
 require 'shokkenki/provider/ticket_reader'
 
 describe Shokkenki::Provider::Session do
+
+  context 'by default' do
+    it "reads tickets from the 'tickets' directory" do
+      expect(subject.ticket_location).to eq('tickets')
+    end
+  end
+
   context 'redeeming tickets' do
     let(:ticket) { double 'ticket' }
     let(:ticket2) { double 'ticket2' }

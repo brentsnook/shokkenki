@@ -9,6 +9,7 @@ module Shokkenki
 
       def initialize
         @ticket_reader = TicketReader.new
+        @ticket_location = 'tickets'
       end
 
       def redeem_tickets
