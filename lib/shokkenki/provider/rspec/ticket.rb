@@ -7,15 +7,9 @@ module Shokkenki
         include ::RSpec::Core::DSL
 
         def verify_with provider
-          describe 'My Consumer' do
-            describe 'greeting' do
-              describe 'status' do
-                it('is 200'){}
-              end
-              describe 'body' do
-                it('matches /hello there/'){}
-              end
-            end
+          ticket = self
+          describe consumer.label do
+            ticket.interactions.each { |i| i.verify_within self }
           end
         end
       end
