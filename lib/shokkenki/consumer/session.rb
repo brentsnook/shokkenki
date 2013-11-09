@@ -17,6 +17,7 @@ module Shokkenki
         @consumers = {}
         @providers = {}
         @patronages = {}
+        @ticket_location = 'tickets'
       end
 
       def current_patronage_for provider_name

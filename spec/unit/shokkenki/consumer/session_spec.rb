@@ -12,6 +12,12 @@ describe Shokkenki::Consumer::Session do
     expect(subject).to respond_to(:configure)
   end
 
+  context 'by default' do
+    it "writes tickets to the 'tickets' directory" do
+      expect(subject.ticket_location).to eq('tickets')
+    end
+  end
+
   describe 'provider' do
     let(:provider) { double('provider', :name => :providername)}
 
