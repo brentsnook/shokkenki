@@ -11,8 +11,9 @@ describe Shokkenki::Provider::RSpec::Ticket do
 
     let(:consumer) { double 'consumer', :label => 'Consumer label' }
     let(:interaction) { double('interaction', :label => 'interaction label').as_null_object }
-    let(:provider_config) { double 'provider' }
+    let(:provider) { double 'provider' }
     let(:example_context) { double('example').as_null_object }
+    let(:example_state) { '' }
 
     before do
       allow(subject).to receive(:consumer).and_return consumer
@@ -22,11 +23,19 @@ describe Shokkenki::Provider::RSpec::Ticket do
         example_context.instance_eval &block
       end
 
-      subject.verify_with provider_config
+      allow(example_context).to receive(:before).with(:all) do |&block|
+        example_state.instance_eval &block
+      end
+
+      subject.verify_with provider
     end
 
     it 'describes the consumer by label' do
       expect(subject).to have_received(:describe).with('Consumer label', anything)
+    end
+
+    it 'exposes the provider to the context' do
+      expect(example_state.instance_variable_get(:@provider)).to be(provider)
     end
 
     it 'tags the examples as shokkenki_provider to allow filtering' do

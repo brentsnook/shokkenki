@@ -6,9 +6,12 @@ module Shokkenki
   module Provider
     module Model
       class Interaction
-        attr_reader :label, :response
+        attr_reader :label, :response, :request
         def initialize
           @label = 'greeting'
+          @request = Shokkenki::Term::AndExpressionTerm.new(
+            :path => Shokkenki::Term::StringTerm.new('/greeting')
+          )
           @response = Shokkenki::Term::AndExpressionTerm.new(
             :status => Shokkenki::Term::NumberTerm.new(200),
             :body => Shokkenki::Term::RegexpTerm.new(/hello there/)

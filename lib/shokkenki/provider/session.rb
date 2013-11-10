@@ -19,9 +19,16 @@ module Shokkenki
         @providers[provider.name] = provider
       end
 
-      def redeem_tickets
+      def configure &block
+        instance_eval &block
+      end
+
+      def redeem_tickets &block
+        configure(&block) if block
         @ticket_reader.read_from(ticket_location).each do |ticket|
-          ticket.verify_with providers[ticket.provider.name]
+          provider = providers[ticket.provider.name]
+          raise "No provided named '#{ticket.provider.name}' was found. Did you register one?" unless provider
+          ticket.verify_with provider
         end
       end
     end
