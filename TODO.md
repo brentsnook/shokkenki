@@ -3,8 +3,6 @@
 
 ## Provider
 
-- add shokkenki_provider => true tag to outer example group
-- ensure that multiple nested and terms will not overwrite actual_values ???
 - Interaction defines actual_values as provider response
 - Use Faraday to make HTTP requests - default to NetHttp and using rack adapter (rack::test)
 - Support body
@@ -25,10 +23,6 @@
 
   end
   - stores fixtures as lambdas, runs them as before blocks at order level
-
-- RSpec support just registers a new TicketListener? that creates examples from ticket
-- Add documentation on selective spec running with --example
-
 
 ## Relish documentation
 
@@ -98,6 +92,7 @@
           - Host, Port
     - Terms - for the consumer
       - And Expression
+        - Nested And Expressions
       - Or Expression
       - Regexp
         - regex terms uses ruby standard for regex
@@ -147,8 +142,6 @@
       - Link to RSpec relish doco on filters and command line filters
 
 ## Test with RSpec 3 beta
-
-  - can you still access example from example group? - https://relishapp.com/rspec/rspec-core/v/3-0/docs/changelog
 
 ## Tidy Up
 
