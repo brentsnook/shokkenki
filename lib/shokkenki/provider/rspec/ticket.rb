@@ -8,7 +8,7 @@ module Shokkenki
 
         def verify_with provider
           ticket = self
-          describe consumer.label do
+          describe consumer.label, :shokkenki_provider => true do
             ticket.interactions.each { |i| i.verify_within self }
           end
         end

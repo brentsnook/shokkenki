@@ -26,7 +26,11 @@ describe Shokkenki::Provider::RSpec::Ticket do
     end
 
     it 'describes the consumer by label' do
-      expect(subject).to have_received(:describe).with('Consumer label')
+      expect(subject).to have_received(:describe).with('Consumer label', anything)
+    end
+
+    it 'tags the examples as shokkenki_provider to allow filtering' do
+      expect(subject).to have_received(:describe).with(anything, :shokkenki_provider => true)
     end
 
     it 'verifies each interaction in the current context' do
