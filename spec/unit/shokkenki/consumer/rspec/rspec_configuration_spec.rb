@@ -47,15 +47,18 @@ describe 'RSpec configuration' do
 
     let(:consumer_metadata) { {:name => :consumername } }
     let(:metadata) { {:shokkenki_consumer => consumer_metadata} }
-    let(:example) { double('example', :metadata => metadata)}
-    let(:example_group) { double('example group', :example => example) }
+    let(:example_group) do
+      double('example group',
+        :example => double('example', :metadata => metadata)
+      )
+    end
 
     before do
       # simulating what happens with an example group
       # sucks, need a better way to test this
       @filtered_to_consumer_examples = false
       allow(config).to receive(:before).with(:each, anything) do |scope, filter, &block|
-        example_group.instance_eval &block
+        block.call example_group
         @filtered_to_consumer_examples = filter[:shokkenki_consumer].call ''
       end
     end
@@ -74,12 +77,10 @@ describe 'RSpec configuration' do
 
   context 'after each example runs' do
 
-    let(:example_group) { double('example group', :example => example) }
-
     before do
       @filtered_to_consumer_examples = false
       allow(config).to receive(:after).with(:each, anything) do |scope, filter, &block|
-        example_group.instance_eval &block
+        block.call
         @filtered_to_consumer_examples = filter[:shokkenki_consumer].call ''
       end
     end
