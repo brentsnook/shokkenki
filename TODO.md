@@ -3,13 +3,13 @@
 
 ## Provider
 
-- Interaction defines actual_values as provider response
-- Use Faraday to make HTTP requests - default to NetHttp and using rack adapter (rack::test)
+- where should session configure method live?
+- RackHttpClient - Use Faraday to make HTTP requests - default to NetHttp and using rack adapter (rack::test)
 - Support body
 - Support headers
-- Allow Rack server to be configured
 
 - read tickets from specified location (file path, URI or lambda) [ ]
+- ensure that ticket keys are converted to symbols, esp provider name
 
 - add producer support to recognise givens
   - fail if state is not recognised
@@ -23,6 +23,16 @@
 
   end
   - stores fixtures as lambdas, runs them as before blocks at order level
+
+## Testing
+
+- Multiple consumer specs write to the same ticket successfully
+- Can use Rails app as provider with no problems
+- Can use blueprints to create data in AR with no problems
+- Consumer can interact with multiple stubbed providers at once
+- Works with RSpec 2
+- Works with RSpec 3 beta
+- Can drive a Javascript consumer app and have correct data show up
 
 ## Relish documentation
 
@@ -38,6 +48,7 @@
         - Curve, number of services vs integration cost
     - what is a shokkenki?
       - food ticket machine
+        - http://www.youtube.com/watch?v=-tZXGdWQZ5g
       - as a consumer you insert coins, press a button to select your meal
       - a paper ticket is dispensed which you hand to your food provider behind the counter
       - they prepare the food and call you over when it is finished
@@ -152,6 +163,7 @@
 - watch out for require_relative and target version
 - differentiate between providers when there is a failure in server
 - add a call to action on README - "problems? Feature request? Doesn't work the way you want? Create an issue!"
+- add a note about compatible ruby versions
 
 - release !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
