@@ -5,7 +5,7 @@ module Shokkenki
         def verify_within context
           values.each do |name, term|
             context.describe name do
-              let(:actual_value) { actual_values[name] }
+              before { @actual_value = @actual_values[name] }
 
               term.verify_within self
             end

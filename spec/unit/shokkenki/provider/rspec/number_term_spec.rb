@@ -12,7 +12,6 @@ describe Shokkenki::Provider::RSpec::NumberTerm do
     let(:example_context) do
       double('example context',
         :expect => expectation,
-        :actual_value => 28,
         :eq => matcher
       ).as_null_object
     end
@@ -21,6 +20,7 @@ describe Shokkenki::Provider::RSpec::NumberTerm do
     let(:expectation) { double('expectation', :to => '') }
 
     before do
+      example_context.instance_eval { @actual_value = 28 }
       allow(subject).to receive(:value).and_return(99)
       allow(example_context).to receive(:it) do |&block|
         example_context.instance_eval &block

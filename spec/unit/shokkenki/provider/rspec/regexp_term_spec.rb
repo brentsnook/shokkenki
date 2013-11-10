@@ -12,7 +12,6 @@ describe Shokkenki::Provider::RSpec::RegexpTerm do
     let(:example_context) do
       double('example context',
         :expect => expectation,
-        :actual_value => 9,
         :match => matcher
       ).as_null_object
     end
@@ -21,6 +20,7 @@ describe Shokkenki::Provider::RSpec::RegexpTerm do
     let(:expectation) { double('expectation', :to => '') }
 
     before do
+      example_context.instance_eval { @actual_value = 9 }
       allow(subject).to receive(:value).and_return(/99 problems/)
       allow(example_context).to receive(:it) do |&block|
         example_context.instance_eval &block

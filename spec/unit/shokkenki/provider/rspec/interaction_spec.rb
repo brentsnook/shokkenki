@@ -30,10 +30,6 @@ describe Shokkenki::Provider::RSpec::Interaction do
       expect(response).to have_received(:verify_within).with(example_context)
     end
 
-    it 'exposes actual values' do
-      expect(example_context).to have_received(:let).with(:actual_values)
-    end
-
     it 'exposes the provider response as actual values'
   end
 end
