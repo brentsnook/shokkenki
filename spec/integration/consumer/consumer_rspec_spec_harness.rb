@@ -7,7 +7,7 @@ Shokkenki.consumer.configure do
   define_provider :my_provider
 end
 
-describe 'A consumer', :shokkenki_consumer => {:name => :my_consumer} do
+describe 'A consumer', :shokkenki_consumer => :my_consumer do
 
   context 'when a simple request is stubbed' do
     before do

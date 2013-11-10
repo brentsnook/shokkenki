@@ -10,9 +10,8 @@ module Shokkenki
           Shokkenki.consumer.start
         end
 
-        def self.before_each metadata
-          name = metadata[:name]
-          Shokkenki.consumer.add_consumer(Shokkenki::Consumer::Model::Role.new(metadata)) unless Shokkenki.consumer.consumer(name)
+        def self.before_each name
+          Shokkenki.consumer.add_consumer(Shokkenki::Consumer::Model::Role.new(:name => name)) unless Shokkenki.consumer.consumer(name)
           Shokkenki.consumer.set_current_consumer name
           Shokkenki.consumer.clear_interaction_stubs
         end

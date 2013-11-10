@@ -15,11 +15,9 @@ describe Shokkenki::Consumer::RSpec::Hooks do
 
   context 'before each example runs' do
 
-    let(:metadata) { {:name => :consumername } }
-
     context 'regardless of whether consumer exists' do
 
-      before { subject.before_each metadata }
+      before { subject.before_each :consumername }
 
       # this allows an implicit consumer to be referred to in the DSL
       it 'sets a new consumer using the shokkenki metadata' do
@@ -37,9 +35,9 @@ describe Shokkenki::Consumer::RSpec::Hooks do
       before do
         allow(session).to receive(:add_consumer)
         allow(session).to receive(:consumer).with(:consumername).and_return nil
-        allow(Shokkenki::Consumer::Model::Role).to receive(:new).with(metadata).and_return(role)
+        allow(Shokkenki::Consumer::Model::Role).to receive(:new).with(:name => :consumername).and_return(role)
 
-        subject.before_each metadata
+        subject.before_each :consumername
       end
 
       it 'creates the consumer' do
