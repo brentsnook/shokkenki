@@ -1,4 +1,4 @@
-require_relative 'provider_configuration'
+require_relative '../model/provider'
 
 module Shokkenki
   module Provider
@@ -10,7 +10,7 @@ module Shokkenki
         end
 
         def provider name, &block
-          provider = ProviderConfiguration.new(name)
+          provider = Shokkenki::Provider::Model::Provider.new(name)
           provider.instance_eval &block if block
           add_provider provider
         end

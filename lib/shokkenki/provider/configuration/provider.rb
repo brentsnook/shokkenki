@@ -1,14 +1,7 @@
 module Shokkenki
   module Provider
     module Configuration
-      class ProviderConfiguration
-
-        attr_reader :app, :name
-
-        def initialize name
-          @name = name
-        end
-
+      module Provider
         def run app
           @app = app
         end

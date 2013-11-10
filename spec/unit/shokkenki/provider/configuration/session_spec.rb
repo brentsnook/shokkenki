@@ -1,6 +1,6 @@
 require_relative '../../../spec_helper'
 require 'shokkenki/provider/configuration/session'
-require 'shokkenki/provider/configuration/provider_configuration'
+require 'shokkenki/provider/model/provider'
 
 describe Shokkenki::Provider::Configuration::Session do
 
@@ -25,14 +25,14 @@ describe Shokkenki::Provider::Configuration::Session do
     let(:provider) { double('provider configuration').as_null_object }
 
     before do
-      allow(Shokkenki::Provider::Configuration::ProviderConfiguration).to receive(:new).and_return(provider)
+      allow(Shokkenki::Provider::Model::Provider).to receive(:new).and_return(provider)
       allow(subject).to receive(:add_provider)
     end
 
     context 'with configuration directives' do
       before { subject.provider(:provider_name) { directive } }
       it 'creates a new provider with the given name' do
-        expect(Shokkenki::Provider::Configuration::ProviderConfiguration).to have_received(:new).with(:provider_name)
+        expect(Shokkenki::Provider::Model::Provider).to have_received(:new).with(:provider_name)
       end
 
       it 'allows the provider to be configured' do
