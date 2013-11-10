@@ -3,6 +3,7 @@
 
 ## Provider
 
+- add shokkenki_provider => true tag to outer example group
 - ensure that multiple nested and terms will not overwrite actual_values ???
 - Interaction defines actual_values as provider response
 - Use Faraday to make HTTP requests - default to NetHttp and using rack adapter (rack::test)
@@ -18,7 +19,7 @@
 
   Shokkenki.provider.fixtures do
 
-    given 'a thing exists' do |thing|
+    given /a (sausage) exists/ do |thing, match|
        ...
     end
 
@@ -28,6 +29,127 @@
 - RSpec support just registers a new TicketListener? that creates examples from ticket
 - Add documentation on selective spec running with --example
 
+
+## Relish documentation
+
+- Shokkenki (shokkenki)
+  - About
+    - what does shokkenki do
+     - Exampled-driven consumer-driven contracts
+     - Targetted at HTTP interactions
+     - Designed for RSpec and Rack Provider but extensible
+    - why?
+      - Integration testing sucks
+      - Bringing down the cost of integration
+        - Curve, number of services vs integration cost
+    - what is a shokkenki?
+      - food ticket machine
+      - as a consumer you insert coins, press a button to select your meal
+      - a paper ticket is dispensed which you hand to your food provider behind the counter
+      - they prepare the food and call you over when it is finished
+    - consumer driven contracts
+      - http://martinfowler.com/articles/consumerDrivenContracts.html
+    - consumer
+      - the user of a service
+      - may be another HTTP service, a Javascript application
+      - a consumer requires a subset of the services offered by a provider
+      - A consumer should specify the minimum that it cares about to avoid specs breaking uncessarily
+    - provider
+     - provides a range of services
+     - has one or more consumers, each interested in a subset of overall services
+     - the provider may change its behaviour and break different consumers in different ways
+     - a provider may run executable consumer-driven contracts to ensure that it has not broken any consumers
+  - Changelog
+  - Cookbook
+    - Writing Good Consumer Specs
+      - Specify the absolute minimum
+    - Options requests
+    - Redeeming Tickets with a Provider Outside of Your Control
+      - Twitter example
+      - Defining host and port
+    - Provider Databases
+      - Ensuring data is set up/torn down - what to require?
+    - Easy Data Setup with Blueprints
+      - Using Factory Girl
+        - fixture name corresponds to blueprint name
+        - arguments are passed through as-is
+    - Driving Javascript Consumers with Capybara
+  - Contributing
+    - Code
+    - Documentation
+
+- Shokkenki Consumer RSpec
+  - Configuration
+    - Ticket Location
+    - Defining Providers
+      - Specifying a Stubber
+    - Defining Stubbers
+
+  - Writing a Consumer Spec
+    - Example Metadata
+    - Orders
+      - During (Labelling Interactions)
+      - Given (Specifying Fixtures)
+      - Receive (Specifying Requests)
+      - And Respond (Specifying Responses)
+    - Stubbers
+      - HTTP Stubber
+        - Interacting with the Stub Server
+          - Host, Port
+    - Terms - for the consumer
+      - And Expression
+      - Or Expression
+      - Regexp
+        - regex terms uses ruby standard for regex
+        - generate terms with ruby string random
+      - String
+      - Number
+      - JSON
+      - Registering Custom Terms
+        - Configuration
+        - Ensure they are supported in both consumer and provider
+    - Tickets
+      - JSON files that contain information about provider, consumer and interactions
+
+  - Running Consumer Specs
+    - Filtering
+      - -- tag shokkenki_consumer:name
+      - Link to RSpec relish doco on filters and command line filters
+    - Troubleshooting
+      - Unused Interactions
+      - Unmatched Requests
+      - Interacting With the Stubber
+        - Finding all interactions
+        - Finding unused interactions
+        - Finding unmatched requests
+        - But I want to know something else...
+          - Please raise an issue and let us know what you need
+        - Using Pry
+
+- Shokkenki Provider RSpec
+  - Configuration
+    - Ticket Location
+    - Defining Fixtures
+    - Registering Providers
+      - Application
+        - Specifying a Rack Application
+    - HTTP Requests
+      - Configuring Faraday
+
+  - Redeeming Tickets
+    - Generating RSpec Examples
+      - Structure
+
+  - Running Provider Specs
+    - Filtering
+      - --tag shokkenki_provider
+      - --example (interaction|request|headers)
+      - Link to RSpec relish doco on filters and command line filters
+
+## Test with RSpec 3 beta
+
+  - can you still access example from example group? - https://relishapp.com/rspec/rspec-core/v/3-0/docs/changelog
+
 ## Tidy Up
 
 - split into shokkenki-provider, shokkenki-consumer and shokkenki-core gems. Don't forget to remove unused gem dependencies. Move version into Shokkenki core
@@ -36,29 +158,7 @@
 - update examples and ensure that they work [ ]
 - watch out for require_relative and target version
 - differentiate between providers when there is a failure in server
-- document
-  - what is a shokkenki?
-    - food ticket machine
-    - as a consumer you insert coins, press a button to select your meal
-    - a paper ticket is dispensed which you hand to your food provider behind the counter
-    - they prepare the food and call you over when it is finished
-  - consumer driven contracts
-  - consumer
-  - provider
-  - ticket
-  - terms
-    - regex terms uses ruby standard for regex
-      - generate terms with ruby string random
-    - creating your own
-      - as long as both the provider and consumer support them
-  - fixtures
-  - add a call to action on README - "problems? Feature request? Doesn't work the way you want? Create an issue!"
-  - wtf is going on
-    - use pry to interrogate the provider
-      provider.stubber.interactions
-      provider.stubber.unused_interactions
-      provider.stubber.requests
-        /interactions?hit_count='0'
+- add a call to action on README - "problems? Feature request? Doesn't work the way you want? Create an issue!"
 
 - release !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -105,23 +205,9 @@
     All requests:
       []
 
-
-
-## Remove argument passed in to configuration methods
-
 ## Support for non-Rack providers
 
 - Just test running webapps at a particular address and port - [ ][ ][ ]
-
-## README/Wiki notes
-
-- where does the name come from? Japanese food ticket machine (emojis)
-  - put this in wiki page or on Readme?
-- which problems/situations drove a need for this? integration testing large numbers of components (like Microservices)
-- what does it target? (rspec consumers, ruby or driving JS apps with Capybara and Rack providers)
-- what will it hopefully target? (Javascript consumers via unit tests + stubbing, http mocking in Angular/Ember/Backbone - shokkenki-consumer-angular)
-- how can it be used to test a provider that I don't control? Using it to test github API as an example
-- Issues/contributing
 
 ## Tests
 
