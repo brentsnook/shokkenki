@@ -5,6 +5,10 @@ module Shokkenki
     module Configuration
       module Session
 
+        def configure &block
+          instance_eval &block
+        end
+
         def tickets location
           self.ticket_location = location
         end

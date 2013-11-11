@@ -4,7 +4,7 @@ require 'shokkenki/provider/model/provider'
 
 describe Shokkenki::Provider::Configuration::Session do
 
-  class StubSession
+  class StubProviderSession
     include Shokkenki::Provider::Configuration::Session
     attr_accessor :ticket_location
     attr_reader :providers
@@ -14,7 +14,18 @@ describe Shokkenki::Provider::Configuration::Session do
     end
   end
 
-  subject { StubSession.new }
+  subject { StubProviderSession.new }
+
+  context 'being configured' do
+    before do
+      allow(subject).to receive(:config_directive)
+      subject.configure { config_directive }
+    end
+
+    it 'applies configuration' do
+      expect(subject).to have_received(:config_directive)
+    end
+  end
 
   it 'allows ticket location to be specified' do
     subject.tickets 'location'

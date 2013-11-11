@@ -5,7 +5,7 @@ require 'shokkenki/provider/ticket_reader'
 describe Shokkenki::Provider::Session do
 
   it 'is configurable' do
-    expect(subject).to respond_to(:provider)
+    expect(subject).to respond_to(:configure)
   end
 
   context 'by default' do
@@ -35,17 +35,6 @@ describe Shokkenki::Provider::Session do
     end
   end
 
-  context 'being configured' do
-    before do
-      allow(subject).to receive(:config_directive)
-      subject.configure { config_directive }
-    end
-
-    it 'applies configuration' do
-      expect(subject).to have_received(:config_directive)
-    end
-  end
-
   context 'redeeming tickets' do
     let(:ticket) do
       double('ticket',
@@ -68,44 +57,30 @@ describe Shokkenki::Provider::Session do
       subject.providers[:provider2] = provider2
     end
 
-    context 'when configuration is supplied' do
+    context 'when all providers are found' do
       before do
-        allow(subject).to receive(:configure)
-        subject.redeem_tickets { }
+        subject.redeem_tickets
       end
 
-      it 'first configures the session' do
-        expect(subject).to have_received(:configure)
+      it 'reads tickets from the configured ticket location' do
+        expect(ticket_reader).to have_received(:read_from).with 'ticket location'
+      end
+
+      it 'verifies each ticket with its provider' do
+        expect(ticket).to have_received(:verify_with).with provider
+        expect(ticket2).to have_received(:verify_with).with provider2
       end
     end
 
-    context 'regardless of whether config was supplied' do
-
-      context 'when all providers are found' do
-        before do
-          subject.redeem_tickets
-        end
-
-        it 'reads tickets from the configured ticket location' do
-          expect(ticket_reader).to have_received(:read_from).with 'ticket location'
-        end
-
-        it 'verifies each ticket with its provider' do
-          expect(ticket).to have_received(:verify_with).with provider
-          expect(ticket2).to have_received(:verify_with).with provider2
-        end
+    context 'when no provider is found' do
+      let(:ticket) do
+        double('ticket with no provider',
+          :provider => double('ticket provider', :name => :unknown_provider)
+        ).as_null_object
       end
 
-      context 'when no provider is found' do
-        let(:ticket) do
-          double('ticket with no provider',
-            :provider => double('ticket provider', :name => :unknown_provider)
-          ).as_null_object
-        end
-
-        it 'raises an error' do
-          expect { subject.redeem_tickets }.to raise_error("No provided named 'unknown_provider' was found. Did you register one?")
-        end
+      it 'raises an error' do
+        expect { subject.redeem_tickets }.to raise_error("No provided named 'unknown_provider' was found. Did you register one?")
       end
     end
   end

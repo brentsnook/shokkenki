@@ -4,7 +4,7 @@ require 'shokkenki/consumer/stubber/http_stubber'
 
 describe Shokkenki::Consumer::Configuration::Session do
 
-  class StubSession
+  class StubConsumerSession
     include Shokkenki::Consumer::Configuration::Session
     attr_reader :property
     attr_accessor :ticket_location
@@ -15,7 +15,7 @@ describe Shokkenki::Consumer::Configuration::Session do
 
   end
 
-  subject { StubSession.new }
+  subject { StubConsumerSession.new }
 
   describe 'stubber classes' do
     context 'by default' do
