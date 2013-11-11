@@ -3,11 +3,8 @@
 
 ## Provider
 
-- read tickets from specified location, file/url (use open uri) or lambda
-  - responds to call - call to retrieve array of tickets
-  - url - read from URL
-  - directory - read from directory
-- ensure that ticket keys are converted to symbols, esp provider name
+- ticket
+- interaction
 
 - add producer support to recognise givens
   - fail if state is not recognised
@@ -22,8 +19,35 @@
   end
   - stores fixtures as lambdas, runs them as before blocks at order level
 
+
+## Tidy Up
+
+- split
+  - shokkenki-provider-rspec
+  - shokkenki-consumer-rspec
+  - shokkenki-support
+  - shokkenki - contains version
+  - Don't forget to remove unused gem dependenciesMove version into Shokkenki core
+- better name for and expression term?
+- differentiate between providers when there is a failure in server - create server with provider name and use in identity?
+- add working examples
+- README
+  - add a call to action on README - "problems? Feature request? Doesn't work the way you want? Create an issue!"
+  - add a note about compatible ruby versions
+  - Upate examples
+  - Add coming soon:
+    - Relish documentation
+    - JSON matcher
+    - XML matcher
+    - Support for non-Rack providers
+    - Register custom matchers
+
 ## Testing
 
+- RSpec 3 beta
+- Ruby 1.9
+- Ruby 2
+- Fix RSpec versions required in gemspec
 - Multiple consumer specs write to the same ticket successfully
 - Can use Rails app as provider with no problems
 - Can use blueprints to create data in AR with no problems
@@ -34,6 +58,11 @@
 - Headers are supported across consumer and provider
 - What happens when no method is specified in consumer?
 - What happens when no path is specified in consumer?
+- What happens when method is a regex and specifies anything?
+- What happens when path is a regex and specifies anything?
+- Multiple nested scenarios
+- What happends when you specify different consumers in nested contexts?
+- tickets via URI
 
 ## Relish documentation
 
@@ -98,6 +127,9 @@
 - Shokkenki Consumer RSpec
   - Configuration
     - Ticket Location
+      - Proc
+      - file
+      - url
     - Defining Providers
       - Specifying a Stubber
     - Defining Stubbers
@@ -147,6 +179,9 @@
 - Shokkenki Provider RSpec
   - Configuration
     - Ticket Location
+      - Proc
+      - file
+      - url
     - Defining Fixtures
     - Registering Providers
       - Application
@@ -164,21 +199,6 @@
       - --example (interaction|request|headers)
       - Link to RSpec relish doco on filters and command line filters
 
-## Test with RSpec 3 beta
-
-## Tidy Up
-
-- split into shokkenki-provider, shokkenki-consumer and shokkenki-core gems. Don't forget to remove unused gem dependencies. Move version into Shokkenki core
-- better name for and expression term?
-- check runtime ruby versions [ ]
-- update examples and ensure that they work [ ]
-- watch out for require_relative and target version
-- differentiate between providers when there is a failure in server
-- add a call to action on README - "problems? Feature request? Doesn't work the way you want? Create an issue!"
-- add a note about compatible ruby versions
-
-- release !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 # Next ...
 
 ## JSON Matcher
@@ -195,7 +215,7 @@
 
 -  use JSONPath syntax and maybe https://github.com/joshbuddy/jsonpath
 
-## Either Matcher
+## Either term
  order(:my_provider).during('order for ramen').to do
         receive(:method => either(:get, :post, :options))
 
@@ -210,37 +230,28 @@
     stop { }
   end
 
+## XML term
+
+## Not term
+
+## Validate terms used in request!!!
+  - method (regex|string|either)
+  - path (regex|string|either)
+
 - Find a better way to stub new methods?
 - document what can be included in a request
 - convert other http examples like http_stubber to use webmock
 - better end to end coverage around tickets?
 
-- provide a verbose mode enabled with SHOKKENKI_OPTIONS='-verbose'
-  - prints out all interactions
-    All interactions:
-      []
-    All requests:
-      []
-
 ## Support for non-Rack providers
 
 - Just test running webapps at a particular address and port - [ ][ ][ ]
 
-## Tests
-
-- Multiple nested scenarios
-- What happends when you specify different consumers in nested contexts?
-
+## Provide custom Faraday configuration
 
 ## Later
 
-## shokkenki-angular.js
-
-- Allow tickets to be produced from Jasmine run angular specs. [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
-
-- support and doco for running the server on the command line [ ][ ][ ]
 - allow custom terms to be configured
-- Rake task for provider tests
 - add unique IDs to interactions - hashed from their contents - make it easier to spot unique interactions
 - key interactions by unique ID and warn when they are being overwritten
 - Use Machinist to simplify specs
@@ -248,6 +259,8 @@
 - Minitest support
 - Steak support
 - add default response params for those that are not given
-  - for example, default status to 200
+  - consumer - response (default status is 200)
+  - provider - request (default method is get)
 - streaming content support - add to a wiki page of things it doesnt support
 - HTTP session support
+- Cookie support
