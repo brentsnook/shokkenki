@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.name = 'shokkenki'
   s.version = Shokkenki::Version::STRING
   s.platform = Gem::Platform::RUBY
-  s.license = 'MIT'
+  s.license = 'GPL2'
   s.authors = ['Brent Snook']
   s.email = 'brent@fuglylogic.com'
   s.homepage = 'http://github.com/brentsnook/shokkenki'
