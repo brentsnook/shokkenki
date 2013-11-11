@@ -25,9 +25,9 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec', '~> 2.14.0'
   s.add_runtime_dependency 'json'
   s.add_runtime_dependency 'rspec'
+  s.add_runtime_dependency 'activesupport'
 
   # consumer
-  s.add_runtime_dependency 'activesupport'
   s.add_runtime_dependency 'httparty'
   s.add_runtime_dependency 'find_a_port'
   s.add_runtime_dependency 'rack'

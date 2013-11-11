@@ -25,6 +25,10 @@ describe Shokkenki::Provider::Session do
       expect(subject.providers[:provider_name]).to be(provider)
     end
 
+    it 'treats string and symbol provider names the same way' do
+      expect(subject.providers['provider_name']).to be(provider)
+    end
+
     context 'when a provider already exists with that name' do
       let(:new_provider) { double('new provider', :name => :provider_name)}
       before { subject.add_provider new_provider }

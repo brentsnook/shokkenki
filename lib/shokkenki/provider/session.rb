@@ -1,5 +1,6 @@
 require_relative 'ticket_reader'
 require_relative 'configuration/session'
+require 'active_support/core_ext/hash/indifferent_access'
 
 module Shokkenki
   module Provider
@@ -12,7 +13,7 @@ module Shokkenki
       def initialize
         @ticket_reader = TicketReader.new
         @ticket_location = 'tickets'
-        @providers = {}
+        @providers = {}.with_indifferent_access
       end
 
       def add_provider provider
