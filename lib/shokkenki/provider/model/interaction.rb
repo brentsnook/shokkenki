@@ -10,6 +10,7 @@ module Shokkenki
         def initialize
           @label = 'greeting'
           @request = Shokkenki::Term::AndExpressionTerm.new(
+            :method => Shokkenki::Term::StringTerm.new(:get),
             :path => Shokkenki::Term::StringTerm.new('/greeting')
           )
           @response = Shokkenki::Term::AndExpressionTerm.new(

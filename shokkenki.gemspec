@@ -37,4 +37,5 @@ Gem::Specification.new do |s|
 
   # producer
   s.add_runtime_dependency 'faraday'
+  s.add_runtime_dependency 'rack-test'
 end

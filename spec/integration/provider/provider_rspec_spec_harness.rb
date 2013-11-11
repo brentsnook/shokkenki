@@ -2,7 +2,7 @@ require 'shokkenki/provider/rspec'
 
 class ProviderApp
   def call env
-    [200, {}, []]
+    env['PATH_INFO'] == '/greeting' ? [200, {}, ['why hello there']] : [404, {}, []]
   end
 end
 
