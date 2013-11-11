@@ -3,12 +3,10 @@
 
 ## Provider
 
-- where should session configure method live?
-- RackHttpClient - Use Faraday to make HTTP requests - default to NetHttp and using rack adapter (rack::test)
-- Support body
-- Support headers
-
-- read tickets from specified location (file path, URI or lambda) [ ]
+- read tickets from specified location, file/url (use open uri) or lambda
+  - responds to call - call to retrieve array of tickets
+  - url - read from URL
+  - directory - read from directory
 - ensure that ticket keys are converted to symbols, esp provider name
 
 - add producer support to recognise givens
@@ -17,7 +15,7 @@
 
   Shokkenki.provider.fixtures do
 
-    given /a (sausage) exists/ do |thing, match|
+    given /a (sausage) exists/ do |thing, match(optional)|
        ...
     end
 
@@ -33,6 +31,9 @@
 - Works with RSpec 2
 - Works with RSpec 3 beta
 - Can drive a Javascript consumer app and have correct data show up
+- Headers are supported across consumer and provider
+- What happens when no method is specified in consumer?
+- What happens when no path is specified in consumer?
 
 ## Relish documentation
 
@@ -60,10 +61,21 @@
       - a consumer requires a subset of the services offered by a provider
       - A consumer should specify the minimum that it cares about to avoid specs breaking uncessarily
     - provider
-     - provides a range of services
-     - has one or more consumers, each interested in a subset of overall services
-     - the provider may change its behaviour and break different consumers in different ways
-     - a provider may run executable consumer-driven contracts to ensure that it has not broken any consumers
+      - provides a range of services
+      - has one or more consumers, each interested in a subset of overall services
+      - the provider may change its behaviour and break different consumers in different ways
+      - a provider may run executable consumer-driven contracts to ensure that it has not broken any consumers
+    - request
+      - path (required)
+      - method (required)
+      - query
+      - body
+      - headers
+    - response
+      - status
+      - body
+      - headers
+
   - Changelog
   - Cookbook
     - Writing Good Consumer Specs
