@@ -14,7 +14,7 @@ describe 'RSpec' do
     end
 
     it 'allows a ticket to verify its self with a provider' do
-      expect(Shokkenki::Provider::Model::Ticket.new).to respond_to(:verify_with)
+      expect(Shokkenki::Provider::Model::Ticket.new(nil, nil, nil)).to respond_to(:verify_with)
     end
 
     it 'allows an interaction to be verified within a context' do
