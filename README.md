@@ -12,9 +12,9 @@ Shokkenki is based on [pact](https://github.com/uglyog/pact) and would not exist
 
 This gem is still being built and will not work in the meantime.
 
-Remaining before a usable release:
+Remaining before first usable release (0.1.0):
 
-- add provider test support
+- manual testing
 
 ## Install
 
