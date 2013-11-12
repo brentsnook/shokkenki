@@ -3,8 +3,28 @@
 
 ## Provider
 
-- ticket
-- interaction
+- role
+
+## JSON term
+    order(:my_provider).during('order for ramen').to do
+        receive(:method => :get, :path => '/order/ramen').
+        and_respond(:body => json('$.temperature' => /hot/)))
+
+    order for ramen
+      response
+        body
+          json
+            $.temperature
+              matches /hot/
+- always assume multiple results from query
+- how can you use path to create values? might need to only support subset for starters
+  - raise exception in generate if path can't be generated
+-  use JSONPath syntax and maybe https://github.com/joshbuddy/jsonpath
+
+## XML term
+- XPath expression
+
+## Fixtures
 
 - add producer support to recognise givens
   - fail if state is not recognised
@@ -19,15 +39,13 @@
   end
   - stores fixtures as lambdas, runs them as before blocks at order level
 
+## Validate terms used in request!!!
+  - method string_term and must be present
+  - path string_term and must be present
+
 
 ## Tidy Up
 
-- split
-  - shokkenki-provider-rspec
-  - shokkenki-consumer-rspec
-  - shokkenki-support
-  - shokkenki - contains version
-  - Don't forget to remove unused gem dependenciesMove version into Shokkenki core
 - better name for and expression term?
 - differentiate between providers when there is a failure in server - create server with provider name and use in identity?
 - add working examples
@@ -63,6 +81,18 @@
 - Multiple nested scenarios
 - What happends when you specify different consumers in nested contexts?
 - tickets via URI
+
+## Release !!!!!!!!!!!!!!!!!!!
+
+- check gemspec
+- version 0.1.0 (major is 0 until split into gems then release all as 1.0.0)
+
+## Split
+  - shokkenki-provider
+  - shokkenki-consumer
+  - shokkenki-support
+  - shokkenki - contains version
+  - Don't forget to remove unused gem dependencies
 
 ## Relish documentation
 
@@ -201,21 +231,7 @@
 
 # Next ...
 
-## JSON Matcher
-    order(:my_provider).during('order for ramen').to do
-        receive(:method => :get, :path => '/order/ramen').
-        and_respond(:body => json('$.temperature' => /hot/)))
-
-    order for ramen
-      response
-        body
-          json
-            $.temperature
-              matches /hot/
-
--  use JSONPath syntax and maybe https://github.com/joshbuddy/jsonpath
-
-## Either term
+## Either term - useful?
  order(:my_provider).during('order for ramen').to do
         receive(:method => either(:get, :post, :options))
 
@@ -230,13 +246,7 @@
     stop { }
   end
 
-## XML term
-
-## Not term
-
-## Validate terms used in request!!!
-  - method (regex|string|either)
-  - path (regex|string|either)
+## Not term - useful?
 
 - Find a better way to stub new methods?
 - document what can be included in a request
@@ -248,12 +258,14 @@
 - Just test running webapps at a particular address and port - [ ][ ][ ]
 
 ## Provide custom Faraday configuration
+- allow a block to be set, eval this against faraday config last
 
 ## Later
 
 - allow custom terms to be configured
 - add unique IDs to interactions - hashed from their contents - make it easier to spot unique interactions
 - key interactions by unique ID and warn when they are being overwritten
+- to/from_hash/json inconsistency
 - Use Machinist to simplify specs
 - Cucumber support
 - Minitest support
