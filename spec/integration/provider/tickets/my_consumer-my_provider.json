@@ -15,6 +15,10 @@
           "path": {
             "type": "string",
             "value": "/greeting"
+          },
+          "method": {
+            "type": "string",
+            "value": "get"
           }
         }
       },
