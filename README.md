@@ -52,10 +52,7 @@ end
 
 ## Provider Rspec
 
-Shokkenki Provider allows you to specify interactions with the provider from the consumer's point of view. These interactions are then used to stub the provider and produce a Shokkenki ticket.
-
-
-### Provider Rspec spec
+Shokkenki Provider allows you to redeem (verify) a Shokkenki ticket against an actual provider.
 
 ```ruby
 require 'shokkenki/provider/rspec'
