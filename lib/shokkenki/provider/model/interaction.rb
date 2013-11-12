@@ -18,6 +18,10 @@ module Shokkenki
             :body => Shokkenki::Term::RegexpTerm.new(/hello there/)
           )
         end
+
+        def self.from_hash hash
+          new
+        end
       end
     end
   end
