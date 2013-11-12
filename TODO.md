@@ -1,9 +1,20 @@
 
 # Now
 
-## Provider
+## Fixtures
 
-- role
+- add producer support to recognise givens
+  - fail if state is not recognised
+  - otherwise set state up before running specs
+
+  Shokkenki.provider.fixtures do
+
+    given /a (sausage) exists/ do |thing, match(optional)|
+       ...
+    end
+
+  end
+  - stores fixtures as lambdas, runs them as before blocks at order level
 
 ## JSON term
     order(:my_provider).during('order for ramen').to do
@@ -21,50 +32,28 @@
   - raise exception in generate if path can't be generated
 -  use JSONPath syntax and maybe https://github.com/joshbuddy/jsonpath
 
-## XML term
-- XPath expression
-
-## Fixtures
-
-- add producer support to recognise givens
-  - fail if state is not recognised
-  - otherwise set state up before running specs
-
-  Shokkenki.provider.fixtures do
-
-    given /a (sausage) exists/ do |thing, match(optional)|
-       ...
-    end
-
-  end
-  - stores fixtures as lambdas, runs them as before blocks at order level
-
 ## Validate terms used in request!!!
   - method string_term and must be present
   - path string_term and must be present
 
-
 ## Tidy Up
 
 - better name for and expression term?
+- remove attributes in initializers?
 - differentiate between providers when there is a failure in server - create server with provider name and use in identity?
 - add working examples
 - README
   - add a call to action on README - "problems? Feature request? Doesn't work the way you want? Create an issue!"
   - add a note about compatible ruby versions
   - Upate examples
-  - Add coming soon:
-    - Relish documentation
-    - JSON matcher
-    - XML matcher
-    - Support for non-Rack providers
-    - Register custom matchers
 
 ## Testing
 
 - RSpec 3 beta
 - Ruby 1.9
 - Ruby 2
+- Works with Rails 3
+- Works with Rails 4
 - Fix RSpec versions required in gemspec
 - Multiple consumer specs write to the same ticket successfully
 - Can use Rails app as provider with no problems
@@ -74,10 +63,6 @@
 - Works with RSpec 3 beta
 - Can drive a Javascript consumer app and have correct data show up
 - Headers are supported across consumer and provider
-- What happens when no method is specified in consumer?
-- What happens when no path is specified in consumer?
-- What happens when method is a regex and specifies anything?
-- What happens when path is a regex and specifies anything?
 - Multiple nested scenarios
 - What happends when you specify different consumers in nested contexts?
 - tickets via URI
@@ -231,12 +216,33 @@
 
 # Next ...
 
+## Add support for writing tickets ...
+  - to URI (POST), application/json
+  - to block (call)
+  - to directory (already)
+  - to file (if not a directory)
+
+## XML term
+- XPath expression
+
+## Provide custom Faraday configuration
+- allow a block to be set, eval this against faraday config last
+
+## Misc
+- Find a better way to stub new methods?
+- document what can be included in a request
+- convert other http examples like http_stubber to use webmock
+- better end to end coverage around tickets?
+
 ## Either term - useful?
  order(:my_provider).during('order for ramen').to do
         receive(:method => either(:get, :post, :options))
 
-- support passing additional configuration to faraday in the provider config
+## Not term - useful? - wraps term to negate its match, make terms negation-aware
+## Any term - useful? - example by using first
+## Array term - matches if values are an array with exact values
 
+## Support for non-Rack providers
 - Allow any server to be configured
   Shokkenki.provider(:restaurant){ already_running(:port => 3000) }.honours_tickets!
 - Require a port but default to localhost for host
@@ -246,22 +252,13 @@
     stop { }
   end
 
-## Not term - useful?
-
-- Find a better way to stub new methods?
-- document what can be included in a request
-- convert other http examples like http_stubber to use webmock
-- better end to end coverage around tickets?
-
-## Support for non-Rack providers
-
-- Just test running webapps at a particular address and port - [ ][ ][ ]
-
-## Provide custom Faraday configuration
-- allow a block to be set, eval this against faraday config last
-
 ## Later
 
+- include version in consumer
+  My Consumer (2.4.3)
+    greeting
+      status
+        is 200
 - allow custom terms to be configured
 - add unique IDs to interactions - hashed from their contents - make it easier to spot unique interactions
 - key interactions by unique ID and warn when they are being overwritten
