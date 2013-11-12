@@ -20,9 +20,9 @@ Remaining before first usable release (0.1.0):
 
     gem install shokkenki
 
-## Examples
+## Consumer Rspec
 
-### Consumer Rspec spec
+Shokkenki Consumer allows you to specify interactions with the provider from the consumer's point of view. These interactions are then used to stub the provider.
 
 ```ruby
 require 'shokkenki/consumer/rspec'
@@ -39,7 +39,7 @@ describe HungryMan, :shokkenki_consumer => :hungry_man do
     before do
       order(:my_provider).during('order for ramen').to do
         receive(:method => :get, :path => '/order/ramen').
-        and_respond(:body => /tasty/))
+        and_respond(:status => 200, :body => /tasty/))
       end
     end
 
@@ -50,28 +50,47 @@ describe HungryMan, :shokkenki_consumer => :hungry_man do
 end
 ```
 
-When run, [this consumer example](examples/consumer/hungry_man_spec.rb) produces a new ticket named **/examples/tickets/hungry_man-restaurant.json** in the examples directory.
+## Provider Rspec
+
+Shokkenki Provider allows you to specify interactions with the provider from the consumer's point of view. These interactions are then used to stub the provider and produce a Shokkenki ticket.
+
 
 ### Provider Rspec spec
 
 ```ruby
 require 'shokkenki/provider/rspec'
-require 'shokkenki/provider/rack'
-require 'restaurant'
 
-Shokkenki.provider.redeem_tickets{ provider(:restaurant){ racked_up_as Restaurant.new } }
+class Restaurant
+  def call env
+    env['PATH_INFO'] == '/order/ramen' ? [200, {}, ['a tasty morsel']] : raise('Unsupported path')
+  end
+end
 
+Shokkenki.provider.configure do
+  provider(:restaurant) { run Restaurant.new }
+end
+
+Shokkenki.provider.redeem_tickets
 ```
 
-When run, [this provider example](examples/provider/restaurant_spec.rb) will define a series of rspec examples for each interaction in any found tickets. It will find the ticket created by the previous consumer example by default.
+When run, this example will define and run an RSpec specification:
 
 ```
 Hungry Man
   order for ramen
-    response
-      body
-        matches /sdsd/
+    status
+      is 200
+    body
+      matches /tasty/
 ```
+
+## On the way ...
+
+  - [Relish documentation](https://www.relishapp.com/shokkenki)
+  - XML term - XPath matching within XML documents
+  - Support for non-Rack providers
+  - Register custom terms in both consumer and provider
+  - Custom Faraday configuration - more control over how your provider is requested
 
 ## License
 
