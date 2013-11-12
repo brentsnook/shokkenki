@@ -42,6 +42,10 @@ describe 'A consumer rspec spec' do
             {
               'type' => 'and_expression',
               'values' => {
+                'method' => {
+                  'type' => 'string',
+                  'value' => 'get'
+                },
                 'path' => {
                   'type' => 'string',
                   'value' => '/greeting'
