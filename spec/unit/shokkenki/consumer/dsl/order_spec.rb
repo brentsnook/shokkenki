@@ -20,6 +20,10 @@ describe Shokkenki::Consumer::DSL::Order do
     allow(Shokkenki::Consumer::Model::Interaction).to receive(:new)
   end
 
+  it 'includes HTTP methods' do
+    expect(subject).to respond_to(:put)
+  end
+
   context 'to' do
 
     let(:interaction) { double 'interaction' }

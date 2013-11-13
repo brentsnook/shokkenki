@@ -13,7 +13,7 @@ describe 'A consumer', :shokkenki_consumer => :my_consumer do
     before do
       order(:my_provider).during('a greeting').to do
         given(:weather, :temperature => 30).
-        receive(:method => :get, :path => '/greeting').
+        get('/greeting').
         and_respond(
           :status => 200,
           :body => /hello there, its a warm one today /
