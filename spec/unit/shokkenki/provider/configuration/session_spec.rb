@@ -40,6 +40,21 @@ describe Shokkenki::Provider::Configuration::Session do
       allow(subject).to receive(:add_provider)
     end
 
+    context 'when a provider that already exists with that name' do
+      let(:existing_provider) do
+        double('existing provider configuration').as_null_object
+      end
+
+      before do
+        subject.providers[:provider_name] = existing_provider
+        subject.provider(:provider_name) { directive }
+      end
+
+      it 'configures the existing provider' do
+        expect(existing_provider).to have_received(:directive)
+      end
+    end
+
     context 'with configuration directives' do
       before { subject.provider(:provider_name) { directive } }
       it 'creates a new provider with the given name' do
