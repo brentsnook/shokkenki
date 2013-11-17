@@ -1,21 +1,6 @@
 
 # Now
 
-## Fixtures
-
-- add producer support to recognise givens
-  - fail if state is not recognised
-  - otherwise set state up before running specs
-
-  Shokkenki.provider.fixtures do
-
-    given /a (sausage) exists/ do |thing, match(optional)|
-       ...
-    end
-
-  end
-  - stores fixtures as lambdas, runs them as before blocks at order level
-
 ## JSON term
     order(:my_provider).during('order for ramen').to do
         receive(:method => :get, :path => '/order/ramen').
@@ -41,6 +26,7 @@
 - better name for and expression term?
 - remove attributes in initializers?
 - differentiate between providers when there is a failure in server - create server with provider name and use in identity?
+- move stubber middleware classes into own high-level package
 - add working examples
 - README
   - add a call to action on README - "problems? Feature request? Doesn't work the way you want? Create an issue!"
@@ -216,11 +202,16 @@
 
 # Next ...
 
+# Automatically assign interaction label
+  - GET /path
+
 ## Add support for writing tickets ...
   - to URI (POST), application/json
   - to block (call)
   - to directory (already)
   - to file (if not a directory)
+
+## Allow ticket read from URI to be a single ticket instead of an array
 
 ## XML term
 - XPath expression
@@ -252,6 +243,13 @@
     stop { }
   end
 
+## Allow stub server to be run via the command line
+  - Allows features to be driven from the from the front end
+  - Allow it to be easily racked up with pow (command to create a pow directory?)
+  - Can pass same args as tickets to read ticket from file, directory or URL
+  - Allow a series of interactions to be scripted with
+    - Shokkenki.consumer.bulk do
+        order(:my_provider).to {}
 ## Later
 
 - include version in consumer
