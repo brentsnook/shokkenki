@@ -15,6 +15,10 @@ This gem is still being built and will not work in the meantime.
 Remaining before first usable release (0.1.0):
 
 - manual testing
+- split gem into
+  - shokkenki-consumer
+  - shokkenki-provider
+  - shokkenki-support
 
 ## Install
 
@@ -28,8 +32,8 @@ Shokkenki Consumer allows you to specify interactions with the provider from the
 require 'shokkenki/consumer/rspec'
 require_relative 'hungry_man'
 
-Shokkenki.consumer.configure do |c|
-  c.define_provider :restaurant
+Shokkenki.consumer.configure do
+  define_provider :restaurant
 end
 
 describe HungryMan, :shokkenki_consumer => :hungry_man do
@@ -38,8 +42,7 @@ describe HungryMan, :shokkenki_consumer => :hungry_man do
 
     before do
       order(:my_provider).during('order for ramen').to do
-        get('/order/ramen').
-        and_respond(:body => /tasty/))
+        get('/order/ramen').and_respond(:body => /tasty/))
       end
     end
 
