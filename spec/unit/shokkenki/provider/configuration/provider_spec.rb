@@ -25,4 +25,16 @@ describe Shokkenki::Provider::Configuration::Provider do
       expect(subject.http_client).to be(http_client)
     end
   end
+
+  context 'given' do
+    let(:block) { lambda {} }
+    before do
+      allow(subject).to receive(:add_fixture)
+      subject.given /pattern/, &block
+    end
+
+    it 'defines a new fixture on the provider' do
+      expect(subject).to have_received(:add_fixture).with /pattern/, block
+    end
+  end
 end

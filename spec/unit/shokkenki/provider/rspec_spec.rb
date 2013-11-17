@@ -18,7 +18,7 @@ describe 'RSpec' do
     end
 
     it 'allows an interaction to be verified within a context' do
-      expect(Shokkenki::Provider::Model::Interaction.new(nil, nil, nil)).to respond_to(:verify_within)
+      expect(Shokkenki::Provider::Model::Interaction.new(nil, nil, nil, nil)).to respond_to(:verify_within)
     end
 
     context 'terms' do

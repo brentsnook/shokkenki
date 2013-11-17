@@ -16,7 +16,7 @@ My Consumer
     status
       is 200
     body
-      matches /(?-mix:hello there)/
+      matches /(?-mix:cold day.*5 degrees)/
 OUTPUT
 
       expect(spec_output.strip).to start_with(output.strip)

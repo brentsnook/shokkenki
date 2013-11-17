@@ -14,7 +14,7 @@
         "values": {
           "path": {
             "type": "string",
-            "value": "/greeting"
+            "value": "/weather"
           },
           "method": {
             "type": "string",
@@ -31,7 +31,7 @@
           },
           "body": {
             "type": "regexp",
-            "value": "(?-mix:hello there)"
+            "value": "(?-mix:cold day.*5 degrees)"
           }
         }
       },
@@ -39,9 +39,9 @@
       "label": "greeting",
       "fixtures": [
         {
-          "name": "weather",
+          "name": "weather is cold",
           "arguments": {
-            "temperature": 30
+            "temperature": 5
           }
         }
       ]
