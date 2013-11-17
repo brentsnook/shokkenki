@@ -10,8 +10,8 @@ describe Shokkenki::Consumer::Stubber::RackResponse do
     let(:response) do
       {
         :headers => { :'date' => 'Fri, 18 Oct 2013 03:32:00 GMT'},
-        :body => 'the body',
-        :status => 200
+        :body => 'short and stout',
+        :status => 418
       }
     end
 
@@ -24,24 +24,24 @@ describe Shokkenki::Consumer::Stubber::RackResponse do
     end
 
     it 'has the status' do
-      expect(rack_response[0]).to eq(200)
+      expect(rack_response[0]).to eq(418)
     end
 
     it 'has the body' do
-      expect(rack_response[2]).to eq(['the body'])
+      expect(rack_response[2]).to eq(['short and stout'])
     end
 
     context 'when there are no headers' do
-
-      let(:response) do
-        {
-          :body => 'the body',
-          :status => 200
-        }
-      end
-
+      let(:response) { {} }
       it 'has no headers' do
         expect(rack_response[1]).to be_empty
+      end
+    end
+
+    context 'when there is no status' do
+      let(:response) { {} }
+      it 'defaults status to 200 (OK)' do
+        expect(rack_response[0]).to eq(200)
       end
     end
   end

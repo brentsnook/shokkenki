@@ -39,7 +39,7 @@ describe HungryMan, :shokkenki_consumer => :hungry_man do
     before do
       order(:my_provider).during('order for ramen').to do
         get('/order/ramen').
-        and_respond(:status => 200, :body => /tasty/))
+        and_respond(:body => /tasty/))
       end
     end
 

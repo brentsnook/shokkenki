@@ -6,7 +6,8 @@ module Shokkenki
       class RackResponse
 
         def self.from_interaction interaction
-          response = interaction.generate_response
+          defaults = { :status => 200 }
+          response = defaults.merge interaction.generate_response
           [response[:status], as_rack_headers(response[:headers]), [response[:body]]]
         end
 
