@@ -1,9 +1,9 @@
-require_relative '../../../spec_helper'
-require 'shokkenki/provider/rspec/string_term'
+require_relative '../../../../spec_helper'
+require 'shokkenki/provider/rspec/term/string_term'
 
-describe Shokkenki::Provider::RSpec::StringTerm do
+describe Shokkenki::Provider::RSpec::Term::StringTerm do
   class StringTermStub
-    include Shokkenki::Provider::RSpec::StringTerm
+    include Shokkenki::Provider::RSpec::Term::StringTerm
   end
 
   subject { StringTermStub.new }

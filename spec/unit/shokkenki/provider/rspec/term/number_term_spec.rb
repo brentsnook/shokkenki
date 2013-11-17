@@ -1,9 +1,9 @@
-require_relative '../../../spec_helper'
-require 'shokkenki/provider/rspec/number_term'
+require_relative '../../../../spec_helper'
+require 'shokkenki/provider/rspec/term/number_term'
 
-describe Shokkenki::Provider::RSpec::NumberTerm do
+describe Shokkenki::Provider::RSpec::Term::NumberTerm do
   class NumberTermStub
-    include Shokkenki::Provider::RSpec::NumberTerm
+    include Shokkenki::Provider::RSpec::Term::NumberTerm
   end
 
   subject { NumberTermStub.new }

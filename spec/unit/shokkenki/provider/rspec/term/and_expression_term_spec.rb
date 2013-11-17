@@ -1,9 +1,9 @@
-require_relative '../../../spec_helper'
-require 'shokkenki/provider/rspec/and_expression_term'
+require_relative '../../../../spec_helper'
+require 'shokkenki/provider/rspec/term/and_expression_term'
 
-describe Shokkenki::Provider::RSpec::AndExpressionTerm do
+describe Shokkenki::Provider::RSpec::Term::AndExpressionTerm do
   class AndExprStub
-    include Shokkenki::Provider::RSpec::AndExpressionTerm
+    include Shokkenki::Provider::RSpec::Term::AndExpressionTerm
   end
 
   subject { AndExprStub.new }

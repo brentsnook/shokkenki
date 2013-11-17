@@ -1,9 +1,9 @@
-require_relative '../../../spec_helper'
-require 'shokkenki/provider/rspec/regexp_term'
+require_relative '../../../../spec_helper'
+require 'shokkenki/provider/rspec/term/regexp_term'
 
-describe Shokkenki::Provider::RSpec::RegexpTerm do
+describe Shokkenki::Provider::RSpec::Term::RegexpTerm do
   class RegexpTermStub
-    include Shokkenki::Provider::RSpec::RegexpTerm
+    include Shokkenki::Provider::RSpec::Term::RegexpTerm
   end
 
   subject { RegexpTermStub.new }

@@ -9,15 +9,15 @@ require 'shokkenki/term/regexp_term'
 
 require_relative 'rspec/ticket'
 require_relative 'rspec/interaction'
-require_relative 'rspec/and_expression_term'
-require_relative 'rspec/string_term'
-require_relative 'rspec/number_term'
-require_relative 'rspec/regexp_term'
+require_relative 'rspec/term/and_expression_term'
+require_relative 'rspec/term/string_term'
+require_relative 'rspec/term/number_term'
+require_relative 'rspec/term/regexp_term'
 
 Shokkenki::Provider::Model::Ticket.send :include, Shokkenki::Provider::RSpec::Ticket
 Shokkenki::Provider::Model::Interaction.send :include, Shokkenki::Provider::RSpec::Interaction
 
-Shokkenki::Term::AndExpressionTerm.send :include, Shokkenki::Provider::RSpec::AndExpressionTerm
-Shokkenki::Term::StringTerm.send :include, Shokkenki::Provider::RSpec::StringTerm
-Shokkenki::Term::NumberTerm.send :include, Shokkenki::Provider::RSpec::NumberTerm
-Shokkenki::Term::RegexpTerm.send :include, Shokkenki::Provider::RSpec::RegexpTerm
+Shokkenki::Term::AndExpressionTerm.send :include, Shokkenki::Provider::RSpec::Term::AndExpressionTerm
+Shokkenki::Term::StringTerm.send :include, Shokkenki::Provider::RSpec::Term::StringTerm
+Shokkenki::Term::NumberTerm.send :include, Shokkenki::Provider::RSpec::Term::NumberTerm
+Shokkenki::Term::RegexpTerm.send :include, Shokkenki::Provider::RSpec::Term::RegexpTerm
