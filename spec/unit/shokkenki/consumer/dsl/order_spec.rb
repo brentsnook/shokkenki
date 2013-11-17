@@ -24,6 +24,10 @@ describe Shokkenki::Consumer::DSL::Order do
     expect(subject).to respond_to(:put)
   end
 
+  it 'includes term DSL' do
+    expect(subject).to respond_to(:json)
+  end
+
   context 'to' do
 
     let(:interaction) { double 'interaction' }

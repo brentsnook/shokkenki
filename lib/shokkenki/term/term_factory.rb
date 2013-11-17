@@ -2,6 +2,7 @@ require 'shokkenki/term/string_term'
 require_relative 'and_expression_term'
 require_relative 'regexp_term'
 require_relative 'number_term'
+require_relative 'json_paths_term'
 
 module Shokkenki
   module Term
@@ -12,7 +13,8 @@ module Shokkenki
           :string => StringTerm,
           :and_expression => AndExpressionTerm,
           :regexp => RegexpTerm,
-          :number => NumberTerm
+          :number => NumberTerm,
+          :json_paths => JsonPathsTerm
         }
       end
 

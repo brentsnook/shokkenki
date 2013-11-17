@@ -105,6 +105,10 @@ describe Shokkenki::Term::TermFactory do
     it 'includes number' do
       expect(subject.factory_for(:number)).to_not be_nil
     end
+
+    it 'includes json paths' do
+      expect(subject.factory_for(:json_paths)).to_not be_nil
+    end
   end
 
 end

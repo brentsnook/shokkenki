@@ -1,12 +1,14 @@
 require_relative '../model/interaction'
 require_relative '../model/fixture'
 require_relative 'http_methods'
+require_relative 'term_dsl'
 
 module Shokkenki
   module Consumer
     module DSL
       class Order
         include HttpMethods
+        include TermDSL
 
         def initialize patronage
           @patronage = patronage

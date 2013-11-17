@@ -1,8 +1,9 @@
 require_relative 'ruby-string-random/lib/strrand'
+require_relative 'term'
 
 module Shokkenki
   module Term
-    class RegexpTerm
+    class RegexpTerm < Term
 
       attr_reader :type, :value
 

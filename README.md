@@ -42,7 +42,7 @@ describe HungryMan, :shokkenki_consumer => :hungry_man do
 
     before do
       order(:my_provider).during('order for ramen').to do
-        get('/order/ramen').and_respond(:body => /tasty/))
+        get('/order/ramen').and_respond(:body => json('flavour' => /tasty/))
       end
     end
 
@@ -78,10 +78,10 @@ When run, this example will define and run an RSpec specification:
 ```
 Hungry Man
   order for ramen
-    status
-      is 200
     body
-      matches /tasty/
+      json
+        $.flavour
+          matches /tasty/
 ```
 
 ## On the way ...

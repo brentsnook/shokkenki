@@ -1,6 +1,7 @@
 require_relative '../harness_helper'
 require 'shokkenki/consumer/rspec'
 require 'httparty'
+require 'json'
 
 Shokkenki.consumer.configure do
   tickets ENV['ticket_directory']
@@ -16,7 +17,7 @@ describe 'A consumer', :shokkenki_consumer => :my_consumer do
         get('/greeting').
         and_respond(
           :status => 200,
-          :body => /hello there, its a warm one today /
+          :body => json('$.chatter.inane' => /hello there, its a warm one today /)
         )
       end
     end
@@ -24,7 +25,8 @@ describe 'A consumer', :shokkenki_consumer => :my_consumer do
     it 'receives the stubbed response' do
       stubber = shokkenki.provider(:my_provider).stubber
       url = "http://#{stubber.host}:#{stubber.port}/greeting"
-      expect(HTTParty.get(url).body).to match(/hello there, its a warm one today/)
+      body = HTTParty.get(url).body
+      expect(JSON.parse(body)['chatter']['inane']).to match(/hello there, its a warm one today/)
     end
   end
 end

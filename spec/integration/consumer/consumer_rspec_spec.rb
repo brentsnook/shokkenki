@@ -65,8 +65,13 @@ describe 'A consumer rspec spec' do
                   'value' => 200,
                 },
                 'body' => {
-                  'type' => 'regexp',
-                  'value' => '(?-mix:hello there, its a warm one today )'
+                  'type' => 'json_paths',
+                  'values' => {
+                    '$.chatter.inane' => {
+                      'type' => 'regexp',
+                      'value' => '(?-mix:hello there, its a warm one today )'
+                    }
+                  }
                 }
               }
             }

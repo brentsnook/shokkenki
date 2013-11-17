@@ -27,6 +27,9 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'rspec'
   s.add_runtime_dependency 'activesupport'
 
+  # term
+  s.add_runtime_dependency 'jsonpath'
+
   # consumer
   s.add_runtime_dependency 'httparty'
   s.add_runtime_dependency 'find_a_port'

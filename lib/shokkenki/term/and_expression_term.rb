@@ -1,6 +1,8 @@
+require_relative 'term'
+
 module Shokkenki
   module Term
-    class AndExpressionTerm
+    class AndExpressionTerm < Term
 
       attr_reader :type, :values
 

@@ -1,6 +1,8 @@
+require_relative 'term'
+
 module Shokkenki
   module Term
-    class NumberTerm
+    class NumberTerm < Term
 
       attr_reader :type, :value
 
