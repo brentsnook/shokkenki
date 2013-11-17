@@ -2,20 +2,19 @@
 # Now
 
 ## JSON term
-    order(:my_provider).during('order for ramen').to do
-        receive(:method => :get, :path => '/order/ramen').
-        and_respond(:body => json('$.temperature' => /hot/)))
-
-    order for ramen
-      response
-        body
-          json
-            $.temperature
-              matches /hot/
-- always assume multiple results from query
-- how can you use path to create values? might need to only support subset for starters
+- generate
+  - how can you use path to create values? might need to only support subset for starters
   - raise exception in generate if path can't be generated
--  use JSONPath syntax and maybe https://github.com/joshbuddy/jsonpath
+- verify_within context
+  body
+    json path
+      $.thing
+        matches /hello/
+      $.time
+        matches /9am/
+
+## Make all terms force values to_shokkenki_term on creation
+  - does the order need to do this now?
 
 ## Validate terms used in request!!!
   - method string_term and must be present
@@ -156,6 +155,7 @@
       - String
       - Number
       - JSON
+        - Uses JSON path gem and adheres to paths supported by it
       - Registering Custom Terms
         - Configuration
         - Ensure they are supported in both consumer and provider
