@@ -1,21 +1,6 @@
 
 # Now
 
-## JSON term
-- generate
-  - how can you use path to create values? might need to only support subset for starters
-  - raise exception in generate if path can't be generated
-- verify_within context
-  body
-    json path
-      $.thing
-        matches /hello/
-      $.time
-        matches /9am/
-
-## Make all terms force values to_shokkenki_term on creation
-  - does the order need to do this now?
-
 ## Validate terms used in request!!!
   - method string_term and must be present
   - path string_term and must be present
@@ -24,6 +9,7 @@
 
 - better name for and expression term?
 - remove attributes in initializers?
+- do terms really need to be shared between provider and consumer? example generation?
 - differentiate between providers when there is a failure in server - create server with provider name and use in identity?
 - move stubber middleware classes into own high-level package
 - add working examples
@@ -201,6 +187,8 @@
       - Link to RSpec relish doco on filters and command line filters
 
 # Next ...
+
+# Add meaningful failures when actual value/s have not been populated
 
 # Automatically assign interaction label
   - GET /path
