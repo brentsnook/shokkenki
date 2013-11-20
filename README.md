@@ -79,7 +79,7 @@ When run, this example will define and run an RSpec specification:
 Hungry Man
   order for ramen
     body
-      json
+      json value
         $.flavour
           matches /tasty/
 ```
