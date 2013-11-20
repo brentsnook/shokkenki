@@ -1,4 +1,5 @@
 require_relative 'term'
+require_relative 'core_ext'
 
 module Shokkenki
   module Term
@@ -17,7 +18,12 @@ module Shokkenki
       end
 
       def initialize values
-        @values = values
+        @values = values.inject({}) do |mapped, kv|
+          k,v = *kv
+          mapped[k] = v.to_shokkenki_term
+          mapped
+        end
+
         @type = :and_expression
       end
 

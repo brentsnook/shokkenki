@@ -6,9 +6,13 @@ describe Shokkenki::Term::AndExpressionTerm do
 
   let(:child_term) { double 'child term' }
 
+  let(:uncoerced_child_term) do
+    double 'child term', :to_shokkenki_term => child_term
+  end
+
   context 'when created' do
 
-    let(:values) { {:values => ''} }
+    let(:values) { {:values => double('value', :to_shokkenki_term => 'value')} }
 
     subject { Shokkenki::Term::AndExpressionTerm.new values }
 
@@ -16,8 +20,8 @@ describe Shokkenki::Term::AndExpressionTerm do
       expect(subject.type).to eq(:and_expression)
     end
 
-    it 'has the given values' do
-      expect(subject.values).to eq(values)
+    it 'coerces the given values to a shokkenki term' do
+      expect(subject.values).to eq({:values => 'value'})
     end
   end
 
@@ -31,7 +35,7 @@ describe Shokkenki::Term::AndExpressionTerm do
 
     before do
       allow(Shokkenki::Term::TermFactory).to(
-        receive(:from_json).with({'childterm' => 'json'}).and_return child_term
+        receive(:from_json).with({'childterm' => 'json'}).and_return uncoerced_child_term
       )
     end
 
@@ -44,7 +48,7 @@ describe Shokkenki::Term::AndExpressionTerm do
 
     let(:term) do
       Shokkenki::Term::AndExpressionTerm.new(
-        :child => child_term
+        :child => uncoerced_child_term
       )
     end
 
@@ -59,13 +63,16 @@ describe Shokkenki::Term::AndExpressionTerm do
 
   context 'matching a compare' do
 
+    let(:uncoerced_child1) { double 'uncoerced child1', :to_shokkenki_term => child1 }
+    let(:uncoerced_child2) { double 'uncoerced child2', :to_shokkenki_term => child2 }
+
     let(:child1) { double 'child1'}
     let(:child2) { double 'child2'}
 
     subject do
       Shokkenki::Term::AndExpressionTerm.new(
-        :child1 => child1,
-        :child2 => child2
+        :child1 => uncoerced_child1,
+        :child2 => uncoerced_child2
       )
     end
 
@@ -116,10 +123,11 @@ describe Shokkenki::Term::AndExpressionTerm do
 
   context 'as a hash' do
     let(:value) { double('value', :to_hash => {:hashed => :apples}) }
+    let(:uncoerced_value) { double 'uncoerced value', :to_shokkenki_term => value }
 
     subject do
       Shokkenki::Term::AndExpressionTerm.new(
-        :key => value
+        :key => uncoerced_value
       )
     end
 
