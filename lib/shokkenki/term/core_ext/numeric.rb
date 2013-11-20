@@ -1,4 +1,4 @@
-require 'shokkenki/term/number_term'
+require_relative '../number_term'
 
 class Numeric
 

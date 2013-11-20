@@ -1,4 +1,4 @@
-require 'shokkenki/term/and_expression_term'
+require_relative '../and_expression_term'
 
 class Hash
 

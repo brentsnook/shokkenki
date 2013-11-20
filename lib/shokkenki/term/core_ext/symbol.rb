@@ -1,6 +1,6 @@
-require 'shokkenki/term/string_term'
+require_relative '../string_term'
 
-class String
+class Symbol
 
   def to_shokkenki_term
     Shokkenki::Term::StringTerm.new self

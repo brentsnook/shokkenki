@@ -1,4 +1,4 @@
-require 'shokkenki/term/regexp_term'
+require_relative '../regexp_term'
 
 class Regexp
 

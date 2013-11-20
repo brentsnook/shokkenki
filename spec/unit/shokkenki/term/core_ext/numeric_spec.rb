@@ -1,5 +1,5 @@
 require_relative '../../../spec_helper'
-require 'shokkenki/consumer/core_ext/numeric'
+require 'shokkenki/term/core_ext/numeric'
 
 describe Numeric do
 

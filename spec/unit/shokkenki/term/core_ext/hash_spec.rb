@@ -1,5 +1,5 @@
 require_relative '../../../spec_helper'
-require 'shokkenki/consumer/core_ext/hash'
+require 'shokkenki/term/core_ext/hash'
 
 describe Hash do
 

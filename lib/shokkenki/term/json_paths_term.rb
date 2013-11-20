@@ -3,6 +3,7 @@ require 'active_support/core_ext/hash/deep_merge'
 require 'json'
 require_relative 'json_path_example'
 require_relative 'term'
+require_relative 'core_ext'
 
 module Shokkenki
   module Term

@@ -1,5 +1,5 @@
 require_relative '../../../spec_helper'
-require 'shokkenki/consumer/core_ext/regexp'
+require 'shokkenki/term/core_ext/regexp'
 
 describe Regexp do
 

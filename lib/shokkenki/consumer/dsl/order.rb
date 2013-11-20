@@ -1,3 +1,4 @@
+require 'shokkenki/term/core_ext'
 require_relative '../model/interaction'
 require_relative '../model/fixture'
 require_relative 'http_methods'

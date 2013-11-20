@@ -1,5 +1,5 @@
 require_relative '../../../spec_helper'
-require 'shokkenki/consumer/core_ext/string'
+require 'shokkenki/term/core_ext/string'
 
 describe String do
 

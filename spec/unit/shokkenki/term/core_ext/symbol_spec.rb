@@ -1,5 +1,5 @@
 require_relative '../../../spec_helper'
-require 'shokkenki/consumer/core_ext/symbol'
+require 'shokkenki/term/core_ext/symbol'
 
 describe Symbol do
 
