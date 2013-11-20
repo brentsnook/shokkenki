@@ -5,7 +5,7 @@ class ProviderApp
   attr_writer :weather, :temperature
 
   def call env
-    env['PATH_INFO'] == '/weather' ? [200, {}, ["its a #{@weather} day, #{@temperature} degrees"]] : [404, {}, []]
+    env['PATH_INFO'] == '/weather' ? [200, {}, [%Q{{"message":"its a #{@weather} day, #{@temperature} degrees"}}]] : [404, {}, []]
   end
 end
 

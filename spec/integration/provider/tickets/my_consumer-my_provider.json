@@ -30,8 +30,13 @@
             "value": 200
           },
           "body": {
-            "type": "regexp",
-            "value": "(?-mix:cold day.*5 degrees)"
+            "type": "json_paths",
+            "values": {
+              "$.message" : {
+                "type": "regexp",
+                "value": "(?-mix:cold day.*5 degrees)"
+              }
+            }
           }
         }
       },

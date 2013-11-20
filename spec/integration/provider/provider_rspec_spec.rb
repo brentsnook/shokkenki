@@ -16,7 +16,9 @@ My Consumer
     status
       is 200
     body
-      matches /(?-mix:cold day.*5 degrees)/
+      json value
+        $.message
+          matches /(?-mix:cold day.*5 degrees)/
 OUTPUT
 
       expect(spec_output.strip).to start_with(output.strip)

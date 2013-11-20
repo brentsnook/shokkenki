@@ -6,6 +6,7 @@ require 'shokkenki/term/and_expression_term'
 require 'shokkenki/term/string_term'
 require 'shokkenki/term/number_term'
 require 'shokkenki/term/regexp_term'
+require 'shokkenki/term/json_paths_term'
 
 describe 'RSpec' do
   context 'when required' do
@@ -36,6 +37,10 @@ describe 'RSpec' do
 
       it 'allows a string term to be verified within a context' do
         expect(Shokkenki::Term::StringTerm.new('')).to respond_to(:verify_within)
+      end
+
+      it 'allows a json paths term to be verified within a context' do
+        expect(Shokkenki::Term::JsonPathsTerm.new({'$.thing' => ''})).to respond_to(:verify_within)
       end
 
     end
