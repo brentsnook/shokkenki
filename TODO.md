@@ -1,22 +1,16 @@
 
 # Now
 
-## Validate terms used in request!!!
-  - method string_term and must be present
-  - path string_term and must be present
-
-## Tidy Up
-
-- better name for and expression term?
-- remove attributes in initializers?
-- do terms really need to be shared between provider and consumer? example generation?
-- differentiate between providers when there is a failure in server - create server with provider name and use in identity?
-- move stubber middleware classes into own high-level package
-- add working examples
-- README
-  - add a call to action on README - "problems? Feature request? Doesn't work the way you want? Create an issue!"
-  - add a note about compatible ruby versions
-  - Upate examples
+## Split
+  - create new projects, push original shokkenki to each
+  - shokkenki-provider
+  - shokkenki-consumer
+  - shokkenki-support
+  - shokkenki
+    - High level features and documentation
+    - Tests that tickets produced from a certain version of the consumer will work with a certain version of the provider (via features)
+  - shokkenki - contains version
+  - Don't forget to remove unused gem dependencies
 
 ## Testing
 
@@ -38,17 +32,15 @@
 - What happends when you specify different consumers in nested contexts?
 - tickets via URI
 
+## README
+  - add a call to action on README - "problems? Feature request? Doesn't work the way you want? Create an issue!"
+  - add a note about compatible ruby versions
+  - Upate examples
+
 ## Release !!!!!!!!!!!!!!!!!!!
 
 - check gemspec
 - version 0.1.0 (major is 0 until split into gems then release all as 1.0.0)
-
-## Split
-  - shokkenki-provider
-  - shokkenki-consumer
-  - shokkenki-support
-  - shokkenki - contains version
-  - Don't forget to remove unused gem dependencies
 
 ## Relish documentation
 
@@ -126,6 +118,8 @@
       - During (Labelling Interactions)
       - Given (Specifying Fixtures)
       - Receive (Specifying Requests)
+        - method must always be a symbol or something that can be converted into a symbol
+        - path must always be a string
       - And Respond (Specifying Responses)
     - Stubbers
       - HTTP Stubber
@@ -134,6 +128,7 @@
     - Terms - for the consumer
       - And Expression
         - Nested And Expressions
+        - And expression will extract values assuming the parent value is a hash
       - Or Expression
       - Regexp
         - regex terms uses ruby standard for regex
@@ -142,6 +137,7 @@
       - Number
       - JSON
         - Uses JSON path gem and adheres to paths supported by it
+        - Will extract values as a JSON value
       - Registering Custom Terms
         - Configuration
         - Ensure they are supported in both consumer and provider
@@ -173,6 +169,7 @@
     - Registering Providers
       - Application
         - Specifying a Rack Application
+        - Loaded from config.ru if none specified
     - HTTP Requests
       - Configuring Faraday
 
@@ -188,9 +185,17 @@
 
 # Next ...
 
-# Add meaningful failures when actual value/s have not been populated
+- use config.ru if no app supplied
 
-# Automatically assign interaction label
+- Can the two models be merged? Should they?
+
+- remove attributes in initializers?
+- move stubber middleware classes into own high-level package
+- Add meaningful failures when actual value/s have not been populated
+
+- support numeric path elements etc. when generating json term example
+
+- Automatically assign interaction label
   - GET /path
 
 ## Add support for writing tickets ...
@@ -207,18 +212,20 @@
 ## Provide custom Faraday configuration
 - allow a block to be set, eval this against faraday config last
 
+
 ## Misc
 - Find a better way to stub new methods?
 - document what can be included in a request
 - convert other http examples like http_stubber to use webmock
 - better end to end coverage around tickets?
+- differentiate between providers when there is a failure in server - provider should wrap and handle exceptions rather than just delegate
 
 ## Either term - useful?
- order(:my_provider).during('order for ramen').to do
+- order(:my_provider).during('order for ramen').to do
         receive(:method => either(:get, :post, :options))
 
 ## Not term - useful? - wraps term to negate its match, make terms negation-aware
-## Any term - useful? - example by using first
+## Any term - useful? - example by using first, could be used with json paths term
 ## Array term - matches if values are an array with exact values
 
 ## Support for non-Rack providers
