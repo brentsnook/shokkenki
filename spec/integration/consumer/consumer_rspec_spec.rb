@@ -41,7 +41,7 @@ describe 'A consumer rspec spec' do
           expect(interaction['request']).to(include(
             {
               'type' => 'hash',
-              'values' => {
+              'value' => {
                 'method' => {
                   'type' => 'string',
                   'value' => 'get'
@@ -59,14 +59,14 @@ describe 'A consumer rspec spec' do
           expect(interaction['response']).to(include(
             {
               'type' => 'hash',
-              'values' => {
+              'value' => {
                 'status' => {
                   'type' => 'number',
                   'value' => 200,
                 },
                 'body' => {
                   'type' => 'json_paths',
-                  'values' => {
+                  'value' => {
                     '$.chatter.inane' => {
                       'type' => 'regexp',
                       'value' => '(?-mix:hello there, its a warm one today )'

@@ -4,7 +4,7 @@ module Shokkenki
       module Term
         module HashTerm
           def verify_within context
-            values.each do |name, term|
+            value.each do |name, term|
               context.describe name do
                 before { @actual_values = @actual_values.map{ |value| value[name] } }
 

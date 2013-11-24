@@ -14,7 +14,7 @@ describe Hash do
     end
 
     it 'forces each of the hash values into a shokkenki term' do
-      expect(subject.values).to eq({:a => shokkenki_term })
+      expect(subject.value).to eq({:a => shokkenki_term })
     end
   end
 end

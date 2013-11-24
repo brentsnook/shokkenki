@@ -18,14 +18,14 @@ describe Shokkenki::Term::JsonPathsTerm do
     end
 
     it 'forces each value to be a shokkenki term' do
-      expect(subject.values).to eq('$.thing' => 'shokkenki term')
+      expect(subject.value).to eq('$.thing' => 'shokkenki term')
     end
   end
 
   context 'created from json' do
     let(:term) do
       Shokkenki::Term::JsonPathsTerm.from_json(
-        'values' => {'$.thing' => {'childterm' => 'json'}}
+        'value' => {'$.thing' => {'childterm' => 'json'}}
       )
     end
 
@@ -36,7 +36,7 @@ describe Shokkenki::Term::JsonPathsTerm do
     end
 
     it 'creates terms for each of its values' do
-      expect(term.values).to eq('$.thing' => child_term)
+      expect(term.value).to eq('$.thing' => child_term)
     end
   end
 
@@ -174,7 +174,7 @@ describe Shokkenki::Term::JsonPathsTerm do
     end
 
     it 'converts all values to a hash' do
-      expect(subject.to_hash[:values]).to(eq(
+      expect(subject.to_hash[:value]).to(eq(
         '$.key' => {:hashed => :apples}
       ))
     end

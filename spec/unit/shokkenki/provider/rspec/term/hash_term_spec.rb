@@ -18,7 +18,7 @@ describe Shokkenki::Provider::RSpec::Term::HashTerm do
       allow(example_context).to receive(:describe) do |&block|
         example_context.instance_eval &block
       end
-      allow(subject).to receive(:values).and_return(:value_name => term)
+      allow(subject).to receive(:value).and_return(:value_name => term)
       allow(example_context).to receive(:before) do |&block|
         example_context.instance_eval &block
       end

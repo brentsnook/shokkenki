@@ -8,7 +8,7 @@ module Shokkenki
           def verify_within context
             term = self
             context.describe 'json value' do
-              term.values.each do |json_path, term|
+              term.value.each do |json_path, term|
                 describe json_path do
 
                   before(:each) do

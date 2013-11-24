@@ -9,10 +9,10 @@ module Shokkenki
   module Term
     class JsonPathsTerm < Term
 
-      attr_reader :type, :values
+      attr_reader :type, :value
 
       def self.from_json json
-        values = json['values'].inject({}) do |hash, kv|
+        values = json['value'].inject({}) do |hash, kv|
           key, value = *kv
           hash[key] = TermFactory.from_json(value)
           hash
@@ -22,7 +22,7 @@ module Shokkenki
       end
 
       def initialize values
-        @values = values.inject({}) do |mapped, kv|
+        @value = values.inject({}) do |mapped, kv|
           k, v = *kv
           mapped[k] = v.to_shokkenki_term
           mapped
@@ -32,14 +32,14 @@ module Shokkenki
       end
 
       def match? compare
-        compare && @values.all? do |key, value|
+        compare && @value.all? do |key, value|
           path = JsonPath.new(key)
           value.match? path.on(compare)
         end
       end
 
       def example
-        @values.inject({}) do |generated, keyvalue|
+        @value.inject({}) do |generated, keyvalue|
           path, term = *keyvalue
           generated.deep_merge! JsonPathExample.new(path, term).to_example
           generated
@@ -47,7 +47,7 @@ module Shokkenki
       end
 
       def to_hash
-        mapped_values = @values.inject({}) do |mapped, keyvalue|
+        mapped_values = @value.inject({}) do |mapped, keyvalue|
           key, value = *keyvalue
           mapped[key] = value.respond_to?(:to_hash) ? value.to_hash : value
           mapped
@@ -55,7 +55,7 @@ module Shokkenki
 
         {
           :type => @type,
-          :values => mapped_values
+          :value => mapped_values
         }
       end
 

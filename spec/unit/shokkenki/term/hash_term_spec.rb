@@ -21,7 +21,7 @@ describe Shokkenki::Term::HashTerm do
     end
 
     it 'coerces the given values to a shokkenki term' do
-      expect(subject.values).to eq({:values => 'value'})
+      expect(subject.value).to eq({:values => 'value'})
     end
   end
 
@@ -29,7 +29,7 @@ describe Shokkenki::Term::HashTerm do
 
     let(:term) do
       Shokkenki::Term::HashTerm.from_json(
-        'values' => {'child' => {'childterm' => 'json'}}
+        'value' => {'child' => {'childterm' => 'json'}}
       )
     end
 
@@ -40,7 +40,7 @@ describe Shokkenki::Term::HashTerm do
     end
 
     it 'creates terms for each of its values' do
-      expect(term.values).to eq(:child => child_term)
+      expect(term.value).to eq(:child => child_term)
     end
   end
 
@@ -136,7 +136,7 @@ describe Shokkenki::Term::HashTerm do
     end
 
     it 'converts all values to a hash' do
-      expect(subject.to_hash[:values]).to(eq(
+      expect(subject.to_hash[:value]).to(eq(
         :key => {:hashed => :apples}
       ))
     end

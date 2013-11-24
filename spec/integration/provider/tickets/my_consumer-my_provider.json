@@ -11,7 +11,7 @@
     {
       "request": {
         "type": "hash",
-        "values": {
+        "value": {
           "path": {
             "type": "string",
             "value": "/weather"
@@ -24,14 +24,14 @@
       },
       "response": {
         "type": "hash",
-        "values": {
+        "value": {
           "status": {
             "type": "number",
             "value": 200
           },
           "body": {
             "type": "json_paths",
-            "values": {
+            "value": {
               "$.message" : {
                 "type": "regexp",
                 "value": "(?-mix:cold day.*5 degrees)"

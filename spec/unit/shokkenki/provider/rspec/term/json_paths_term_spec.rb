@@ -23,7 +23,7 @@ describe Shokkenki::Provider::RSpec::Term::JsonPathsTerm do
       allow(inner_context).to receive(:describe) do |&block|
         inner_context.instance_eval &block
       end
-      allow(subject).to receive(:values).and_return('$.first.second.third' => term)
+      allow(subject).to receive(:value).and_return('$.first.second.third' => term)
       allow(inner_context).to receive(:before).with(:each) do |&block|
         inner_context.instance_eval &block
       end
