@@ -20,7 +20,7 @@ describe Shokkenki::Provider::RSpec::Term::NumberTerm do
     let(:expectation) { double('expectation', :to => '') }
 
     before do
-      example_context.instance_eval { @actual_value = 28 }
+      example_context.instance_eval { @actual_values = [28] }
       allow(subject).to receive(:value).and_return(99)
       allow(example_context).to receive(:it) do |&block|
         example_context.instance_eval &block
@@ -33,7 +33,7 @@ describe Shokkenki::Provider::RSpec::Term::NumberTerm do
       expect(example_context).to have_received(:it).with('is 99')
     end
 
-    it 'asserts that the actual value is the same as the term value' do
+    it 'asserts that each of the actual values is the same as the term value' do
       expect(example_context).to have_received(:expect).with(28)
       expect(expectation).to have_received(:to)
       expect(example_context).to have_received(:eq).with(99)

@@ -60,9 +60,9 @@ describe Shokkenki::Provider::RSpec::Interaction do
     end
 
     # this is so we don't clobber the original request if actual_values is re-assigned
-    it 'exposes the provider http response as actual values' do
+    it 'exposes the provider http response as an array of actual values' do
       expect(example_context).to have_received(:before).with(:each)
-      expect(example_state.instance_variable_get(:@actual_values)).to be(http_response)
+      expect(example_state.instance_variable_get(:@actual_values)).to eq([http_response])
     end
   end
 end

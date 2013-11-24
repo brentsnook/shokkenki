@@ -16,7 +16,7 @@ describe Shokkenki::Provider::RSpec::Term::JsonPathsTerm do
     let(:term) { double('term').as_null_object }
 
     before do
-      inner_context.instance_eval { @actual_value = {:first => {:second => {:third => 'value1'} } }.to_json }
+      inner_context.instance_eval { @actual_values = [{:first => {:second => {:third => 'value1'} } }.to_json] }
       allow(example_context).to receive(:describe) do |&block|
         inner_context.instance_eval &block
       end
@@ -43,8 +43,8 @@ describe Shokkenki::Provider::RSpec::Term::JsonPathsTerm do
       expect(term).to have_received(:verify_within).with(inner_context)
     end
 
-    it 'converts actual value to the collection of values found at the given JSON path before each example runs' do
-      expect(inner_context.instance_variable_get(:@actual_value)).to eq(['value1'])
+    it 'translates actual value to the collection of values found at the given JSON path before each example runs' do
+      expect(inner_context.instance_variable_get(:@actual_values)).to eq(['value1'])
     end
   end
 end

@@ -20,7 +20,7 @@ describe Shokkenki::Provider::RSpec::Term::StringTerm do
     let(:expectation) { double('expectation', :to => '') }
 
     before do
-      example_context.instance_eval { @actual_value = 123 }
+      example_context.instance_eval { @actual_values = [123] }
       allow(subject).to receive(:value).and_return('value')
       allow(example_context).to receive(:it) do |&block|
         example_context.instance_eval &block
@@ -34,7 +34,7 @@ describe Shokkenki::Provider::RSpec::Term::StringTerm do
     end
 
     # stubtastic - can't think of a better way to test this though
-    it 'asserts that the actual value as a string is the same as the term value' do
+    it 'asserts that each of the the actual values as a string is the same as the term value' do
       expect(example_context).to have_received(:expect).with('123')
       expect(expectation).to have_received(:to)
       expect(example_context).to have_received(:eq).with('value')
