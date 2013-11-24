@@ -94,8 +94,8 @@ describe Shokkenki::Term::TermFactory do
       expect(subject.factory_for(:string)).to_not be_nil
     end
 
-    it 'includes and expressions' do
-      expect(subject.factory_for(:and_expression)).to_not be_nil
+    it 'includes hashes' do
+      expect(subject.factory_for(:hash)).to_not be_nil
     end
 
     it 'includes rexegp' do

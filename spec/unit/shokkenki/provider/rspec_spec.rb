@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 require 'shokkenki/provider/model/ticket'
 require 'shokkenki/provider/model/interaction'
 
-require 'shokkenki/term/and_expression_term'
+require 'shokkenki/term/hash_term'
 require 'shokkenki/term/string_term'
 require 'shokkenki/term/number_term'
 require 'shokkenki/term/regexp_term'
@@ -23,8 +23,8 @@ describe 'RSpec' do
     end
 
     context 'terms' do
-      it 'allows an and expression term to be verified within a context' do
-        expect(Shokkenki::Term::AndExpressionTerm.new({})).to respond_to(:verify_within)
+      it 'allows a hash term to be verified within a context' do
+        expect(Shokkenki::Term::HashTerm.new({})).to respond_to(:verify_within)
       end
 
       it 'allows a number term to be verified within a context' do

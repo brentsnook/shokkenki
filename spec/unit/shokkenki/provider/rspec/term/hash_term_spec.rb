@@ -1,12 +1,12 @@
 require_relative '../../../../spec_helper'
-require 'shokkenki/provider/rspec/term/and_expression_term'
+require 'shokkenki/provider/rspec/term/hash_term'
 
-describe Shokkenki::Provider::RSpec::Term::AndExpressionTerm do
-  class AndExprStub
-    include Shokkenki::Provider::RSpec::Term::AndExpressionTerm
+describe Shokkenki::Provider::RSpec::Term::HashTerm do
+  class HashTermStub
+    include Shokkenki::Provider::RSpec::Term::HashTerm
   end
 
-  subject { AndExprStub.new }
+  subject { HashTermStub.new }
 
   context 'verifying within a context' do
     let(:example_context) { double('example context').as_null_object }

@@ -10,7 +10,7 @@
   "interactions": [
     {
       "request": {
-        "type": "and_expression",
+        "type": "hash",
         "values": {
           "path": {
             "type": "string",
@@ -23,7 +23,7 @@
         }
       },
       "response": {
-        "type": "and_expression",
+        "type": "hash",
         "values": {
           "status": {
             "type": "number",

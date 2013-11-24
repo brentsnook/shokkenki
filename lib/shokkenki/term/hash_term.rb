@@ -3,7 +3,7 @@ require_relative 'core_ext'
 
 module Shokkenki
   module Term
-    class AndExpressionTerm < Term
+    class HashTerm < Term
 
       attr_reader :type, :values
 
@@ -24,7 +24,7 @@ module Shokkenki
           mapped
         end
 
-        @type = :and_expression
+        @type = :hash
       end
 
       def to_hash

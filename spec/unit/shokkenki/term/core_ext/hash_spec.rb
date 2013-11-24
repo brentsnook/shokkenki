@@ -9,8 +9,8 @@ describe Hash do
     let(:value) { double('value', :to_shokkenki_term => shokkenki_term) }
     subject { {:a => value }.to_shokkenki_term }
 
-    it 'is an and expression term (all values must match)' do
-      expect(subject.type).to eq(:and_expression)
+    it 'is a hash term' do
+      expect(subject.type).to eq(:hash)
     end
 
     it 'forces each of the hash values into a shokkenki term' do

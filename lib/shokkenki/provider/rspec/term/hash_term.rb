@@ -2,7 +2,7 @@ module Shokkenki
   module Provider
     module RSpec
       module Term
-        module AndExpressionTerm
+        module HashTerm
           def verify_within context
             values.each do |name, term|
               context.describe name do

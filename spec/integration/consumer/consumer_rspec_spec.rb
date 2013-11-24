@@ -40,7 +40,7 @@ describe 'A consumer rspec spec' do
         it 'includes the request term' do
           expect(interaction['request']).to(include(
             {
-              'type' => 'and_expression',
+              'type' => 'hash',
               'values' => {
                 'method' => {
                   'type' => 'string',
@@ -58,7 +58,7 @@ describe 'A consumer rspec spec' do
         it 'includes the response term' do
           expect(interaction['response']).to(include(
             {
-              'type' => 'and_expression',
+              'type' => 'hash',
               'values' => {
                 'status' => {
                   'type' => 'number',

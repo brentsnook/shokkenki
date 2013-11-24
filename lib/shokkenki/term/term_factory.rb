@@ -1,5 +1,5 @@
 require 'shokkenki/term/string_term'
-require_relative 'and_expression_term'
+require_relative 'hash_term'
 require_relative 'regexp_term'
 require_relative 'number_term'
 require_relative 'json_paths_term'
@@ -11,7 +11,7 @@ module Shokkenki
       def self.factories
         @factories ||= {
           :string => StringTerm,
-          :and_expression => AndExpressionTerm,
+          :hash => HashTerm,
           :regexp => RegexpTerm,
           :number => NumberTerm,
           :json_paths => JsonPathsTerm

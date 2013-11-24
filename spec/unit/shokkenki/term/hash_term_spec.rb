@@ -1,8 +1,8 @@
 require_relative '../../spec_helper'
-require 'shokkenki/term/and_expression_term'
+require 'shokkenki/term/hash_term'
 require 'shokkenki/term/term_factory'
 
-describe Shokkenki::Term::AndExpressionTerm do
+describe Shokkenki::Term::HashTerm do
 
   let(:child_term) { double 'child term' }
 
@@ -14,10 +14,10 @@ describe Shokkenki::Term::AndExpressionTerm do
 
     let(:values) { {:values => double('value', :to_shokkenki_term => 'value')} }
 
-    subject { Shokkenki::Term::AndExpressionTerm.new values }
+    subject { Shokkenki::Term::HashTerm.new values }
 
-    it "has a type of 'and_expression'" do
-      expect(subject.type).to eq(:and_expression)
+    it "has a type of 'hash'" do
+      expect(subject.type).to eq(:hash)
     end
 
     it 'coerces the given values to a shokkenki term' do
@@ -28,7 +28,7 @@ describe Shokkenki::Term::AndExpressionTerm do
   context 'created from json' do
 
     let(:term) do
-      Shokkenki::Term::AndExpressionTerm.from_json(
+      Shokkenki::Term::HashTerm.from_json(
         'values' => {'child' => {'childterm' => 'json'}}
       )
     end
@@ -47,7 +47,7 @@ describe Shokkenki::Term::AndExpressionTerm do
   context 'generating an example' do
 
     let(:term) do
-      Shokkenki::Term::AndExpressionTerm.new(
+      Shokkenki::Term::HashTerm.new(
         :child => uncoerced_child_term
       )
     end
@@ -70,7 +70,7 @@ describe Shokkenki::Term::AndExpressionTerm do
     let(:child2) { double 'child2'}
 
     subject do
-      Shokkenki::Term::AndExpressionTerm.new(
+      Shokkenki::Term::HashTerm.new(
         :child1 => uncoerced_child1,
         :child2 => uncoerced_child2
       )
@@ -126,13 +126,13 @@ describe Shokkenki::Term::AndExpressionTerm do
     let(:uncoerced_value) { double 'uncoerced value', :to_shokkenki_term => value }
 
     subject do
-      Shokkenki::Term::AndExpressionTerm.new(
+      Shokkenki::Term::HashTerm.new(
         :key => uncoerced_value
       )
     end
 
     it 'has a type' do
-      expect(subject.to_hash[:type]).to eq(:and_expression)
+      expect(subject.to_hash[:type]).to eq(:hash)
     end
 
     it 'converts all values to a hash' do
