@@ -6,15 +6,10 @@ require 'shokkenki/consumer/model/fixture'
 describe Shokkenki::Consumer::DSL::Order do
 
   let(:response_attributes) { double('response attributes').as_null_object }
-  let(:request_attributes) { double('request attributes').as_null_object }
+  let(:request_attributes) { {:method => :get, :path => '/path'} }
   let(:patronage) { double('patronage').as_null_object }
 
   subject { Shokkenki::Consumer::DSL::Order.new patronage }
-
-  before do
-    subject.receive request_attributes
-    subject.and_respond response_attributes
-  end
 
   before do
     allow(Shokkenki::Consumer::Model::Interaction).to receive(:new)
@@ -29,6 +24,11 @@ describe Shokkenki::Consumer::DSL::Order do
   end
 
   context 'to' do
+
+    before do
+      subject.receive request_attributes
+      subject.and_respond response_attributes
+    end
 
     let(:interaction) { double 'interaction' }
 
@@ -56,6 +56,11 @@ describe Shokkenki::Consumer::DSL::Order do
 
   context 'given' do
 
+    before do
+      subject.receive request_attributes
+      subject.and_respond response_attributes
+    end
+
     let(:request_term) { double 'request term' }
     let(:fixture) { double 'fixture' }
     let(:order_with_given) { subject.given :fixture_name, {:fixture => :arguments} }
@@ -81,6 +86,11 @@ describe Shokkenki::Consumer::DSL::Order do
   context 'during' do
     let(:order_with_label) { subject.during 'my label' }
 
+    before do
+      subject.receive request_attributes
+      subject.and_respond response_attributes
+    end
+
     it 'defines the label of the interaction' do
       order_with_label.to_interaction
       expect(Shokkenki::Consumer::Model::Interaction).to have_received(:new).with(hash_including(:label => 'my label'))
@@ -98,16 +108,68 @@ describe Shokkenki::Consumer::DSL::Order do
     let(:order_with_request) { subject.receive request_attributes }
 
     before do
+      subject.receive request_attributes
+      subject.and_respond response_attributes
+    end
+
+    before do
       allow(request_attributes).to receive(:to_shokkenki_term).and_return request_term
     end
 
-    it 'defines the request of the interaction using a term' do
-      order_with_request.to_interaction
-      expect(Shokkenki::Consumer::Model::Interaction).to have_received(:new).with(hash_including(:request => request_term))
+    context 'when a valid request has been specified' do
+
+      it 'defines the request of the interaction using a term' do
+        order_with_request.to_interaction
+        expect(Shokkenki::Consumer::Model::Interaction).to have_received(:new).with(hash_including(:request => request_term))
+      end
+
+      it 'allows order calls to be chained' do
+        expect(order_with_request).to be(subject)
+      end
     end
 
-    it 'allows order calls to be chained' do
-      expect(order_with_request).to be(subject)
+    context 'when the request method is not present' do
+      before do
+        request_attributes.delete(:method)
+      end
+
+      it 'fails' do
+        expect { order_with_request }.to raise_error("No request method has been specified.")
+      end
+
+    end
+
+    context 'when the request method is not a symbol' do
+      before do
+        request_attributes[:method] = /get/
+      end
+
+      it 'fails' do
+        expect { order_with_request }.to raise_error("The request method must be a symbol.")
+      end
+
+    end
+
+    context 'when the request path is not present' do
+      before do
+        request_attributes.delete(:path)
+      end
+
+      it 'fails' do
+        expect { order_with_request }.to raise_error("No request path has been specified.")
+      end
+
+    end
+
+    context 'when the request path is not a string' do
+      before do
+        request_attributes[:path] = /path/
+      end
+
+      it 'fails' do
+        expect { order_with_request }.to raise_error("The request path must be a string.")
+      end
+
     end
   end
 
@@ -118,6 +180,8 @@ describe Shokkenki::Consumer::DSL::Order do
     let(:order_with_response) { subject.and_respond response_attributes }
 
     before do
+      subject.receive request_attributes
+      subject.and_respond response_attributes
       allow(response_attributes).to receive(:to_shokkenki_term).and_return response_term
     end
 
@@ -136,22 +200,22 @@ describe Shokkenki::Consumer::DSL::Order do
     context "when 'requested with' has not been specified" do
 
       before do
-        subject.receive nil
+        subject.and_respond response_attributes
       end
 
       it 'fails' do
-        expect { subject.validate! }.to raise_error("No 'receive' has been specified.")
+        expect { subject.validate! }.to raise_error("No request has been specified.")
       end
     end
 
     context "when 'and respond' has not been specified" do
 
       before do
-        subject.and_respond nil
+        subject.receive request_attributes
       end
 
       it 'fails' do
-        expect { subject.validate! }.to raise_error("No 'and_respond' has been specified.")
+        expect { subject.validate! }.to raise_error("No response has been specified.")
       end
     end
   end

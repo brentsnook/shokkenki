@@ -22,6 +22,12 @@ module Shokkenki
         end
 
         def receive details
+          raise "No request method has been specified." unless details.has_key?(:method)
+          raise "The request method must be a symbol." unless @request_details = details[:method].is_a?(Symbol)
+
+          raise "No request path has been specified." unless details.has_key?(:path)
+          raise "The request path must be a string." unless details[:path].is_a?(String)
+
           @request_details = details
           self
         end
@@ -40,8 +46,8 @@ module Shokkenki
         end
 
         def validate!
-          raise "No 'receive' has been specified." unless @request_details
-          raise "No 'and_respond' has been specified." unless @response_details
+          raise "No request has been specified." unless @request_details
+          raise "No response has been specified." unless @response_details
         end
 
         def to_interaction
