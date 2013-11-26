@@ -18,27 +18,10 @@ Gem::Specification.new do |s|
   s.rdoc_options = ['--charset=UTF-8']
   s.require_path = 'lib'
 
-  s.required_ruby_version = '>= 1.8.7'
+  s.required_ruby_version = '>= 1.9'
 
-  # both
+  s.add_runtime_dependency 'shokkenki-consumer', '0.0.2'
+  s.add_runtime_dependency 'shokkenki-provider', '0.0.2'
+
   s.add_development_dependency 'rake', '~> 10.0.0'
-  s.add_development_dependency 'rspec', '~> 2.14.0'
-  s.add_runtime_dependency 'json'
-  s.add_runtime_dependency 'rspec'
-  s.add_runtime_dependency 'activesupport'
-
-  # term
-  s.add_runtime_dependency 'jsonpath'
-
-  # consumer
-  s.add_runtime_dependency 'httparty'
-  s.add_runtime_dependency 'find_a_port'
-  s.add_runtime_dependency 'rack'
-  s.add_development_dependency 'json'
-  s.add_development_dependency 'timecop'
-  s.add_development_dependency 'webmock'
-
-  # producer
-  s.add_runtime_dependency 'faraday'
-  s.add_runtime_dependency 'rack-test'
 end
