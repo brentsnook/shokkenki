@@ -4,85 +4,25 @@ Shokkenki (食券機) records [consumer-driven contracts](http://martinfowler.co
 
 Consumer tests can express a contract as a series of HTTP interactions that can be used to stub out the provider in those tests. Those interactions can then be saved as a shokkenki ticket and then used within provider tests to ensure that a provider honours that contract.
 
+[Shokkenki Consumer](https://github.com/brentsnook/shokkenki-consumer) provides support for stubbing providers and generating tickets.
+
+[Shokkenki Provider](https://github.com/brentsnook/shokkenki-provider) provides support for verifying tickets against an actual provider.
+
+This is a meta-gem that ties together compatible versions of Shokkenki Consumer and Shokkenki Provider.
+
 Shokkenki is based on [pact](https://github.com/uglyog/pact) and would not exist without the hard work of all of the contributors of that project.
 
 ![Under construction](/Under_contruction_icon-red.svg.png "Under construction")
 
 ## Still under construction!
 
-This gem is still being built and will not work in the meantime.
-
-Remaining before first usable release (0.1.0):
+Remaining before first usable release (1.0.0):
 
 - manual testing
-- split gem into
-  - shokkenki-consumer
-  - shokkenki-provider
-  - shokkenki-support
 
 ## Install
 
     gem install shokkenki
-
-## Consumer Rspec
-
-Shokkenki Consumer allows you to specify interactions with the provider from the consumer's point of view. These interactions are then used to stub the provider.
-
-```ruby
-require 'shokkenki/consumer/rspec'
-require_relative 'hungry_man'
-
-Shokkenki.consumer.configure do
-  define_provider :restaurant
-end
-
-describe HungryMan, :shokkenki_consumer => :hungry_man do
-
-  context 'when his ramen is hot' do
-
-    before do
-      order(:my_provider).during('order for ramen').to do
-        get('/order/ramen').and_respond(:body => json('flavour' => /tasty/))
-      end
-    end
-
-    it 'is happy' do
-      expect(subject.happy?).to be_true
-    end
-  end
-end
-```
-
-## Provider Rspec
-
-Shokkenki Provider allows you to redeem (verify) a Shokkenki ticket against an actual provider.
-
-```ruby
-require 'shokkenki/provider/rspec'
-
-class Restaurant
-  def call env
-    env['PATH_INFO'] == '/order/ramen' ? [200, {}, ['a tasty morsel']] : raise('Unsupported path')
-  end
-end
-
-Shokkenki.provider.configure do
-  provider(:restaurant) { run Restaurant.new }
-end
-
-Shokkenki.provider.redeem_tickets
-```
-
-When run, this example will define and run an RSpec specification:
-
-```
-Hungry Man
-  order for ramen
-    body
-      json value
-        $.flavour
-          matches /tasty/
-```
 
 ## On the way ...
 
@@ -95,7 +35,5 @@ Hungry Man
 ## License
 
 See [LICENSE.txt](LICENSE.txt).
-
-This gem embeds and makes use of [ruby string random](https://github.com/repeatedly/ruby-string-random).
 
 
