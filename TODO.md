@@ -1,17 +1,6 @@
 
 # Now
 
-## Split
-  - create new projects, push original shokkenki to each
-  - shokkenki-provider
-  - shokkenki-consumer
-  - shokkenki-support
-  - shokkenki
-    - High level features and documentation
-    - Tests that tickets produced from a certain version of the consumer will work with a certain version of the provider (via features)
-  - shokkenki - contains version
-  - Don't forget to remove unused gem dependencies
-
 ## Testing
 
 - RSpec 3 beta
@@ -40,7 +29,7 @@
 ## Release !!!!!!!!!!!!!!!!!!!
 
 - check gemspec
-- version 0.1.0 (major is 0 until split into gems then release all as 1.0.0)
+- version 1.0.0
 
 ## Relish documentation
 
