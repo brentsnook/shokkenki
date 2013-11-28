@@ -2,6 +2,8 @@
 # Use subject name as consumer if none given
 # trim the failure stack trace the same way that rspec does
 # Add Changelog for all 3 gems
+# Dynamically depend on same support version as own version in consumer and provider
+# Same for shokkenki
 
 # Now
 
