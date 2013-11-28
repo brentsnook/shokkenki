@@ -1,3 +1,7 @@
+# Create ticket path if not present in consumer
+# Use subject name as consumer if none given
+# trim the failure stack trace the same way that rspec does
+# Add Changelog for all 3 gems
 
 # Now
 
