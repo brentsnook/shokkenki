@@ -20,8 +20,8 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 1.9'
 
-  s.add_runtime_dependency 'shokkenki-consumer', '0.0.2'
-  s.add_runtime_dependency 'shokkenki-provider', '0.0.2'
+  s.add_runtime_dependency 'shokkenki-consumer', '0.0.4'
+  s.add_runtime_dependency 'shokkenki-provider', '0.0.4'
 
   s.add_development_dependency 'rake', '~> 10.0.0'
 end
