@@ -1,9 +1,17 @@
-# Create ticket path if not present in consumer
-# Use subject name as consumer if none given
-# trim the failure stack trace the same way that rspec does
-# Add Changelog for all 3 gems
-# Dynamically depend on same support version as own version in consumer and provider
-# Same for shokkenki
+
+# (provider) trim the failure stack trace the same way that rspec does
+RSpec.configure do |config|
+  config.backtrace_inclusion_patterns = [/shokkenki/]
+end
+
+# (provider) Json spec description should be 'json' instead of 'json value'
+
+# (all) Dynamically depend on same support version as own version in consumer and provider
+
+# (all) Add Changelog for all 3 gems
+  - How to add to releases?
+
+# (all) Use more stable active support methods (ie. no deep_symbolize keys - use JSON parse options instead?) (across all gems)
 
 # Now
 
@@ -18,7 +26,6 @@
 - Multiple consumer specs write to the same ticket successfully
 - Can use Rails app as provider with no problems
 - Can use blueprints to create data in AR with no problems
-- Consumer can interact with multiple stubbed providers at once
 - Works with RSpec 2
 - Works with RSpec 3 beta
 - Can drive a Javascript consumer app and have correct data show up
@@ -179,6 +186,10 @@
       - Link to RSpec relish doco on filters and command line filters
 
 # Next ...
+
+- set up coveralls
+
+- Fix up code climate smells
 
 - use config.ru if no app supplied
 
