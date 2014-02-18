@@ -24,4 +24,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'shokkenki-provider', Shokkenki::Version::STRING
 
   s.add_development_dependency 'rake', '~> 10.0.0'
+  s.add_development_dependency 'relish'
 end
