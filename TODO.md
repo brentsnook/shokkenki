@@ -1,17 +1,16 @@
+# Relish documentation for shokkenki
+# Relish documentation for shokkenki-consumer
+# Relish documentation for shokkenki-provider
 
 # (provider) trim the failure stack trace the same way that rspec does
 RSpec.configure do |config|
   config.backtrace_inclusion_patterns = [/shokkenki/]
 end
 
-# (provider) Json spec description should be 'json' instead of 'json value'
-
-# (all) Dynamically depend on same support version as own version in consumer and provider
+# (all) Use more stable active support methods (ie. no deep_symbolize keys - use JSON parse options instead?) (across all gems)
 
 # (all) Add Changelog for all 3 gems
   - How to add to releases?
-
-# (all) Use more stable active support methods (ie. no deep_symbolize keys - use JSON parse options instead?) (across all gems)
 
 # Now
 
@@ -35,7 +34,7 @@ end
 - tickets via URI
 
 ## README
-  - add a call to action on README - "problems? Feature request? Doesn't work the way you want? Create an issue!"
+  - add a call to action on README - "Problems? Want a feature? Doesn't work the way you want? Create an issue!"
   - add a note about compatible ruby versions
   - Upate examples
 
@@ -46,65 +45,8 @@ end
 
 ## Relish documentation
 
-- Shokkenki (shokkenki)
-  - About
-    - what does shokkenki do
-     - Exampled-driven consumer-driven contracts
-     - Targetted at HTTP interactions
-     - Designed for RSpec and Rack Provider but extensible
-    - why?
-      - Integration testing sucks
-      - Bringing down the cost of integration
-        - Curve, number of services vs integration cost
-    - what is a shokkenki?
-      - food ticket machine
-        - http://www.youtube.com/watch?v=-tZXGdWQZ5g
-      - as a consumer you insert coins, press a button to select your meal
-      - a paper ticket is dispensed which you hand to your food provider behind the counter
-      - they prepare the food and call you over when it is finished
-    - consumer driven contracts
-      - http://martinfowler.com/articles/consumerDrivenContracts.html
-    - consumer
-      - the user of a service
-      - may be another HTTP service, a Javascript application
-      - a consumer requires a subset of the services offered by a provider
-      - A consumer should specify the minimum that it cares about to avoid specs breaking uncessarily
-    - provider
-      - provides a range of services
-      - has one or more consumers, each interested in a subset of overall services
-      - the provider may change its behaviour and break different consumers in different ways
-      - a provider may run executable consumer-driven contracts to ensure that it has not broken any consumers
-    - request
-      - path (required)
-      - method (required)
-      - query
-      - body
-      - headers
-    - response
-      - status
-      - body
-      - headers
-
-  - Changelog
-  - Cookbook
-    - Writing Good Consumer Specs
-      - Specify the absolute minimum
-    - Options requests
-    - Redeeming Tickets with a Provider Outside of Your Control
-      - Twitter example
-      - Defining host and port
-    - Provider Databases
-      - Ensuring data is set up/torn down - what to require?
-    - Easy Data Setup with Blueprints
-      - Using Factory Girl
-        - fixture name corresponds to blueprint name
-        - arguments are passed through as-is
-    - Driving Javascript Consumers with Capybara
-  - Contributing
-    - Code
-    - Documentation
-
 - Shokkenki Consumer RSpec
+     - Designed for RSpec and Rack Provider but extensible
   - Configuration
     - Ticket Location
       - Proc
@@ -116,6 +58,16 @@ end
 
   - Writing a Consumer Spec
     - Example Metadata
+    - request
+      - path (required)
+      - method (required)
+      - query
+      - body
+      - headers
+    - response
+      - status
+      - body
+      - headers
     - Orders
       - During (Labelling Interactions)
       - Given (Specifying Fixtures)
@@ -186,6 +138,26 @@ end
       - Link to RSpec relish doco on filters and command line filters
 
 # Next ...
+
+## Further Relish documentation
+
+  - Cookbook
+    - Writing Good Consumer Specs
+      - Specify the absolute minimum
+    - Options requests
+    - Redeeming Tickets with a Provider Outside of Your Control
+      - Twitter example
+      - Defining host and port
+    - Provider Databases
+      - Ensuring data is set up/torn down - what to require?
+    - Easy Data Setup with Blueprints
+      - Using Factory Girl
+        - fixture name corresponds to blueprint name
+        - arguments are passed through as-is
+    - Driving Javascript Consumers with Capybara
+  - Contributing
+    - Code
+    - Documentation
 
 - set up coveralls
 
