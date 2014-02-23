@@ -32,6 +32,20 @@ Remaining before first usable release (1.0.0):
   - Register custom terms in both consumer and provider
   - Custom Faraday configuration - more control over how your provider is requested
 
+## Need help?
+
+Try the [Shokkenki Google Group](http://groups.google.com/forum/#!forum/shokkenki) (you must be a member to post).
+
+## Bugs or Feature Requests for the Project/Documentation?
+
+Please use the appropriate Github issues:
+
+- [Shokkeni](http://github.com/brentsnook/shokkenki/issues) - general Shokkenki
+- [Shokkenki Consumer](http://github.com/brentsnook/shokkenki-consumer/issues)
+- [Shokkenki Provider](http://github.com/brentsnook/shokkenki-provider/issues)
+
+Have your say on the features that you want.
+
 ## License
 
 See [LICENSE.txt](LICENSE.txt).
