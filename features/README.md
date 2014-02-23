@@ -38,7 +38,7 @@ A provider may in turn be a consumer for a different service that it relies on i
 
 Shokkenki is **similar** [VCR](https://github.com/vcr/vcr) in that it plays back interactions to a consumer of an HTTP service in order to stub out that service.
 
-Shokkenki is **different** to [VCR](https://github.com/vcr/vcr) in that it allows interactions to be **spelled out explicitly** instead of just **recorded**. Those interactions can then be used to test the provider too. It goes a little something like this:
+Shokkenki is **different** to [VCR](https://github.com/vcr/vcr) in that it allows interactions to be **specified explicitly** instead of just **recorded**. Those interactions can then be used to test the provider too. It goes a little something like this:
 
 1. Consumer A spells out desired interactions with Provider B as a series of requests and responses
 2. Those interactions are used to stub out Provider B during consumer A tests
