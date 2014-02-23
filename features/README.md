@@ -14,6 +14,8 @@ A shokkenki is a [Japanese food ticket vending machine](http://www.youtube.com/w
 
 A hungry consumer inserts their money, makes a selection and then out pops a ticket. They hand their ticket to the food provider behind the counter and the order is fulfilled.
 
+This project is a tool for generating and using simple, powerful consumer-driven contracts.
+
 ## Who?
 
 ### Consumer
@@ -34,7 +36,9 @@ A provider may in turn be a consumer for a different service that it relies on i
 
 ## How?
 
-Shokkenki is like [VCR](https://github.com/vcr/vcr) in that it plays back interactions to a consumer of an HTTP service in order to stub out its provider. Shokkenki is different to VCR in that it allows interactions to be spelled out explicitly instead of just recorded. Those interactions can then be used to test the provider too. It goes a little something like this:
+Shokkenki is **similar** [VCR](https://github.com/vcr/vcr) in that it plays back interactions to a consumer of an HTTP service in order to stub out its provider.
+
+Shokkenki is **different** to VCR in that it allows interactions to be spelled out explicitly instead of just recorded. Those interactions can then be used to test the provider too. It goes a little something like this:
 
 1. Consumer A spells out desired interactions with Provider B as a series of requests and responses
 2. Those interactions are used to stub out Provider B during consumer A tests
@@ -45,8 +49,8 @@ Shokkenki is like [VCR](https://github.com/vcr/vcr) in that it plays back intera
 
 To keep consumers and providers in synch with concise, fast, automated specifications.
 
-Automated integration testing in a traditional sense is painful. Tests that set up several dependant systems with the right data, run a scenario through them and then attempt to verify the results quickly become unwieldly and complex.
+Automated integration testing in a traditional sense is painful. Tests that set up several dependant systems with the right data, run a scenario through them and then attempt to verify the results can quickly become unwieldly and complex.
 
-[Consumer-driven contracts](http://martinfowler.com/articles/consumerDrivenContracts.html) are a great way to provide feedback about whether and how a provider has broken particular consumers but producing and maintaining them can be hard. If they are not driven from real examples then they can quickly drift from the reality of how the consumer really works.
+[Consumer-driven contracts](http://martinfowler.com/articles/consumerDrivenContracts.html) are a great way to provide feedback about whether and how a provider has broken particular consumers but producing and maintaining them can be hard. If they are not driven from real examples then they can quickly drift away from how the consumer actually works.
 
 Shokkenki aims to make generating and using consumer-driven contracts easy.
