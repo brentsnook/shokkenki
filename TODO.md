@@ -1,6 +1,29 @@
-# Relish documentation for shokkenki
-# Relish documentation for shokkenki-consumer
 # Relish documentation for shokkenki-provider
+- Shokkenki Provider RSpec
+  - Configuration
+    - Ticket Location
+      - Proc
+      - file
+      - url
+    - Defining Fixtures
+    - Registering Providers
+      - Application
+        - Specifying a Rack Application
+        - Loaded from config.ru if none specified
+    - HTTP Requests
+      - Configuring Faraday
+
+  - Redeeming Tickets
+    - Generating RSpec Examples
+      - Structure
+
+  - Running Provider Specs
+    - Filtering
+      - --tag shokkenki_provider
+      - --example (interaction|request|headers)
+      - Link to RSpec relish doco on filters and command line filters
+
+# Remove traces of old crap like jsonpathexamplespec from consumer - search for this in both
 
 # (provider) trim the failure stack trace the same way that rspec does
 RSpec.configure do |config|
@@ -33,111 +56,29 @@ end
 - What happends when you specify different consumers in nested contexts?
 - tickets via URI
 
+## When requests not matched...
+
+Perhaps you need to define an interaction for it or there is a problem with the interactions already defined?
+Perhaps it was defined incorrectly or the consumer never made a request that matches it?
+
 ## README
   - add a call to action on README - "Problems? Want a feature? Doesn't work the way you want? Create an issue!"
   - add a note about compatible ruby versions
-  - Upate examples
+  - Update examples
 
 ## Release !!!!!!!!!!!!!!!!!!!
 
 - check gemspec
 - version 1.0.0
 
-## Relish documentation
-
-- Shokkenki Consumer RSpec
-     - Designed for RSpec and Rack Provider but extensible
-  - Configuration
-    - Ticket Location
-      - Proc
-      - file
-      - url
-    - Defining Providers
-      - Specifying a Stubber
-    - Defining Stubbers
-
-  - Writing a Consumer Spec
-    - Example Metadata
-    - request
-      - path (required)
-      - method (required)
-      - query
-      - body
-      - headers
-    - response
-      - status
-      - body
-      - headers
-    - Orders
-      - During (Labelling Interactions)
-      - Given (Specifying Fixtures)
-      - Receive (Specifying Requests)
-        - method must always be a symbol or something that can be converted into a symbol
-        - path must always be a string
-      - And Respond (Specifying Responses)
-    - Stubbers
-      - HTTP Stubber
-        - Interacting with the Stub Server
-          - Host, Port
-    - Terms - for the consumer
-      - And Expression
-        - Nested And Expressions
-        - And expression will extract values assuming the parent value is a hash
-      - Or Expression
-      - Regexp
-        - regex terms uses ruby standard for regex
-        - generate terms with ruby string random
-      - String
-      - Number
-      - JSON
-        - Uses JSON path gem and adheres to paths supported by it
-        - Will extract values as a JSON value
-      - Registering Custom Terms
-        - Configuration
-        - Ensure they are supported in both consumer and provider
-    - Tickets
-      - JSON files that contain information about provider, consumer and interactions
-
-  - Running Consumer Specs
-    - Filtering
-      - -- tag shokkenki_consumer:name
-      - Link to RSpec relish doco on filters and command line filters
-    - Troubleshooting
-      - Unused Interactions
-      - Unmatched Requests
-      - Interacting With the Stubber
-        - Finding all interactions
-        - Finding unused interactions
-        - Finding unmatched requests
-        - But I want to know something else...
-          - Please raise an issue and let us know what you need
-        - Using Pry
-
-- Shokkenki Provider RSpec
-  - Configuration
-    - Ticket Location
-      - Proc
-      - file
-      - url
-    - Defining Fixtures
-    - Registering Providers
-      - Application
-        - Specifying a Rack Application
-        - Loaded from config.ru if none specified
-    - HTTP Requests
-      - Configuring Faraday
-
-  - Redeeming Tickets
-    - Generating RSpec Examples
-      - Structure
-
-  - Running Provider Specs
-    - Filtering
-      - --tag shokkenki_provider
-      - --example (interaction|request|headers)
-      - Link to RSpec relish doco on filters and command line filters
-
 # Next ...
+
+## Expose all interactions and all requests from stubber
+
+## Add consumer driven contracts 101 page
+  - driven from consumer - provider is subservient (the customer is always right)
+  - consumer interested in a subset (menu) of what provider provides
+  - provider is responsible for not breaking consumers
 
 ## Further Relish documentation
 
