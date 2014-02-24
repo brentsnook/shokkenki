@@ -1,13 +1,9 @@
-# (all) Use more stable active support methods (ie. no deep_symbolize_keys - use JSON parse options instead?) (across all gems) (1hr)
-
-# make provider ticket reader from proc return JSON instead of ticket instances - avoid exposing ticket class (30m)
-
-# (all) Add Changelog for all 3 gems (30m)
-  - How to add to releases?
-
 # Add consumer/provider doco cross references (30m)
   - ticket
   - fixtures
+
+# (all) Add Changelog for all 3 gems (30m)
+  - How to add to releases?
 
 ## Testing (3hr)
 
@@ -54,6 +50,15 @@
 
 - check gemspec
 - version 1.0.0
+- order
+  - support
+  - consumer
+  - provider
+  - shokkenki
+- relish
+  - create version 1.0.0 for all
+  - publish doco for all and publisher
+- ensure build works for all
 
 # Next ...
 
