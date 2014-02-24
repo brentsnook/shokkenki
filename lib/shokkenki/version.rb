@@ -1,5 +1,5 @@
 module Shokkenki
   module Version
-    STRING = '0.0.5'
+    STRING = '1.0.0'
   end
 end
