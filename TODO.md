@@ -1,70 +1,65 @@
-# Relish documentation for shokkenki-provider
-- Shokkenki Provider RSpec
-  - Configuration
-    - Ticket Location
-      - Proc
-      - file
-      - url
-    - Defining Fixtures
-    - Registering Providers
-      - Application
-        - Specifying a Rack Application
-        - Loaded from config.ru if none specified
-    - HTTP Requests
-      - Configuring Faraday
+# Remove traces of old crap like jsonpathexamplespec from consumer - search for this in both (30m)
 
-  - Redeeming Tickets
-    - Generating RSpec Examples
-      - Structure
-
-  - Running Provider Specs
-    - Filtering
-      - --tag shokkenki_provider
-      - --example (interaction|request|headers)
-      - Link to RSpec relish doco on filters and command line filters
-
-# Remove traces of old crap like jsonpathexamplespec from consumer - search for this in both
-
-# (provider) trim the failure stack trace the same way that rspec does
+# (provider) trim the failure stack trace the same way that rspec does (30m)
 RSpec.configure do |config|
   config.backtrace_inclusion_patterns = [/shokkenki/]
 end
 
-# (all) Use more stable active support methods (ie. no deep_symbolize keys - use JSON parse options instead?) (across all gems)
+# (all) Use more stable active support methods (ie. no deep_symbolize keys - use JSON parse options instead?) (across all gems) (1hr)
 
-# (all) Add Changelog for all 3 gems
+# make provider ticket reader from proc return JSON instead of ticket instances - avoid exposing ticket class (30m)
+
+# (all) Add Changelog for all 3 gems (30m)
   - How to add to releases?
 
-# Now
+# Add consumer/provider doco cross references (30m)
+  - ticket
+  - fixtures
 
-## Testing
+## When requests not matched... (30m)
 
-- RSpec 3 beta
-- Ruby 1.9
-- Ruby 2
-- Works with Rails 3
-- Works with Rails 4
-- Fix RSpec versions required in gemspec
+Perhaps you need to define an interaction for it or there is a problem with the interactions already defined?
+Perhaps it was defined incorrectly or the consumer never made a request that matches it?
+
+## Testing (3hr)
+
+== Simple scenarios
+
+- create test project
 - Multiple consumer specs write to the same ticket successfully
-- Can use Rails app as provider with no problems
-- Can use blueprints to create data in AR with no problems
-- Works with RSpec 2
-- Works with RSpec 3 beta
 - Can drive a Javascript consumer app and have correct data show up
 - Headers are supported across consumer and provider
 - Multiple nested scenarios
 - What happends when you specify different consumers in nested contexts?
 - tickets via URI
 
-## When requests not matched...
+== Ruby versions (30m)
 
-Perhaps you need to define an interaction for it or there is a problem with the interactions already defined?
-Perhaps it was defined incorrectly or the consumer never made a request that matches it?
+- consult travis page, timebox if taking too long
+- Ruby 1.9
+- Ruby 2
+- Ruby 2.1
+- rubinius
+- jruby
+
+== Rails
+
+- Works with Rails 3 provider
+- Works with Rails 4 provider
+
+== RSpec
+
+- Earliest version of 2
+- Latest version of 2
+- 3 beta
+
+== Fixtures
+
+- Factory girl + AR for fixtures
+- Machinist + AR for fixtures
 
 ## README
-  - add a call to action on README - "Problems? Want a feature? Doesn't work the way you want? Create an issue!"
-  - add a note about compatible ruby versions
-  - Update examples
+  - add a note about compatible ruby versions (1.9 up)
 
 ## Release !!!!!!!!!!!!!!!!!!!
 
@@ -73,7 +68,13 @@ Perhaps it was defined incorrectly or the consumer never made a request that mat
 
 # Next ...
 
+## Add all new features as tickets, allow people to vote
+
 ## Expose all interactions and all requests from stubber
+
+## Provider uses config.ru if no app given
+
+## Non-rack apps supported in provider
 
 ## Add consumer driven contracts 101 page
   - driven from consumer - provider is subservient (the customer is always right)
