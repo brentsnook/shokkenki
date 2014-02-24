@@ -10,7 +10,7 @@ require 'rake'
 
 desc 'Push features to shokkenki project site for current version of shokkenki'
 task :relish do
-  sh "relish push shokkenki/shokkenki:#{Shokkenki::Version::STRING}"
+  sh "relish push shokkenki/shokkenki:#{Shokkenki::Version::STRING.split('.')[0..1].join('.')}"
 end
 
 desc 'Push documentation to shokkenki publisher site'
