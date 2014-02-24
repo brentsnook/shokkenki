@@ -1,1 +1,0 @@
-Examples of end-to-end scenarios between a Shokkenki consumer and provider.
