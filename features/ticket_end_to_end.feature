@@ -90,5 +90,5 @@ Feature: Shokkenki ticket - end to end
           body
             json value
               message
-                matches /(?-mix:howdy)/
+                matches /howdy/
       """
