@@ -20,7 +20,7 @@ This project is a tool for generating and using simple, powerful consumer-driven
 
 ### Consumer
 
-A Shokkenki consumer is a system that makes use of a service via a RESTful interface.
+A Shokkenki **consumer** is a system that makes use of a RESTful service.
 
 A consumer is interested in a subset of the services offered by a provider and should aim to specify only the minimum that it is interested in. Avoiding specifying things that a consumer doesn't really care about helps to keep a consumer contract targetted - it will only break when a relevant feature breaks.
 
@@ -28,11 +28,11 @@ Examples of a consumer include an [AngularJS](http://http://angularjs.org) appli
 
 ### Provider
 
-A Shokkenki *provider* is a system that provides a service via a RESTful interface. It might offer functions like storing data or allowing it to be retrieved.
+A Shokkenki **provider** is a system that provides one or more services via a RESTful interface. Examples of these services are storing data or allowing it to be retrieved.
 
-A provider cares about the consumers it services and the aim of consumer-driven contracts are to allow a provider to know when and how it has broken a particular consumer.
+A provider cares about the consumers it serves and the aim of consumer-driven contracts are to allow a provider to know when and how it has broken a particular consumer.
 
-A provider may in turn be a consumer for a different service that it relies on in order to do its job.
+A provider may in turn may also be a consumer for a different service that it relies on in order to do its job.
 
 ## How?
 
