@@ -1,31 +1,9 @@
-# Add consumer/provider doco cross references (30m)
-  - ticket
-  - fixtures
-
-# (all) Add Changelog for all 3 gems (30m)
-  - How to add to releases?
-
 ## Testing (3hr)
 
 == Simple scenarios
 
-- create test project
-- Multiple consumer specs write to the same ticket successfully
-- Can drive a Javascript consumer app and have correct data show up
-- Headers are supported across consumer and provider
-- Multiple nested scenarios
-- What happends when you specify different consumers in nested contexts?
 - tickets via URI
-
-== Ruby versions (30m)
-
-- consult travis page, timebox if taking too long
-- Ruby 1.9.2
-- Ruby 1.9.3
-- Ruby 2.0.0
-- Ruby 2.1.0
-- rubinius
-- jruby
+- Can drive a Javascript consumer app and have correct data show up
 
 == Rails
 
@@ -43,9 +21,6 @@
 - Factory girl + AR for fixtures
 - Machinist + AR for fixtures
 
-## README
-  - add a note about compatible ruby versions (1.9 up)
-
 ## Release !!!!!!!!!!!!!!!!!!!
 
 - check gemspec
@@ -61,6 +36,14 @@
 - ensure build works for all
 
 # Next ...
+
+# Add consumer/provider doco cross references (30m)
+  - ticket
+  - fixtures
+
+## Support more ruby versions
+- 1.9.4, 2.0.0, 2.1.0 of rubinius and jruby
+- possible to support 1.9.3? Currently dragging in latest AS (4) and breaking travis
 
 ## Add all new features as tickets, allow people to vote
   - XML term - XPath matching within XML documents
