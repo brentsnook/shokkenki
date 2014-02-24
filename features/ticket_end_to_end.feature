@@ -45,7 +45,7 @@ Feature: Shokkenki ticket - end to end
         attr_writer :mood
         def call env
           raise "I don't recognise the request" unless recognised?(env)
-          [200, {}, [%Q{{"message": "#{'howdy'}"}}]]
+          [200, {}, [%Q{{"message": "#{greeting}"}}]]
         end
 
         def greeting
