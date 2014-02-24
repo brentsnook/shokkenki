@@ -1,11 +1,4 @@
-# Remove traces of old crap like jsonpathexamplespec from consumer - search for this in both (30m)
-
-# (provider) trim the failure stack trace the same way that rspec does (30m)
-RSpec.configure do |config|
-  config.backtrace_inclusion_patterns = [/shokkenki/]
-end
-
-# (all) Use more stable active support methods (ie. no deep_symbolize keys - use JSON parse options instead?) (across all gems) (1hr)
+# (all) Use more stable active support methods (ie. no deep_symbolize_keys - use JSON parse options instead?) (across all gems) (1hr)
 
 # make provider ticket reader from proc return JSON instead of ticket instances - avoid exposing ticket class (30m)
 
@@ -15,11 +8,6 @@ end
 # Add consumer/provider doco cross references (30m)
   - ticket
   - fixtures
-
-## When requests not matched... (30m)
-
-Perhaps you need to define an interaction for it or there is a problem with the interactions already defined?
-Perhaps it was defined incorrectly or the consumer never made a request that matches it?
 
 ## Testing (3hr)
 
@@ -36,9 +24,10 @@ Perhaps it was defined incorrectly or the consumer never made a request that mat
 == Ruby versions (30m)
 
 - consult travis page, timebox if taking too long
-- Ruby 1.9
-- Ruby 2
-- Ruby 2.1
+- Ruby 1.9.2
+- Ruby 1.9.3
+- Ruby 2.0.0
+- Ruby 2.1.0
 - rubinius
 - jruby
 
@@ -73,6 +62,14 @@ Perhaps it was defined incorrectly or the consumer never made a request that mat
   - Support for non-Rack providers
   - Register custom terms in both consumer and provider
   - Custom Faraday configuration - more control over how your provider is requested
+  - Add line numbers to rspec failure traces for provider specs
+
+
+## When requests not matched...
+
+Perhaps you need to define an interaction for it or there is a problem with the interactions already defined?
+Perhaps it was defined incorrectly or the consumer never made a request that matches it?
+
 
 ## Expose all interactions and all requests from stubber
 
