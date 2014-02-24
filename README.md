@@ -12,25 +12,9 @@ This is a meta-gem that ties together compatible versions of Shokkenki Consumer 
 
 Shokkenki is based on [pact](https://github.com/uglyog/pact) and would not exist without the hard work of all of the contributors of that project.
 
-![Under construction](/Under_contruction_icon-red.svg.png "Under construction")
-
-## Still under construction!
-
-Remaining before first usable release (1.0.0):
-
-- manual testing
-
 ## Install
 
     gem install shokkenki
-
-## On the way ...
-
-  - [Relish documentation](https://www.relishapp.com/shokkenki)
-  - XML term - XPath matching within XML documents
-  - Support for non-Rack providers
-  - Register custom terms in both consumer and provider
-  - Custom Faraday configuration - more control over how your provider is requested
 
 ## Need help?
 

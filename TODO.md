@@ -69,6 +69,10 @@ Perhaps it was defined incorrectly or the consumer never made a request that mat
 # Next ...
 
 ## Add all new features as tickets, allow people to vote
+  - XML term - XPath matching within XML documents
+  - Support for non-Rack providers
+  - Register custom terms in both consumer and provider
+  - Custom Faraday configuration - more control over how your provider is requested
 
 ## Expose all interactions and all requests from stubber
 
